@@ -3,6 +3,8 @@ using System.Collections;
 
 public class manager : MonoBehaviour {
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
+    public static GameObject canvas;
+    public static GameObject spycanvas;
     GameObject plefab_t;
     GameObject t;
     GameObject plefab_s1;
@@ -12,6 +14,13 @@ public class manager : MonoBehaviour {
 
     // Use this for initialization
 
+    void Awake() {
+        canvas = GameObject.Find("Canvas");
+        canvas.SetActive(false);
+        spycanvas = GameObject.Find("spyCanvas");
+        spycanvas.SetActive(false);
+    }
+    
     void Start () {
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
@@ -38,7 +47,7 @@ public class manager : MonoBehaviour {
         t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
         t.name = plefab_t.name;
         //GameObject terrorist = GameObject.Find("terrorist");
-        GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = -1; // テロリストを非表示にする（実際はマップより後ろのレイヤーに追いやっているだけ）
+        //GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = -1; // テロリストを非表示にする（実際はマップより後ろのレイヤーに追いやっているだけ）
 
         GameObject spy1masu = GameObject.Find(spy1pos.ToString());
         //spy1masu.tag = "spy1";
@@ -54,7 +63,7 @@ public class manager : MonoBehaviour {
         s2 = (GameObject)Instantiate(plefab_s2, s2pos, Quaternion.identity);
         s2.name = plefab_s2.name;
 
-        Debug.Log(GameObject.FindWithTag("terrorist").transform.position);
+        //Debug.Log(GameObject.FindWithTag("terrorist").transform.position);
 
         /*
         Debug.Log(data.map1[0]);
@@ -70,6 +79,10 @@ public class manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    
-	}
+        GameObject.Find("terrorist").GetComponent<player>().play();
+        GameObject.Find("spy1").GetComponent<player>().play();
+        GameObject.Find("spy2").GetComponent<player>().play();
+
+
+    }
 }
