@@ -76,6 +76,7 @@
     <Compile Include="Assets\script\data.cs" />
     <Compile Include="Assets\script\manager.cs" />
     <Compile Include="Assets\script\player.cs" />
+    <Compile Include="Assets\script\saikorobutton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

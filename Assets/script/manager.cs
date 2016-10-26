@@ -5,6 +5,11 @@ public class manager : MonoBehaviour {
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static GameObject canvas;
     public static GameObject spycanvas;
+    public static bool saikoro = false;
+    public static bool terroristtern = true;
+    public static bool spy1tern = false;
+    public static bool spy2tern = false;
+    public static int total;
     GameObject plefab_t;
     GameObject t;
     GameObject plefab_s1;
@@ -25,8 +30,8 @@ public class manager : MonoBehaviour {
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
         plefab_s2 = (GameObject)Resources.Load("spy2");
-
-        int total = GameObject.Find("masu").transform.childCount; //30
+        
+        total = GameObject.Find("masu").transform.childCount; //30
         int terroristpos = Random.Range(1, total + 1);
         int spy1pos = Random.Range(1, total + 1);
         while (spy1pos == terroristpos) spy1pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
@@ -79,10 +84,9 @@ public class manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject.Find("terrorist").GetComponent<player>().play();
-        GameObject.Find("spy1").GetComponent<player>().play();
-        GameObject.Find("spy2").GetComponent<player>().play();
-
+        if(terroristtern) GameObject.Find("terrorist").GetComponent<player>().play();
+        if (spy1tern) GameObject.Find("spy1").GetComponent<player>().play();
+        if (spy2tern) GameObject.Find("spy2").GetComponent<player>().play();
 
     }
 }
