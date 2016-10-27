@@ -106,12 +106,18 @@ public class manager : MonoBehaviour {
 	void Update () {
         //Debug.Log(playflag);
         if (playflag == false) {
-            if (terroristtern) {
-                GameObject.Find("terrorist").GetComponent<terrorist>().play();
-            } else if (spy1tern) {
-                GameObject.Find("spy1").GetComponent<spy1>().play();
-            } else if (spy2tern) {
-                GameObject.Find("spy2").GetComponent<spy2>().play();
+            if (playerpos[0] == 0) {
+                Debug.Log("スパイの勝利");
+            } else if(playerpos[1]==0 && playerpos[2] == 0) {
+                Debug.Log("テロリストの勝利");
+            } else {
+                if (terroristtern) {
+                    GameObject.Find("terrorist").GetComponent<terrorist>().play();
+                } else if (spy1tern) {
+                    GameObject.Find("spy1").GetComponent<spy1>().play();
+                } else if (spy2tern) {
+                    GameObject.Find("spy2").GetComponent<spy2>().play();
+                }
             }
         }
     }

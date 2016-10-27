@@ -20,6 +20,18 @@ public class terrorist : MonoBehaviour {
         manager.playflag = true;
     }
 
+    void hantei() {
+        for(int i=1; i< manager.playerpos.Length; ++i)
+        {
+            if(manager.playerpos[0]==manager.playerpos[i]) //スパイがテロリストに踏まれたら
+            {
+                manager.playerpos[i] = 0;
+                Destroy(GameObject.Find("spy" + i.ToString()));
+                Debug.Log(GameObject.Find("spy" + i.ToString()) + "テロリストに殺される");
+            }
+        }
+    }
+
     // Use this for initialization
     void Start () {
         plefab_b = (GameObject)Resources.Load("bom");
@@ -35,7 +47,7 @@ public class terrorist : MonoBehaviour {
             //Debug.Log(manager.saikorobutton.activeInHierarchy);
             manager.saikorobutton.SetActive(false);
             manager.saikoro = false;
-            Debug.Log(this.gameObject.name);
+            //Debug.Log(this.gameObject.name);
             l = manager.playerpos[0];
             k = l + me;
             if (k > manager.total) k -= manager.total; //一周した場合
@@ -45,6 +57,7 @@ public class terrorist : MonoBehaviour {
             tpos.y += 0.4f; // コマの位置調整
             //GameObject.Find("terrorist").transform.position = pos;
             this.gameObject.transform.position = tpos;
+            hantei();
             // lからkの一個前のマスに爆弾を置ける
             bakudanphase = true;
         }
@@ -107,7 +120,19 @@ public class terrorist : MonoBehaviour {
                 Debug.Log("ターンエンド");
                 manager.playflag = false;
                 manager.terroristtern = false;
-                manager.spy1tern = true; // 次のターンへ
+                Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
+                if (manager.playerpos[1] != 0)
+                {
+                    manager.spy1tern = true; // 次のターンへ
+                }
+                else if (manager.playerpos[2] != 0)
+                {
+                    manager.spy2tern = true; // 次のターンへ
+                }
+                else
+                {
+                    Debug.Log("テロリストの勝利");
+                }
             }
         }
 

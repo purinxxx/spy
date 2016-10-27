@@ -9,7 +9,6 @@ public class spy1 : MonoBehaviour {
     int me;
     string ternplayer;
     bool mati = false;
-    GameObject mituketabom;
 
     public void play() {
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = -5;
@@ -20,12 +19,37 @@ public class spy1 : MonoBehaviour {
         manager.playflag = true;
     }
 
+    void hantei()
+    {
+        for (int i = 1; i < manager.playerpos.Length; ++i)
+        {
+            if (manager.playerpos[0] == manager.playerpos[i]) //スパイがテロリストを踏んだら
+            {
+                manager.playerpos[0] = 0;
+                Destroy(GameObject.Find("terrorist"));
+                Debug.Log("テロリスト死亡");
+            }
+        }
+
+        for (int i = 0; i < manager.bompos.Length; ++i)
+        {
+            if (manager.playerpos[1] == manager.bompos[i]) //スパイが爆弾を踏んだら
+            {
+                Destroy(GameObject.Find("bom" + manager.bompos[i].ToString()));
+                //Destroy(GameObject.Find("spy1"));
+                //GameObject.Find("spy1").SetActive(false);
+                GameObject.Find("spy1").GetComponent<Renderer>().sortingOrder = -5;
+                manager.bompos[i] = 0;
+                manager.playerpos[1] = 0;
+                Debug.Log("爆弾を踏んでスパイ１死亡");
+            }
+        }
+    }
+
     // Use this for initialization
     void Start () {
 	
 	}
-
-    
 
     // Update is called once per frame
     void Update()
@@ -51,6 +75,7 @@ public class spy1 : MonoBehaviour {
             Vector3 pos = GameObject.Find(k.ToString()).transform.position;
             pos.y += 0.4f; // コマの位置調整
             GameObject.Find(ternplayer).transform.position = pos;
+            hantei();
             mati = true;
         } else if (manager.tansaku && manager.spy1tern) {
             manager.tansaku = false;
@@ -68,10 +93,10 @@ public class spy1 : MonoBehaviour {
                     {
                         //爆弾見つけた
                         Debug.Log("爆弾見つけた");
-                        mituketabom = GameObject.Find("bom" + (l + i).ToString());
-                        mituketabom.GetComponent<Renderer>().sortingOrder = 5;
+                        GameObject b = GameObject.Find("bom" + (l + i).ToString());
+                        b.GetComponent<Renderer>().sortingOrder = 5;
                         manager.bompos[j - 1] = 0;
-                        StartCoroutine(bomkesu());
+                        StartCoroutine(bomkesu(b));
                     }
                 }
                 if (l + i == manager.playerpos[0])
@@ -92,12 +117,24 @@ public class spy1 : MonoBehaviour {
                 Debug.Log("ターンエンド");
                 manager.playflag = false;
                 manager.spy1tern = false;
-                manager.spy2tern = true; // 次のターンへ
+                Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
+                if (manager.playerpos[2] != 0)
+                {
+                    manager.spy2tern = true; // 次のターンへ
+                }
+                else if (manager.playerpos[0] != 0)
+                {
+                    manager.terroristtern = true; // 次のターンへ
+                }
+                else
+                {
+                    Debug.Log("スパイの勝利");
+                }
             }
         }
     }
 
-    private IEnumerator bomkesu()
+    private IEnumerator bomkesu(GameObject mituketabom)
     {
         yield return new WaitForSeconds(2.0f);
         Destroy(mituketabom);

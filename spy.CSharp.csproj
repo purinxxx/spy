@@ -75,7 +75,6 @@
     <Compile Include="Assets\script\createmap.cs" />
     <Compile Include="Assets\script\data.cs" />
     <Compile Include="Assets\script\manager.cs" />
-    <Compile Include="Assets\script\player.cs" />
     <Compile Include="Assets\script\saikorobutton.cs" />
     <Compile Include="Assets\script\spy1.cs" />
     <Compile Include="Assets\script\spy2.cs" />
