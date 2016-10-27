@@ -9,16 +9,13 @@ public class terrorist : MonoBehaviour {
     int m;
     int me;
     string ternplayer;
+    bool mati = false;
     GameObject plefab_b;
     GameObject b;
 
     public void play() {
-        GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
-        if (manager.bompos[0] != 0) GameObject.Find("bom1").GetComponent<Renderer>().sortingOrder = 5;
-        if (manager.bompos[1] != 0) GameObject.Find("bom2").GetComponent<Renderer>().sortingOrder = 5;
-        if (manager.bompos[2] != 0) GameObject.Find("bom3").GetComponent<Renderer>().sortingOrder = 5;
         ternplayer = this.gameObject.name;
-        Debug.Log(ternplayer + "のターン");
+        Debug.Log(ternplayer + "　テロリストのターン");
         manager.saikorobutton.SetActive(true);
         manager.playflag = true;
     }
@@ -31,27 +28,28 @@ public class terrorist : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (manager.saikoro && manager.terroristtern) {
+            foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = 5;
+            GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
             me = Random.Range(1, 7);
             Debug.Log(me.ToString() + "の目が出た");
-            Debug.Log(manager.saikorobutton.activeInHierarchy);
+            //Debug.Log(manager.saikorobutton.activeInHierarchy);
             manager.saikorobutton.SetActive(false);
             manager.saikoro = false;
-                Debug.Log(this.gameObject.name);
-                l = manager.playerpos[0];
-                k = l + me;
-                if (k > manager.total) k -= manager.total; //一周した場合
-                manager.playerpos[0] = k;
-                Debug.Log("テロリストの現在位置" + manager.playerpos[0]);
-                Vector3 tpos = GameObject.Find(k.ToString()).transform.position;
-                tpos.y += 0.4f; // コマの位置調整
-                //GameObject.Find("terrorist").transform.position = pos;
-                this.gameObject.transform.position = tpos;
-                // lからkの一個前のマスに爆弾を置ける
-                bakudanphase = true;
-            manager.terroristtern = false;
+            Debug.Log(this.gameObject.name);
+            l = manager.playerpos[0];
+            k = l + me;
+            if (k > manager.total) k -= manager.total; //一周した場合
+            manager.playerpos[0] = k;
+            //Debug.Log("テロリストの現在位置" + manager.playerpos[0]);
+            Vector3 tpos = GameObject.Find(k.ToString()).transform.position;
+            tpos.y += 0.4f; // コマの位置調整
+            //GameObject.Find("terrorist").transform.position = pos;
+            this.gameObject.transform.position = tpos;
+            // lからkの一個前のマスに爆弾を置ける
+            bakudanphase = true;
         }
         
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && manager.terroristtern)
         {
             if (bakudanphase)
             {
@@ -61,7 +59,6 @@ public class terrorist : MonoBehaviour {
                 if (aCollider2d)
                 {
                     GameObject obj = aCollider2d.transform.gameObject;
-                    Debug.Log(obj.name);
                     for (int i = 1; i <= me; ++i)
                     {
                         m = l + i - 1;
@@ -74,31 +71,43 @@ public class terrorist : MonoBehaviour {
                                 manager.bompos[0] = m;
                                 Vector3 bpos = obj.transform.position;
                                 b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
-                                b.name = "bom1";
+                                b.name = "bom" + m.ToString();
+                                b.transform.parent = manager.boms.transform;
+                                //int.Parse(b.name.Substring(3))
                             }
                             else if (manager.bompos[1] == 0)
                             {
                                 manager.bompos[1] = m;
                                 Vector3 bpos = obj.transform.position;
                                 b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
-                                b.name = "bom2";
+                                b.name = "bom" + m.ToString();
+                                b.transform.parent = manager.boms.transform;
                             }
                             else if (manager.bompos[2] == 0)
                             {
                                 manager.bompos[2] = m;
                                 Vector3 bpos = obj.transform.position;
                                 b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
-                                b.name = "bom3";
+                                b.name = "bom" + m.ToString();
+                                b.transform.parent = manager.boms.transform;
                             }
-                            else {
+                            else
+                            {
                                 Debug.Log("爆弾上限");
                             }
                             bakudanphase = false;
-                            manager.playflag = false;
-                            manager.spy1tern = true; // 次のターンへ
+                            mati = true;
                         }
                     }
                 }
+            }
+            else if (mati)
+            {
+                mati = false;
+                Debug.Log("ターンエンド");
+                manager.playflag = false;
+                manager.terroristtern = false;
+                manager.spy1tern = true; // 次のターンへ
             }
         }
 

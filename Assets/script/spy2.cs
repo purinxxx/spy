@@ -8,15 +8,15 @@ public class spy2 : MonoBehaviour {
     int m;
     int me;
     string ternplayer;
+    bool mati = false;
+    GameObject mituketabom;
 
     public void play()
     {
+        foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = -5;
         GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = -5;
-        if (manager.bompos[0] != 0) GameObject.Find("bom1").GetComponent<Renderer>().sortingOrder = -10;
-        if (manager.bompos[1] != 0) GameObject.Find("bom2").GetComponent<Renderer>().sortingOrder = -10;
-        if (manager.bompos[2] != 0) GameObject.Find("bom3").GetComponent<Renderer>().sortingOrder = -10;
         ternplayer = this.gameObject.name;
-        Debug.Log(ternplayer + "のターン");
+        Debug.Log(ternplayer + "　スパイ２（青）のターン");
         manager.saikorobutton.SetActive(true);
         manager.playflag = true;
     }
@@ -51,13 +51,11 @@ public class spy2 : MonoBehaviour {
             k = l + me;
             if (k > manager.total) k -= manager.total; //一周した場合
             manager.playerpos[2] = k;
-            Debug.Log("スパイ2の現在位置" + manager.playerpos[2]);
+            //Debug.Log("スパイ2の現在位置" + manager.playerpos[2]);
             Vector3 pos = GameObject.Find(k.ToString()).transform.position;
             pos.y += 0.4f; // コマの位置調整
             GameObject.Find(ternplayer).transform.position = pos;
-            manager.spy2tern = false;
-            manager.playflag = false;
-            manager.terroristtern = true; // 次のターンへ
+            mati = true;
         }
         else if (manager.tansaku && manager.spy2tern)
         {
@@ -78,6 +76,10 @@ public class spy2 : MonoBehaviour {
                     {
                         //爆弾見つけた
                         Debug.Log("爆弾見つけた");
+                        mituketabom = GameObject.Find("bom" + (l + i).ToString());
+                        mituketabom.GetComponent<Renderer>().sortingOrder = 5;
+                        manager.bompos[j - 1] = 0;
+                        StartCoroutine(bomkesu());
                     }
                 }
                 if (l + i == manager.playerpos[0])
@@ -87,10 +89,27 @@ public class spy2 : MonoBehaviour {
                     GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
                 }
             }
-            manager.spy2tern = false;
-            manager.playflag = false;
-            manager.terroristtern = true; // 次のターンへ
+            mati = true;
         }
 
+
+        if (Input.GetMouseButtonDown(0) && manager.spy2tern)
+        {
+            if (mati)
+            {
+                mati = false;
+                Debug.Log("ターンエンド");
+                manager.playflag = false;
+                manager.spy2tern = false;
+                manager.terroristtern = true; // 次のターンへ
+            }
+        }
+    }
+
+    private IEnumerator bomkesu()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Destroy(mituketabom);
+        Debug.Log("爆弾を除去した " + mituketabom.name);
     }
 }

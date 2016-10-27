@@ -9,6 +9,7 @@ public class manager : MonoBehaviour {
     public static GameObject saikorobutton;
     public static GameObject susumubutton;
     public static GameObject tansakubutton;
+    public static GameObject boms;
     public static bool saikoro = false;
     public static bool susumu = false;
     public static bool tansaku = false;
@@ -40,6 +41,7 @@ public class manager : MonoBehaviour {
         susumubutton.SetActive(false);
         tansakubutton = GameObject.Find("tansaku");
         tansakubutton.SetActive(false);
+        boms = GameObject.Find("boms");
     }
     
     void Start () {
@@ -68,6 +70,7 @@ public class manager : MonoBehaviour {
         tpos.y += 0.4f; // コマの位置調整
         t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
         t.name = plefab_t.name;
+        t.GetComponent<Renderer>().sortingOrder = -5;
         //GameObject terrorist = GameObject.Find("terrorist");
         //GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = -1; // テロリストを非表示にする（実際はマップより後ろのレイヤーに追いやっているだけ）
 
@@ -101,12 +104,10 @@ public class manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(playflag);
+        //Debug.Log(playflag);
         if (playflag == false) {
             if (terroristtern) {
-                Debug.Log("２ターン目");
                 GameObject.Find("terrorist").GetComponent<terrorist>().play();
-                Debug.Log(GameObject.Find("terrorist"));
             } else if (spy1tern) {
                 GameObject.Find("spy1").GetComponent<spy1>().play();
             } else if (spy2tern) {
