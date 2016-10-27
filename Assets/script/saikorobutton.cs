@@ -4,7 +4,7 @@ using System.Collections;
 public class saikorobutton : MonoBehaviour {
 
     public void ClickTest() {
-        Debug.Log("Clicked.");
+        Debug.Log("さいころをふる");
         manager.saikoro = true;
     }
 

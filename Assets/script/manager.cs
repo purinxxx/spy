@@ -3,13 +3,20 @@ using System.Collections;
 
 public class manager : MonoBehaviour {
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
+    public static int[] bompos = {0, 0, 0}; // 爆弾上限３個
     public static GameObject canvas;
     public static GameObject spycanvas;
+    public static GameObject saikorobutton;
+    public static GameObject susumubutton;
+    public static GameObject tansakubutton;
     public static bool saikoro = false;
+    public static bool susumu = false;
+    public static bool tansaku = false;
     public static bool terroristtern = true;
     public static bool spy1tern = false;
     public static bool spy2tern = false;
     public static int total;
+    public static bool playflag = false;
     GameObject plefab_t;
     GameObject t;
     GameObject plefab_s1;
@@ -21,9 +28,18 @@ public class manager : MonoBehaviour {
 
     void Awake() {
         canvas = GameObject.Find("Canvas");
-        canvas.SetActive(false);
-        spycanvas = GameObject.Find("spyCanvas");
-        spycanvas.SetActive(false);
+        //canvas.SetActive(false);
+        //spycanvas = GameObject.Find("spyCanvas");
+        //spycanvas.SetActive(false);
+        saikorobutton = GameObject.Find("saikoro");
+        saikorobutton.SetActive(false);
+        //Vector3 pos = manager.saikorobutton.transform.position;
+        //pos.x += 1000; // なぜかsetactive falseが効かないから画面外にボタンを飛ばす
+        //manager.saikorobutton.transform.position = pos;
+        susumubutton = GameObject.Find("susumu");
+        susumubutton.SetActive(false);
+        tansakubutton = GameObject.Find("tansaku");
+        tansakubutton.SetActive(false);
     }
     
     void Start () {
@@ -41,9 +57,10 @@ public class manager : MonoBehaviour {
         playerpos[0] = terroristpos;
         playerpos[1] = spy1pos;
         playerpos[2] = spy2pos;
-        Debug.Log(terroristpos);
-        Debug.Log(spy1pos);
-        Debug.Log(spy2pos);
+
+        //Debug.Log(terroristpos);
+        //Debug.Log(spy1pos);
+        //Debug.Log(spy2pos);
 
         GameObject terroristmasu = GameObject.Find(terroristpos.ToString());
         //terroristmasu.tag = "terrorist"; // テロリストのいるマスにterroristタグをつける
@@ -84,9 +101,17 @@ public class manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(terroristtern) GameObject.Find("terrorist").GetComponent<player>().play();
-        if (spy1tern) GameObject.Find("spy1").GetComponent<player>().play();
-        if (spy2tern) GameObject.Find("spy2").GetComponent<player>().play();
-
+        Debug.Log(playflag);
+        if (playflag == false) {
+            if (terroristtern) {
+                Debug.Log("２ターン目");
+                GameObject.Find("terrorist").GetComponent<terrorist>().play();
+                Debug.Log(GameObject.Find("terrorist"));
+            } else if (spy1tern) {
+                GameObject.Find("spy1").GetComponent<spy1>().play();
+            } else if (spy2tern) {
+                GameObject.Find("spy2").GetComponent<spy2>().play();
+            }
+        }
     }
 }
