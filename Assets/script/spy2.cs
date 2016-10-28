@@ -22,16 +22,6 @@ public class spy2 : MonoBehaviour {
 
     void hantei()
     {
-        for (int i = 1; i < manager.playerpos.Length; ++i)
-        {
-            if (manager.playerpos[0] == manager.playerpos[i]) //スパイがテロリストを踏んだら
-            {
-                manager.playerpos[0] = 0;
-                Destroy(GameObject.Find("terrorist"));
-                Debug.Log("テロリスト死亡");
-            }
-        }
-
         for (int i = 0; i < manager.bompos.Length; ++i)
         {
             if (manager.playerpos[2] == manager.bompos[i]) //スパイが爆弾を踏んだら
@@ -45,6 +35,17 @@ public class spy2 : MonoBehaviour {
                 Debug.Log("爆弾を踏んでスパイ２死亡");
             }
         }
+
+        for (int i = 1; i < manager.playerpos.Length; ++i)
+        {
+            if (manager.playerpos[0] == manager.playerpos[i]) //スパイがテロリストを踏んだら
+            {
+                manager.playerpos[0] = 0;
+                Destroy(GameObject.Find("terrorist"));
+                Debug.Log("テロリスト死亡");
+            }
+        }
+
     }
 
     // Use this for initialization

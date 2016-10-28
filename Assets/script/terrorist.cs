@@ -4,6 +4,7 @@ using System.Collections;
 public class terrorist : MonoBehaviour {
 
     bool bakudanphase = false;
+    bool bommax = false;
     int k;
     int l;
     int m;
@@ -26,7 +27,8 @@ public class terrorist : MonoBehaviour {
             if(manager.playerpos[0]==manager.playerpos[i]) //スパイがテロリストに踏まれたら
             {
                 manager.playerpos[i] = 0;
-                Destroy(GameObject.Find("spy" + i.ToString()));
+                //Destroy(GameObject.Find("spy" + i.ToString()));
+                GameObject.Find("spy" + i.ToString()).GetComponent<Renderer>().sortingOrder = -5;
                 Debug.Log(GameObject.Find("spy" + i.ToString()) + "テロリストに殺される");
             }
         }
@@ -59,12 +61,69 @@ public class terrorist : MonoBehaviour {
             this.gameObject.transform.position = tpos;
             hantei();
             // lからkの一個前のマスに爆弾を置ける
-            bakudanphase = true;
+
+            int j=1;
+            foreach (int i in manager.bompos)
+            {
+                j = j * i;
+            }
+            if (j != 0) {
+                bommax = true;
+                Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
+            }
+
+            int cnt = 0;
+            for (int i = 1; i <= me; ++i)
+            {
+                m = l + i - 1; //m=l+1,l+2,l+3,,,l+me-1
+                if (m > 30) m -= 30;
+                foreach (int p in manager.playerpos)
+                {
+                    if (p == m) ++cnt;
+                }
+                foreach (int p in manager.bompos)
+                {
+                    if (p == m) ++cnt;
+                }
+            }
+            if (cnt == me)
+            {
+                Debug.Log("爆弾置けない");
+                mati = true;
+            }
+            else
+            {
+                bakudanphase = true;
+            }
         }
         
         if (Input.GetMouseButtonDown(0) && manager.terroristtern)
         {
-            if (bakudanphase)
+            if (bommax)
+            {
+                // http://bribser.co.jp/blog/tappobject/
+                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint);
+                if (aCollider2d)
+                {
+                    GameObject obj = aCollider2d.transform.gameObject;
+                    if (obj.name.Substring(0,3) == "bom")
+                    {
+                        int b = int.Parse(obj.name.Substring(3));
+                        for(int i = 0; i < manager.bompos.Length; ++i)
+                        {
+                            if (manager.bompos[i] == b)
+                            {
+                                Debug.Log("爆弾を撤去しました");
+                                bommax = false;
+                                Destroy(obj);
+                                manager.bompos[i] = 0;
+                            }
+                        }
+                    }
+                }
+            }
+            if (bakudanphase && bommax==false)
             {
                 // http://bribser.co.jp/blog/tappobject/
                 Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
