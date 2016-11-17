@@ -151,11 +151,21 @@ public class terrorist : MonoBehaviour {
         
         if (Input.GetMouseButtonDown(0) && manager.terroristtern)
         {
-            if (bommax)
-            {
-                // http://bribser.co.jp/blog/tappobject/
-                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, layerMask); //レイヤーマスク
+//<<<<<<< HEAD
+//            if (bommax)
+//            {
+//                // http://bribser.co.jp/blog/tappobject/
+//                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, layerMask); //レイヤーマスク
+//=======
+			if (bommax)
+			{
+				// http://bribser.co.jp/blog/tappobject/
+				int enablelayer = 1 << LayerMask.NameToLayer("bom");
+				// http://stepism.sakura.ne.jp/unity/wiki/doku.php?id=wiki:unity:tips:073
+				Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, enablelayer);
+//>>>>>>> origin/master
                 if (aCollider2d)
                 {
                     GameObject obj = aCollider2d.transform.gameObject;
