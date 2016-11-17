@@ -3,9 +3,15 @@ using System.Collections;
 
 public class saikorobutton : MonoBehaviour {
 
-    public void ClickTest() {
+    public void huru() {
         Debug.Log("さいころをふる");
         manager.saikoro = true;
+    }
+
+    public void use()
+    {
+        Debug.Log("アイテムを使う");
+        manager.item = true;
     }
 
     // Use this for initialization

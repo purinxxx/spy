@@ -1,16 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class manager : MonoBehaviour {
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static int[] bompos = {0, 0, 0}; // 爆弾上限３個
     public static GameObject canvas;
-    public static GameObject spycanvas;
+    public static GameObject itemcanvas;
     public static GameObject saikorobutton;
+    public static GameObject itembutton;
+    public static GameObject modorubutton;
     public static GameObject susumubutton;
     public static GameObject tansakubutton;
     public static GameObject boms;
     public static bool saikoro = false;
+    public static bool item = false;
+    public static bool modoru = false;
     public static bool susumu = false;
     public static bool tansaku = false;
     public static bool terroristtern = true;
@@ -18,6 +24,9 @@ public class manager : MonoBehaviour {
     public static bool spy2tern = false;
     public static int total;
     public static bool playflag = false;
+    public static List<int> itemterrorist = new List<int>();
+    public static List<int> itemspy1 = new List<int>();
+    public static List<int> itemspy2 = new List<int>();
     GameObject plefab_t;
     GameObject t;
     GameObject plefab_s1;
@@ -27,16 +36,19 @@ public class manager : MonoBehaviour {
 
     // Use this for initialization
 
-    void Awake() {
+    void Awake()
+    {
         canvas = GameObject.Find("Canvas");
+        itemcanvas = GameObject.Find("itemCanvas");
         //canvas.SetActive(false);
         //spycanvas = GameObject.Find("spyCanvas");
         //spycanvas.SetActive(false);
         saikorobutton = GameObject.Find("saikoro");
+        itembutton = GameObject.Find("item");
+        modorubutton = GameObject.Find("modoru");
         saikorobutton.SetActive(false);
-        //Vector3 pos = manager.saikorobutton.transform.position;
-        //pos.x += 1000; // なぜかsetactive falseが効かないから画面外にボタンを飛ばす
-        //manager.saikorobutton.transform.position = pos;
+        itembutton.SetActive(false);
+        itemcanvas.SetActive(false);
         susumubutton = GameObject.Find("susumu");
         susumubutton.SetActive(false);
         tansakubutton = GameObject.Find("tansaku");
@@ -49,6 +61,7 @@ public class manager : MonoBehaviour {
         plefab_s1 = (GameObject)Resources.Load("spy1");
         plefab_s2 = (GameObject)Resources.Load("spy2");
         
+
         total = GameObject.Find("masu").transform.childCount; //30
         int terroristpos = Random.Range(1, total + 1);
         int spy1pos = Random.Range(1, total + 1);
