@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class spy1 : MonoBehaviour {
+public class spy1 : MonoBehaviour
+{
 
     int k;
     int l;
@@ -13,7 +14,8 @@ public class spy1 : MonoBehaviour {
     bool mati = false;
     public static int mieru = 0;
 
-    public void play() {
+    public void play()
+    {
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = -5;
         if (spy2.mieru > 0) GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
         else if (mieru > 0)
@@ -48,20 +50,21 @@ public class spy1 : MonoBehaviour {
 
         //for (int i = 1; i < manager.playerpos.Length; ++i)
         //{
-            if (manager.playerpos[0] == manager.playerpos[1]) //スパイがテロリストを踏んだら
-            {
-                manager.playerpos[0] = 0;
-                //Destroy(GameObject.Find("terrorist"));
-                Debug.Log("テロリスト死亡");
-            }
+        if (manager.playerpos[0] == manager.playerpos[1]) //スパイがテロリストを踏んだら
+        {
+            manager.playerpos[0] = 0;
+            //Destroy(GameObject.Find("terrorist"));
+            Debug.Log("テロリスト死亡");
+        }
         //}
 
     }
 
     // Use this for initialization
-    void Start () {
-	
-	}
+    void Start()
+    {
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -77,7 +80,8 @@ public class spy1 : MonoBehaviour {
                 GameObject plefab_a = (GameObject)Resources.Load(str);
                 GameObject a = (GameObject)Instantiate(plefab_a);
                 a.name = plefab_a.name;
-                a.transform.parent = manager.itemcanvas.transform;
+                //a.transform.parent = manager.itemcanvas.transform;
+                a.transform.SetParent(manager.itemcanvas.transform);
                 RectTransform a_rect = a.GetComponent<RectTransform>();
                 a_rect.anchoredPosition = new Vector2(-130, defaulty);
                 defaulty += 70;
@@ -95,15 +99,22 @@ public class spy1 : MonoBehaviour {
             manager.itemcanvas.SetActive(false);
             manager.modoru = false;
         }
-        if (manager.saikoro && manager.spy1tern) {
+        if (manager.saikoro && manager.spy1tern)
+        {
             me = Random.Range(1, 7);
             Debug.Log(me.ToString() + "の目が出た");
             if (me <= 3)
             {
-                manager.itemspy1.Add(Random.Range(1, 6));
-                foreach (int i in manager.itemspy1)
+                int item = Random.Range(1, 5);
+                manager.itemspy1.Add(item);
+                Debug.Log(item);
+                if (manager.item2)
                 {
-                    Debug.Log(i);
+                    me = me * 2;
+                }
+                else if (manager.item3)
+                {
+                    me = me * 3;
                 }
             }
             manager.saikoro = false;
@@ -113,7 +124,8 @@ public class spy1 : MonoBehaviour {
             manager.tansakubutton.SetActive(true);
         }
 
-        if (manager.susumu && manager.spy1tern) {
+        if (manager.susumu && manager.spy1tern)
+        {
             manager.susumu = false;
             manager.susumubutton.SetActive(false);
             manager.tansakubutton.SetActive(false);
@@ -127,16 +139,18 @@ public class spy1 : MonoBehaviour {
             GameObject.Find(ternplayer).transform.position = pos;
             hantei();
             mati = true;
-        } else if (manager.tansaku && manager.spy1tern) {
+        }
+        else if (manager.tansaku && manager.spy1tern)
+        {
             manager.tansaku = false;
             manager.susumubutton.SetActive(false);
             manager.tansakubutton.SetActive(false);
             l = manager.playerpos[1];
             k = l + me;
             // l-meからl+meまで探索する
-            for (int i = -1*me; i <= me; ++i)
+            for (int i = -1 * me; i <= me; ++i)
             {
-                k = l+i;
+                k = l + i;
                 if (k > manager.total) k -= manager.total; //一周した場合
                 else if (k < 1) k += manager.total; //一周した場合
                 Debug.Log(k);
@@ -159,7 +173,7 @@ public class spy1 : MonoBehaviour {
                     Debug.Log("テロリスト見つけた");
                     GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
                     mieru = 3;
-                    if(manager.playerpos[0]== manager.playerpos[1]) manager.playerpos[0]=0;
+                    if (manager.playerpos[0] == manager.playerpos[1]) manager.playerpos[0] = 0;
                 }
             }
             mati = true;

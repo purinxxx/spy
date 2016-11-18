@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class spy2 : MonoBehaviour {
+public class spy2 : MonoBehaviour
+{
 
     int k;
     int l;
@@ -14,7 +15,8 @@ public class spy2 : MonoBehaviour {
     GameObject mituketabom;
     public static int mieru = 0;
 
-    public void play() {
+    public void play()
+    {
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = -5;
         if (spy1.mieru > 0) GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
         else if (mieru > 0)
@@ -49,12 +51,12 @@ public class spy2 : MonoBehaviour {
 
         //for (int i = 1; i < manager.playerpos.Length; ++i)
         //{
-            if (manager.playerpos[0] == manager.playerpos[2]) //スパイがテロリストを踏んだら
-            {
-                manager.playerpos[0] = 0;
-                //Destroy(GameObject.Find("terrorist"));
-                Debug.Log("テロリスト死亡");
-            }
+        if (manager.playerpos[0] == manager.playerpos[2]) //スパイがテロリストを踏んだら
+        {
+            manager.playerpos[0] = 0;
+            //Destroy(GameObject.Find("terrorist"));
+            Debug.Log("テロリスト死亡");
+        }
         //}
 
     }
@@ -64,7 +66,7 @@ public class spy2 : MonoBehaviour {
     {
 
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -79,7 +81,8 @@ public class spy2 : MonoBehaviour {
                 GameObject plefab_a = (GameObject)Resources.Load(str);
                 GameObject a = (GameObject)Instantiate(plefab_a);
                 a.name = plefab_a.name;
-                a.transform.parent = manager.itemcanvas.transform;
+                //a.transform.parent = manager.itemcanvas.transform;
+                a.transform.SetParent(manager.itemcanvas.transform);
                 RectTransform a_rect = a.GetComponent<RectTransform>();
                 a_rect.anchoredPosition = new Vector2(-130, defaulty);
                 defaulty += 70;
@@ -103,10 +106,16 @@ public class spy2 : MonoBehaviour {
             Debug.Log(me.ToString() + "の目が出た");
             if (me <= 3)
             {
-                manager.itemspy2.Add(Random.Range(1, 6));
-                foreach (int i in manager.itemspy2)
+                int item = Random.Range(1, 5);
+                manager.itemspy2.Add(item);
+                Debug.Log(item);
+                if (manager.item2)
                 {
-                    Debug.Log(i);
+                    me = me * 2;
+                }
+                else if (manager.item3)
+                {
+                    me = me * 3;
                 }
             }
             manager.saikoro = false;

@@ -216,8 +216,8 @@ pip-log.txt
 .mr.developer.cfg
 
 #unity
-Library
-Temp
+Library/
+Temp/
 *.pidb
 *.unityproj
 *.sln

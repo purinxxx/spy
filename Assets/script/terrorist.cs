@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class terrorist : MonoBehaviour {
+public class terrorist : MonoBehaviour
+{
 
     bool bakudanphase = false;
     bool bommax = false;
@@ -19,20 +20,22 @@ public class terrorist : MonoBehaviour {
 
 
 
-    public void play() {
+    public void play()
+    {
         ternplayer = this.gameObject.name;
         Debug.Log(ternplayer + "　テロリストのターン");
         Debug.Log(spy1.mieru);
         Debug.Log(spy2.mieru);
         manager.saikorobutton.SetActive(true);
-        if(manager.itemterrorist.Count>0) manager.itembutton.SetActive(true);
+        if (manager.itemterrorist.Count > 0) manager.itembutton.SetActive(true);
         manager.playflag = true;
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = 5;
         GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
     }
 
-    void hantei() {
-        for(int i=1; i< manager.playerpos.Length; ++i)
+    void hantei()
+    {
+        for (int i = 1; i < manager.playerpos.Length; ++i)
         {
             //if(manager.playerpos[0]==manager.playerpos[i]) //スパイがテロリストに踏まれたら
             //{
@@ -45,24 +48,28 @@ public class terrorist : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         plefab_b = (GameObject)Resources.Load("bom");
         layerMask = LayerMask.GetMask(new string[] { LayerMask.LayerToName(8) }); //レイヤーマスクbom
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (manager.item && manager.terroristtern)
         {
             manager.itemcanvas.SetActive(true);
             int defaulty = 130;
-            foreach (int i in manager.itemterrorist) {
+            foreach (int i in manager.itemterrorist)
+            {
                 Debug.Log(i);
                 string str = "item" + i.ToString();
                 GameObject plefab_a = (GameObject)Resources.Load(str);
                 GameObject a = (GameObject)Instantiate(plefab_a);
                 a.name = plefab_a.name;
-                a.transform.parent = manager.itemcanvas.transform;
+                //a.transform.parent = manager.itemcanvas.transform;
+                a.transform.SetParent(manager.itemcanvas.transform);
                 RectTransform a_rect = a.GetComponent<RectTransform>();
                 a_rect.anchoredPosition = new Vector2(-130, defaulty);
                 defaulty += 70;
@@ -85,12 +92,19 @@ public class terrorist : MonoBehaviour {
             Debug.Log(me.ToString() + "の目が出た");
             if (me <= 3)
             {
-                manager.itemterrorist.Add(Random.Range(1, 5));
-                foreach (int i in manager.itemterrorist)
+                int item = Random.Range(1, 5);
+                manager.itemterrorist.Add(item);
+                Debug.Log(item);
+                if (manager.item2)
                 {
-                    Debug.Log(i);
+                    me = me * 2;
+                }
+                else if (manager.item3)
+                {
+                    me = me * 3;
                 }
             }
+
             manager.saikoro = false;
             manager.saikorobutton.SetActive(false);
             manager.itembutton.SetActive(false);
@@ -114,12 +128,13 @@ public class terrorist : MonoBehaviour {
             hantei();
             // lからkの一個前のマスに爆弾を置ける
 
-            int j=1;
+            int j = 1;
             foreach (int i in manager.bompos)
             {
                 j = j * i;
             }
-            if (j != 0) {
+            if (j != 0)
+            {
                 bommax = true;
                 Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
             }
@@ -148,32 +163,32 @@ public class terrorist : MonoBehaviour {
                 bakudanphase = true;
             }
         }
-        
+
         if (Input.GetMouseButtonDown(0) && manager.terroristtern)
         {
-//<<<<<<< HEAD
-//            if (bommax)
-//            {
-//                // http://bribser.co.jp/blog/tappobject/
-//                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-//                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, layerMask); //レイヤーマスク
-//=======
-			if (bommax)
-			{
-				// http://bribser.co.jp/blog/tappobject/
-				int enablelayer = 1 << LayerMask.NameToLayer("bom");
-				// http://stepism.sakura.ne.jp/unity/wiki/doku.php?id=wiki:unity:tips:073
-				Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, enablelayer);
-//>>>>>>> origin/master
+            //<<<<<<< HEAD
+            //            if (bommax)
+            //            {
+            //                // http://bribser.co.jp/blog/tappobject/
+            //                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, layerMask); //レイヤーマスク
+            //=======
+            if (bommax)
+            {
+                // http://bribser.co.jp/blog/tappobject/
+                int enablelayer = 1 << LayerMask.NameToLayer("bom");
+                // http://stepism.sakura.ne.jp/unity/wiki/doku.php?id=wiki:unity:tips:073
+                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, enablelayer);
+                //>>>>>>> origin/master
                 if (aCollider2d)
                 {
                     GameObject obj = aCollider2d.transform.gameObject;
                     Debug.Log(obj.name);
-                    if (obj.name.Substring(0,3) == "bom")
+                    if (obj.name.Substring(0, 3) == "bom")
                     {
                         int b = int.Parse(obj.name.Substring(3));
-                        for(int i = 0; i < manager.bompos.Length; ++i)
+                        for (int i = 0; i < manager.bompos.Length; ++i)
                         {
                             if (manager.bompos[i] == b)
                             {
@@ -186,7 +201,7 @@ public class terrorist : MonoBehaviour {
                     }
                 }
             }
-            if (bakudanphase && bommax==false)
+            if (bakudanphase && bommax == false)
             {
                 // http://bribser.co.jp/blog/tappobject/
                 Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);

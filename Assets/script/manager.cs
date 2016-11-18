@@ -3,9 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class manager : MonoBehaviour {
+public class manager : MonoBehaviour
+{
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
-    public static int[] bompos = {0, 0, 0}; // 爆弾上限３個
+    public static int[] bompos = { 0, 0, 0 }; // 爆弾上限３個
     public static GameObject canvas;
     public static GameObject itemcanvas;
     public static GameObject saikorobutton;
@@ -19,6 +20,11 @@ public class manager : MonoBehaviour {
     public static bool modoru = false;
     public static bool susumu = false;
     public static bool tansaku = false;
+    public static bool item1 = false;
+    public static bool item2 = false;
+    public static bool item3 = false;
+    public static bool item4 = false;
+    public static bool item5 = false;
     public static bool terroristtern = true;
     public static bool spy1tern = false;
     public static bool spy2tern = false;
@@ -55,12 +61,13 @@ public class manager : MonoBehaviour {
         tansakubutton.SetActive(false);
         boms = GameObject.Find("boms");
     }
-    
-    void Start () {
+
+    void Start()
+    {
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
         plefab_s2 = (GameObject)Resources.Load("spy2");
-        
+
 
         total = GameObject.Find("masu").transform.childCount; //30
         int terroristpos = Random.Range(1, total + 1);
@@ -112,23 +119,35 @@ public class manager : MonoBehaviour {
         pos.y += 2;
         a.transform.position = pos;
         */
-        
+
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //Debug.Log(playflag);
-        if (playflag == false) {
-            if (playerpos[0] == 0) {
+        if (playflag == false)
+        {
+            if (playerpos[0] == 0)
+            {
                 Debug.Log("スパイの勝利");
-            } else if(playerpos[1]==0 && playerpos[2] == 0) {
+            }
+            else if (playerpos[1] == 0 && playerpos[2] == 0)
+            {
                 Debug.Log("テロリストの勝利");
-            } else {
-                if (terroristtern) {
+            }
+            else
+            {
+                if (terroristtern)
+                {
                     GameObject.Find("terrorist").GetComponent<terrorist>().play();
-                } else if (spy1tern) {
+                }
+                else if (spy1tern)
+                {
                     GameObject.Find("spy1").GetComponent<spy1>().play();
-                } else if (spy2tern) {
+                }
+                else if (spy2tern)
+                {
                     GameObject.Find("spy2").GetComponent<spy2>().play();
                 }
             }
