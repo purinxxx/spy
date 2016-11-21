@@ -15,7 +15,9 @@ public class terrorist : MonoBehaviour
     string ternplayer;
     bool mati = false;
     GameObject plefab_b;
+    GameObject plefab_b2;
     GameObject b;
+    GameObject b2;
     int layerMask;
 
 
@@ -26,10 +28,20 @@ public class terrorist : MonoBehaviour
         Debug.Log(ternplayer + "　テロリストのターン");
         Debug.Log(spy1.mieru);
         Debug.Log(spy2.mieru);
-        manager.saikorobutton.SetActive(true);
-        if (manager.itemterrorist.Count > 0) manager.itembutton.SetActive(true);
+        if (manager.koudouseigen[0] > 0)
+        {
+            Debug.Log("麻酔状態で動けない");
+            manager.koudouseigen[0] -= 1;
+            mati = true;
+        }
+        else
+        {
+            manager.saikorobutton.SetActive(true);
+            if (manager.itemterrorist.Count > 0) manager.itembutton.SetActive(true);
+        }
         manager.playflag = true;
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = 5;
+        foreach (Transform child in manager.bom2s.transform) child.GetComponent<Renderer>().sortingOrder = 5;
         GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
     }
 
@@ -51,227 +63,306 @@ public class terrorist : MonoBehaviour
     void Start()
     {
         plefab_b = (GameObject)Resources.Load("bom");
-        layerMask = LayerMask.GetMask(new string[] { LayerMask.LayerToName(8) }); //レイヤーマスクbom
+        plefab_b2 = (GameObject)Resources.Load("bom2");
+        //layerMask = LayerMask.GetMask(new string[] { LayerMask.LayerToName(8) }); //レイヤーマスクbom
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (manager.item && manager.terroristtern)
+        if (manager.terroristtern)
         {
-            manager.itemcanvas.SetActive(true);
-            int defaulty = 130;
-            foreach (int i in manager.itemterrorist)
+            if (manager.item)
             {
-                Debug.Log(i);
-                string str = "item" + i.ToString();
-                GameObject plefab_a = (GameObject)Resources.Load(str);
-                GameObject a = (GameObject)Instantiate(plefab_a);
-                a.name = plefab_a.name;
-                //a.transform.parent = manager.itemcanvas.transform;
-                a.transform.SetParent(manager.itemcanvas.transform);
-                RectTransform a_rect = a.GetComponent<RectTransform>();
-                a_rect.anchoredPosition = new Vector2(-130, defaulty);
-                defaulty += 70;
+                manager.itemcanvas.SetActive(true);
+                int defaulty = 130;
+                foreach (int i in manager.itemterrorist)
+                {
+                    Debug.Log(i);
+                    string str = "item" + i.ToString();
+                    GameObject plefab_a = (GameObject)Resources.Load(str);
+                    GameObject a = (GameObject)Instantiate(plefab_a);
+                    a.name = plefab_a.name;
+                    //a.transform.parent = manager.itemcanvas.transform;
+                    a.transform.SetParent(manager.itemcanvas.transform);
+                    RectTransform a_rect = a.GetComponent<RectTransform>();
+                    a_rect.anchoredPosition = new Vector2(-130, defaulty);
+                    defaulty += 70;
+                }
+                manager.saikorobutton.SetActive(false);
+                manager.itembutton.SetActive(false);
+                manager.item = false;
             }
-            manager.saikorobutton.SetActive(false);
-            manager.itembutton.SetActive(false);
-            manager.item = false;
-        }
-        if (manager.modoru && manager.terroristtern)
-        {
-            GameObject[] items = GameObject.FindGameObjectsWithTag("item");
-            foreach (GameObject g in items) Destroy(g);
-            manager.saikorobutton.SetActive(true);
-            manager.itemcanvas.SetActive(false);
-            manager.modoru = false;
-        }
-        if (manager.saikoro && manager.terroristtern)
-        {
-            me = Random.Range(1, 7);
-            Debug.Log(me.ToString() + "の目が出た");
-            if (me <= 3)
+            if (manager.modoru)
             {
-                int item = Random.Range(1, 5);
-                manager.itemterrorist.Add(item);
-                Debug.Log(item);
+                GameObject[] items = GameObject.FindGameObjectsWithTag("item");
+                foreach (GameObject g in items) Destroy(g);
+                manager.saikorobutton.SetActive(true);
+                manager.itemcanvas.SetActive(false);
+                manager.modoru = false;
+            }
+            if (manager.item4) //自転車
+            {
+                manager.item4 = false;
+                manager.saikorobutton.SetActive(false);
+                manager.itembutton.SetActive(false);
+            }
+            if (manager.item5) //麻酔銃
+            {
+                manager.item5 = false;
+                manager.saikorobutton.SetActive(false);
+                manager.itembutton.SetActive(false);
+                manager.spy1button.SetActive(true);
+                manager.spy2button.SetActive(true);
+            }
+            if (manager.player_spy1) //麻酔銃
+            {
+                Debug.Log("スパイ１は次のターン動けない");
+                manager.player_spy1 = false;
+                manager.spy1button.SetActive(false);
+                manager.spy2button.SetActive(false);
+                manager.koudouseigen[1] += 1;
+                mati = true;
+            }
+            else if (manager.player_spy2) //麻酔銃
+            {
+                Debug.Log("スパイ２は次のターン動けない");
+                manager.player_spy2 = false;
+                manager.spy1button.SetActive(false);
+                manager.spy2button.SetActive(false);
+                manager.koudouseigen[2] += 1;
+                mati = true;
+            }
+            if (manager.saikoro)
+            {
+                me = Random.Range(1, 7);
+                Debug.Log(me.ToString() + "の目が出た");
+                if (me <= 3)
+                {
+                    int item = Random.Range(2, 6);
+                    manager.itemterrorist.Add(item);
+                    Debug.Log(item);
+                }
                 if (manager.item2)
                 {
                     me = me * 2;
+                    manager.item2 = false;
                 }
                 else if (manager.item3)
                 {
                     me = me * 3;
+                    manager.item3 = false;
                 }
-            }
 
-            manager.saikoro = false;
-            manager.saikorobutton.SetActive(false);
-            manager.itembutton.SetActive(false);
-            manager.susumubutton.SetActive(true);
-        }
-        if (manager.susumu && manager.terroristtern)
-        {
-            manager.susumu = false;
-            manager.susumubutton.SetActive(false);
-            //Debug.Log(manager.saikorobutton.activeInHierarchy);
-            //Debug.Log(this.gameObject.name);
-            l = manager.playerpos[0];
-            k = l + me;
-            if (k > manager.total) k -= manager.total; //一周した場合
-            manager.playerpos[0] = k;
-            //Debug.Log("テロリストの現在位置" + manager.playerpos[0]);
-            Vector3 tpos = GameObject.Find(k.ToString()).transform.position;
-            tpos.y += 0.4f; // コマの位置調整
-            //GameObject.Find("terrorist").transform.position = pos;
-            this.gameObject.transform.position = tpos;
-            hantei();
-            // lからkの一個前のマスに爆弾を置ける
-
-            int j = 1;
-            foreach (int i in manager.bompos)
-            {
-                j = j * i;
+                manager.saikoro = false;
+                manager.saikorobutton.SetActive(false);
+                manager.itembutton.SetActive(false);
+                manager.susumubutton.SetActive(true);
             }
-            if (j != 0)
+            if (manager.susumu)
             {
-                bommax = true;
-                Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
-            }
+                manager.susumu = false;
+                manager.susumubutton.SetActive(false);
+                //Debug.Log(manager.saikorobutton.activeInHierarchy);
+                //Debug.Log(this.gameObject.name);
+                l = manager.playerpos[0];
+                k = l + me;
+                if (k > manager.total) k -= manager.total; //一周した場合
+                manager.playerpos[0] = k;
+                //Debug.Log("テロリストの現在位置" + manager.playerpos[0]);
+                Vector3 tpos = GameObject.Find(k.ToString()).transform.position;
+                tpos.y += 0.4f; // コマの位置調整
+                                //GameObject.Find("terrorist").transform.position = pos;
+                this.gameObject.transform.position = tpos;
+                hantei();
 
-            int cnt = 0;
-            for (int i = 1; i <= me; ++i)
-            {
-                m = l + i - 1; //m=l+1,l+2,l+3,,,l+me-1
-                if (m > 30) m -= 30;
-                foreach (int p in manager.playerpos)
+
+                int cnt = 0;
+                for (int i = 1; i <= me; ++i)
                 {
-                    if (p == m) ++cnt;
-                }
-                foreach (int p in manager.bompos)
-                {
-                    if (p == m) ++cnt;
-                }
-            }
-            if (cnt == me)
-            {
-                Debug.Log("爆弾置けない");
-                mati = true;
-            }
-            else
-            {
-                bakudanphase = true;
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0) && manager.terroristtern)
-        {
-            //<<<<<<< HEAD
-            //            if (bommax)
-            //            {
-            //                // http://bribser.co.jp/blog/tappobject/
-            //                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, layerMask); //レイヤーマスク
-            //=======
-            if (bommax)
-            {
-                // http://bribser.co.jp/blog/tappobject/
-                int enablelayer = 1 << LayerMask.NameToLayer("bom");
-                // http://stepism.sakura.ne.jp/unity/wiki/doku.php?id=wiki:unity:tips:073
-                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, enablelayer);
-                //>>>>>>> origin/master
-                if (aCollider2d)
-                {
-                    GameObject obj = aCollider2d.transform.gameObject;
-                    Debug.Log(obj.name);
-                    if (obj.name.Substring(0, 3) == "bom")
+                    m = l + i - 1; //m=l+1,l+2,l+3,,,l+me-1
+                    if (m > 30) m -= 30;
+                    foreach (int p in manager.playerpos)
                     {
-                        int b = int.Parse(obj.name.Substring(3));
-                        for (int i = 0; i < manager.bompos.Length; ++i)
-                        {
-                            if (manager.bompos[i] == b)
-                            {
-                                Debug.Log("爆弾を撤去しました");
-                                bommax = false;
-                                Destroy(obj);
-                                manager.bompos[i] = 0;
-                            }
-                        }
+                        if (p == m) ++cnt;
+                    }
+                    foreach (int p in manager.bompos)
+                    {
+                        if (p == m) ++cnt;
                     }
                 }
-            }
-            if (bakudanphase && bommax == false)
-            {
-                // http://bribser.co.jp/blog/tappobject/
-                Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint);
-                if (aCollider2d)
+                if (cnt == me)
                 {
-                    GameObject obj = aCollider2d.transform.gameObject;
-                    for (int i = 1; i <= me; ++i)
-                    {
-                        m = l + i - 1;
-                        if (m > 30) m -= 30;
-                        if (obj.name == m.ToString())
-                        {
-                            // 爆弾置く
-                            if (manager.bompos[0] == 0)
-                            {
-                                manager.bompos[0] = m;
-                                Vector3 bpos = obj.transform.position;
-                                b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
-                                b.name = "bom" + m.ToString();
-                                b.transform.parent = manager.boms.transform;
-                                //int.Parse(b.name.Substring(3))
-                            }
-                            else if (manager.bompos[1] == 0)
-                            {
-                                manager.bompos[1] = m;
-                                Vector3 bpos = obj.transform.position;
-                                b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
-                                b.name = "bom" + m.ToString();
-                                b.transform.parent = manager.boms.transform;
-                            }
-                            else if (manager.bompos[2] == 0)
-                            {
-                                manager.bompos[2] = m;
-                                Vector3 bpos = obj.transform.position;
-                                b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
-                                b.name = "bom" + m.ToString();
-                                b.transform.parent = manager.boms.transform;
-                            }
-                            else
-                            {
-                                Debug.Log("爆弾上限");
-                            }
-                            bakudanphase = false;
-                            mati = true;
-                        }
-                    }
-                }
-            }
-            else if (mati)
-            {
-                mati = false;
-                Debug.Log("ターンエンド");
-                manager.playflag = false;
-                manager.terroristtern = false;
-                Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
-                if (manager.playerpos[1] != 0)
-                {
-                    manager.spy1tern = true; // 次のターンへ
-                }
-                else if (manager.playerpos[2] != 0)
-                {
-                    manager.spy2tern = true; // 次のターンへ
+                    Debug.Log("爆弾置けない");
+                    mati = true;
                 }
                 else
                 {
-                    Debug.Log("テロリストの勝利");
+                    manager.bombutton.SetActive(true);
+                    if (manager.bom2pos[0] == 0) manager.bom2button.SetActive(true);
+                    manager.nonebutton.SetActive(true);
                 }
             }
-        }
 
+            if (manager.none)
+            {
+                manager.bombutton.SetActive(false);
+                manager.bom2button.SetActive(false);
+                manager.nonebutton.SetActive(false);
+                manager.none = false;
+                mati = true;
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+
+                if (manager.bom)
+                {
+                    // lからkの一個前のマスに爆弾を置ける
+                    int j = 1;
+                    foreach (int i in manager.bompos)
+                    {
+                        j = j * i;
+                    }
+                    if (j != 0)
+                    {
+                        bommax = true;
+                        Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
+                    }
+                    if (bommax)
+                    {
+                        // http://bribser.co.jp/blog/tappobject/
+                        int enablelayer = 1 << LayerMask.NameToLayer("bom");
+                        // http://stepism.sakura.ne.jp/unity/wiki/doku.php?id=wiki:unity:tips:073
+                        Vector3 bTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        Collider2D bCollider2d = Physics2D.OverlapPoint(bTapPoint, enablelayer);
+                        //>>>>>>> origin/master
+                        if (bCollider2d)
+                        {
+                            GameObject obj = bCollider2d.transform.gameObject;
+                            Debug.Log(obj.name);
+                            if (obj.name.Substring(0, 3) == "bom")
+                            {
+                                int b = int.Parse(obj.name.Substring(3));
+                                for (int i = 0; i < manager.bompos.Length; ++i)
+                                {
+                                    if (manager.bompos[i] == b)
+                                    {
+                                        Debug.Log("爆弾を撤去しました");
+                                        bommax = false;
+                                        Destroy(obj);
+                                        manager.bompos[i] = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // http://bribser.co.jp/blog/tappobject/
+                    Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint);
+                    if (aCollider2d)
+                    {
+                        GameObject obj = aCollider2d.transform.gameObject;
+                        for (int i = 1; i <= me; ++i)
+                        {
+                            m = l + i - 1;
+                            if (m > 30) m -= 30;
+                            if (obj.name == m.ToString())
+                            {
+                                // 爆弾置く
+                                if (manager.bompos[0] == 0)
+                                {
+                                    manager.bompos[0] = m;
+                                    Vector3 bpos = obj.transform.position;
+                                    b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
+                                    b.name = "bom" + m.ToString();
+                                    b.transform.parent = manager.boms.transform;
+                                    //int.Parse(b.name.Substring(3))
+                                }
+                                else if (manager.bompos[1] == 0)
+                                {
+                                    manager.bompos[1] = m;
+                                    Vector3 bpos = obj.transform.position;
+                                    b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
+                                    b.name = "bom" + m.ToString();
+                                    b.transform.parent = manager.boms.transform;
+                                }
+                                else if (manager.bompos[2] == 0)
+                                {
+                                    manager.bompos[2] = m;
+                                    Vector3 bpos = obj.transform.position;
+                                    b = (GameObject)Instantiate(plefab_b, bpos, Quaternion.identity);
+                                    b.name = "bom" + m.ToString();
+                                    b.transform.parent = manager.boms.transform;
+                                }
+                                else
+                                {
+                                    Debug.Log("爆弾上限");
+                                }
+                                manager.bom = false;
+                                mati = true;
+                            }
+                        }
+                    }
+                }
+
+                else if (manager.bom2)
+                {
+                    // http://bribser.co.jp/blog/tappobject/
+                    Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint);
+                    if (aCollider2d)
+                    {
+                        GameObject obj = aCollider2d.transform.gameObject;
+                        for (int i = 1; i <= me; ++i)
+                        {
+                            m = l + i - 1;
+                            if (m > 30) m -= 30;
+                            if (obj.name == m.ToString())
+                            {
+                                // 爆弾置く
+                                if (manager.bom2pos[0] == 0)
+                                {
+                                    manager.bom2pos[0] = m;
+                                    Vector3 bpos = obj.transform.position;
+                                    b = (GameObject)Instantiate(plefab_b2, bpos, Quaternion.identity);
+                                    b.name = "bom2" + m.ToString();
+                                    b.transform.parent = manager.bom2s.transform;
+                                    //int.Parse(b.name.Substring(3))
+                                }
+                                else
+                                {
+                                    Debug.Log("爆弾上限");
+                                }
+                                manager.bom2 = false;
+                                mati = true;
+                            }
+                        }
+                    }
+                }
+
+                else if (mati)
+                {
+                    mati = false;
+                    Debug.Log("ターンエンド");
+                    manager.playflag = false;
+                    manager.terroristtern = false;
+                    Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
+                    if (manager.playerpos[1] != 0)
+                    {
+                        manager.spy1tern = true; // 次のターンへ
+                    }
+                    else if (manager.playerpos[2] != 0)
+                    {
+                        manager.spy2tern = true; // 次のターンへ
+                    }
+                    else
+                    {
+                        Debug.Log("テロリストの勝利");
+                    }
+                }
+            }
+
+        }
     }
 }

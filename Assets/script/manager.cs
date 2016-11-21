@@ -7,6 +7,9 @@ public class manager : MonoBehaviour
 {
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static int[] bompos = { 0, 0, 0 }; // 爆弾上限３個
+    public static int[] bom2pos = { 0 }; // 爆弾上限１個
+    public static int[] spylife = { 1, 1 }; // スパイライフ
+    public static int[] koudouseigen = { 0, 0, 0 }; // 行動制限
     public static GameObject canvas;
     public static GameObject itemcanvas;
     public static GameObject saikorobutton;
@@ -14,17 +17,33 @@ public class manager : MonoBehaviour
     public static GameObject modorubutton;
     public static GameObject susumubutton;
     public static GameObject tansakubutton;
+    public static GameObject bombutton;
+    public static GameObject bom2button;
+    public static GameObject toutyoubutton;
+    public static GameObject nonebutton;
+    public static GameObject spy1button;
+    public static GameObject spy2button;
+    public static GameObject terroristbutton;
     public static GameObject boms;
+    public static GameObject bom2s;
     public static bool saikoro = false;
     public static bool item = false;
     public static bool modoru = false;
     public static bool susumu = false;
     public static bool tansaku = false;
+    public static bool bom = false;
+    public static bool bom2 = false;
+    public static bool toutyou = false;
+    public static bool none = false;
+    public static bool player_spy1 = false;
+    public static bool player_spy2 = false;
+    public static bool player_terrorist = false;
     public static bool item1 = false;
     public static bool item2 = false;
     public static bool item3 = false;
     public static bool item4 = false;
     public static bool item5 = false;
+    //public static bool item6 = false;
     public static bool terroristtern = true;
     public static bool spy1tern = false;
     public static bool spy2tern = false;
@@ -44,6 +63,13 @@ public class manager : MonoBehaviour
 
     void Awake()
     {
+        itemterrorist.Add(5); //デバッグ
+        itemterrorist.Add(5); //デバッグ
+        itemspy1.Add(5); //デバッグ
+        itemspy2.Add(5); //デバッグ
+        itemspy1.Add(5); //デバッグ
+        itemspy2.Add(5); //デバッグ
+
         canvas = GameObject.Find("Canvas");
         itemcanvas = GameObject.Find("itemCanvas");
         //canvas.SetActive(false);
@@ -59,7 +85,22 @@ public class manager : MonoBehaviour
         susumubutton.SetActive(false);
         tansakubutton = GameObject.Find("tansaku");
         tansakubutton.SetActive(false);
+        bombutton = GameObject.Find("bom");
+        bombutton.SetActive(false);
+        bom2button = GameObject.Find("bom2");
+        bom2button.SetActive(false);
+        toutyoubutton = GameObject.Find("toutyou");
+        toutyoubutton.SetActive(false);
+        nonebutton = GameObject.Find("none");
+        nonebutton.SetActive(false);
+        spy1button = GameObject.Find("player_spy1");
+        spy1button.SetActive(false);
+        spy2button = GameObject.Find("player_spy2");
+        spy2button.SetActive(false);
+        terroristbutton = GameObject.Find("player_terrorist");
+        terroristbutton.SetActive(false);
         boms = GameObject.Find("boms");
+        bom2s = GameObject.Find("bom2s");
     }
 
     void Start()
@@ -144,11 +185,11 @@ public class manager : MonoBehaviour
                 }
                 else if (spy1tern)
                 {
-                    GameObject.Find("spy1").GetComponent<spy1>().play();
+                    if(playerpos[1]!=0) GameObject.Find("spy1").GetComponent<spy1>().play();
                 }
                 else if (spy2tern)
                 {
-                    GameObject.Find("spy2").GetComponent<spy2>().play();
+                    if (playerpos[2] != 0) GameObject.Find("spy2").GetComponent<spy2>().play();
                 }
             }
         }
