@@ -106,6 +106,24 @@ public class terrorist : MonoBehaviour
                 manager.item4 = false;
                 manager.saikorobutton.SetActive(false);
                 manager.itembutton.SetActive(false);
+                manager.maebutton.SetActive(true);
+                manager.usirobutton.SetActive(true);
+            }
+            if (manager.mae) //自転車
+            {
+                manager.mae = false;
+                manager.maebutton.SetActive(false);
+                manager.usirobutton.SetActive(false);
+                me = 3;
+                manager.susumu = true;
+            }
+            if (manager.usiro) //自転車
+            {
+                manager.usiro = false;
+                manager.maebutton.SetActive(false);
+                manager.usirobutton.SetActive(false);
+                me = -3;
+                manager.susumu = true;
             }
             if (manager.item5) //麻酔銃
             {
@@ -168,6 +186,7 @@ public class terrorist : MonoBehaviour
                 l = manager.playerpos[0];
                 k = l + me;
                 if (k > manager.total) k -= manager.total; //一周した場合
+                if (k < 1) k += manager.total; //一周した場合
                 manager.playerpos[0] = k;
                 //Debug.Log("テロリストの現在位置" + manager.playerpos[0]);
                 Vector3 tpos = GameObject.Find(k.ToString()).transform.position;
@@ -263,10 +282,17 @@ public class terrorist : MonoBehaviour
                     if (aCollider2d)
                     {
                         GameObject obj = aCollider2d.transform.gameObject;
-                        for (int i = 1; i <= me; ++i)
+                        for (int i = 1; i <= Mathf.Abs(me); ++i) //絶対値meにする
                         {
-                            m = l + i - 1;
-                            if (m > 30) m -= 30;
+                            if (me < 0)
+                            {
+                                m = l + me + i; //後ろに戻るとき
+                            }else
+                            {
+                                m = l + i - 1;
+                            }
+                            if (m > manager.total) m -= manager.total; //一周した場合
+                            if (m < 1) m += manager.total; //一周した場合
                             if (obj.name == m.ToString())
                             {
                                 // 爆弾置く
@@ -314,10 +340,18 @@ public class terrorist : MonoBehaviour
                     if (aCollider2d)
                     {
                         GameObject obj = aCollider2d.transform.gameObject;
-                        for (int i = 1; i <= me; ++i)
+                        for (int i = 1; i <= Mathf.Abs(me); ++i)
                         {
-                            m = l + i - 1;
-                            if (m > 30) m -= 30;
+                            if (me < 0)
+                            {
+                                m = l + me + i; //後ろに戻るとき
+                            }
+                            else
+                            {
+                                m = l + i - 1;
+                            }
+                            if (m > manager.total) m -= manager.total; //一周した場合
+                            if (m < 1) m += manager.total; //一周した場合
                             if (obj.name == m.ToString())
                             {
                                 // 爆弾置く

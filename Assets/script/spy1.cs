@@ -127,6 +127,24 @@ public class spy1 : MonoBehaviour
                 manager.item4 = false;
                 manager.saikorobutton.SetActive(false);
                 manager.itembutton.SetActive(false);
+                manager.maebutton.SetActive(true);
+                manager.usirobutton.SetActive(true);
+            }
+            if (manager.mae) //自転車
+            {
+                manager.mae = false;
+                manager.maebutton.SetActive(false);
+                manager.usirobutton.SetActive(false);
+                me = 3;
+                manager.susumu = true;
+            }
+            if (manager.usiro) //自転車
+            {
+                manager.usiro = false;
+                manager.maebutton.SetActive(false);
+                manager.usirobutton.SetActive(false);
+                me = -3;
+                manager.susumu = true;
             }
             if (manager.item5) //麻酔銃
             {
@@ -192,10 +210,19 @@ public class spy1 : MonoBehaviour
                 manager.susumubutton.SetActive(false);
                 manager.tansakubutton.SetActive(false);
                 l = manager.playerpos[1];
-                for (int i = 1; i <= me; ++i)
+                for (int i = 1; i <= Mathf.Abs(me); ++i)
                 {
-                    k = l + i;
+                    if (me < 0)
+                    {
+                        k = l - i; //後ろに戻るとき
+                    }
+                    else
+                    {
+                        k = l + i;
+                    }
                     if (k > manager.total) k -= manager.total; //一周した場合
+                    if (k < 1) k += manager.total; //一周した場合
+
                     Vector3 pos = GameObject.Find(k.ToString()).transform.position;
                     pos.y += 0.4f; // コマの位置調整
                     GameObject.Find(ternplayer).transform.position = pos;

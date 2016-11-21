@@ -90,6 +90,20 @@ public class koudoubutton : MonoBehaviour
         manager.none = true;
     }
 
+
+    public void mae()
+    {
+        Debug.Log("前に３マス");
+        manager.mae = true;
+    }
+
+
+    public void usiro()
+    {
+        Debug.Log("後ろに３マス");
+        manager.usiro = true;
+    }
+
     public void spy1()
     {
         Debug.Log("spy1押した");

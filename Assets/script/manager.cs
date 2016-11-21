@@ -21,6 +21,8 @@ public class manager : MonoBehaviour
     public static GameObject bom2button;
     public static GameObject toutyoubutton;
     public static GameObject nonebutton;
+    public static GameObject maebutton;
+    public static GameObject usirobutton;
     public static GameObject spy1button;
     public static GameObject spy2button;
     public static GameObject terroristbutton;
@@ -35,6 +37,8 @@ public class manager : MonoBehaviour
     public static bool bom2 = false;
     public static bool toutyou = false;
     public static bool none = false;
+    public static bool mae = false;
+    public static bool usiro = false;
     public static bool player_spy1 = false;
     public static bool player_spy2 = false;
     public static bool player_terrorist = false;
@@ -63,12 +67,12 @@ public class manager : MonoBehaviour
 
     void Awake()
     {
-        itemterrorist.Add(5); //デバッグ
-        itemterrorist.Add(5); //デバッグ
-        itemspy1.Add(5); //デバッグ
-        itemspy2.Add(5); //デバッグ
-        itemspy1.Add(5); //デバッグ
-        itemspy2.Add(5); //デバッグ
+        itemterrorist.Add(4); //デバッグ
+        itemterrorist.Add(4); //デバッグ
+        itemspy1.Add(4); //デバッグ
+        itemspy2.Add(4); //デバッグ
+        itemspy1.Add(4); //デバッグ
+        itemspy2.Add(4); //デバッグ
 
         canvas = GameObject.Find("Canvas");
         itemcanvas = GameObject.Find("itemCanvas");
@@ -93,6 +97,10 @@ public class manager : MonoBehaviour
         toutyoubutton.SetActive(false);
         nonebutton = GameObject.Find("none");
         nonebutton.SetActive(false);
+        maebutton = GameObject.Find("mae");
+        maebutton.SetActive(false);
+        usirobutton = GameObject.Find("usiro");
+        usirobutton.SetActive(false);
         spy1button = GameObject.Find("player_spy1");
         spy1button.SetActive(false);
         spy2button = GameObject.Find("player_spy2");
