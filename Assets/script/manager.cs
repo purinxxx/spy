@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class manager : MonoBehaviour
 {
+    //public static Text message;
+    public static Text message;
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static int[] bompos = { 0, 0, 0 }; // 爆弾上限３個
     public static int[] bom2pos = { 0 }; // 爆弾上限１個
@@ -67,13 +69,7 @@ public class manager : MonoBehaviour
 
     void Awake()
     {
-        itemterrorist.Add(4); //デバッグ
-        itemterrorist.Add(4); //デバッグ
-        itemspy1.Add(4); //デバッグ
-        itemspy2.Add(4); //デバッグ
-        itemspy1.Add(4); //デバッグ
-        itemspy2.Add(4); //デバッグ
-
+        message = GameObject.Find("message").GetComponentInChildren<Text>();
         canvas = GameObject.Find("Canvas");
         itemcanvas = GameObject.Find("itemCanvas");
         //canvas.SetActive(false);

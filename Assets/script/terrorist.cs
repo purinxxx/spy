@@ -26,11 +26,13 @@ public class terrorist : MonoBehaviour
     {
         ternplayer = this.gameObject.name;
         Debug.Log(ternplayer + "　テロリストのターン");
+        manager.message.text = "テロリストのターン";
         Debug.Log(spy1.mieru);
         Debug.Log(spy2.mieru);
         if (manager.koudouseigen[0] > 0)
         {
             Debug.Log("麻酔状態で動けない");
+            manager.message.text = "麻酔状態で動けない";
             manager.koudouseigen[0] -= 1;
             mati = true;
         }
@@ -75,7 +77,7 @@ public class terrorist : MonoBehaviour
             if (manager.item)
             {
                 manager.itemcanvas.SetActive(true);
-                int defaulty = 130;
+                int defaulty = 180;
                 foreach (int i in manager.itemterrorist)
                 {
                     Debug.Log(i);
@@ -83,11 +85,11 @@ public class terrorist : MonoBehaviour
                     GameObject plefab_a = (GameObject)Resources.Load(str);
                     GameObject a = (GameObject)Instantiate(plefab_a);
                     a.name = plefab_a.name;
-                    //a.transform.parent = manager.itemcanvas.transform;
                     a.transform.SetParent(manager.itemcanvas.transform);
                     RectTransform a_rect = a.GetComponent<RectTransform>();
-                    a_rect.anchoredPosition = new Vector2(-130, defaulty);
-                    defaulty += 70;
+                    a_rect.anchoredPosition = new Vector2(-180, defaulty);
+                    a_rect.localScale = new Vector3(1,1,1);
+                    defaulty += 120;
                 }
                 manager.saikorobutton.SetActive(false);
                 manager.itembutton.SetActive(false);
@@ -136,6 +138,7 @@ public class terrorist : MonoBehaviour
             if (manager.player_spy1) //麻酔銃
             {
                 Debug.Log("スパイ１は次のターン動けない");
+                manager.message.text = "スパイ１は次のターン動けない";
                 manager.player_spy1 = false;
                 manager.spy1button.SetActive(false);
                 manager.spy2button.SetActive(false);
@@ -145,6 +148,7 @@ public class terrorist : MonoBehaviour
             else if (manager.player_spy2) //麻酔銃
             {
                 Debug.Log("スパイ２は次のターン動けない");
+                manager.message.text = "スパイ２は次のターン動けない";
                 manager.player_spy2 = false;
                 manager.spy1button.SetActive(false);
                 manager.spy2button.SetActive(false);
@@ -155,10 +159,16 @@ public class terrorist : MonoBehaviour
             {
                 me = Random.Range(1, 7);
                 Debug.Log(me.ToString() + "の目が出た");
+                manager.message.text = me.ToString() + "の目が出た";
                 if (me <= 3)
                 {
                     int item = Random.Range(2, 6);
                     manager.itemterrorist.Add(item);
+                    if (item == 1) manager.message.text = me.ToString() + "の目が出た　プロテクターを手に入れた";
+                    else if (item == 2) manager.message.text = me.ToString() + "の目が出た　車を手に入れた";
+                    else if (item == 3) manager.message.text = me.ToString() + "の目が出た　ヘリを手に入れた";
+                    else if (item == 4) manager.message.text = me.ToString() + "の目が出た　自転車を手に入れた";
+                    else if (item == 5) manager.message.text = me.ToString() + "の目が出た　麻酔銃を手に入れた";
                     Debug.Log(item);
                 }
                 if (manager.item2)
@@ -195,12 +205,21 @@ public class terrorist : MonoBehaviour
                 this.gameObject.transform.position = tpos;
                 hantei();
 
-
+                
                 int cnt = 0;
-                for (int i = 1; i <= me; ++i)
+                for (int i = 1; i <= Mathf.Abs(me); ++i)
                 {
-                    m = l + i - 1; //m=l+1,l+2,l+3,,,l+me-1
-                    if (m > 30) m -= 30;
+                    if (me < 0)
+                    {
+                        m = l + me + i; //後ろに戻るとき
+                    }
+                    else
+                    {
+                        m = l + i - 1;
+                    }
+                    if (m > manager.total) m -= manager.total; //一周した場合
+                    if (m < 1) m += manager.total; //一周した場合
+
                     foreach (int p in manager.playerpos)
                     {
                         if (p == m) ++cnt;
@@ -213,6 +232,7 @@ public class terrorist : MonoBehaviour
                 if (cnt == me)
                 {
                     Debug.Log("爆弾置けない");
+                    manager.message.text = "爆弾置けない";
                     mati = true;
                 }
                 else
@@ -247,6 +267,7 @@ public class terrorist : MonoBehaviour
                     {
                         bommax = true;
                         Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
+                        manager.message.text = "いらない爆弾を撤去してから新しい爆弾を設置してください";
                     }
                     if (bommax)
                     {
@@ -268,6 +289,7 @@ public class terrorist : MonoBehaviour
                                     if (manager.bompos[i] == b)
                                     {
                                         Debug.Log("爆弾を撤去しました");
+                                        manager.message.text = "爆弾を撤去しました";
                                         bommax = false;
                                         Destroy(obj);
                                         manager.bompos[i] = 0;
@@ -324,6 +346,7 @@ public class terrorist : MonoBehaviour
                                 else
                                 {
                                     Debug.Log("爆弾上限");
+                                    manager.message.text = "爆弾上限";
                                 }
                                 manager.bom = false;
                                 mati = true;
@@ -367,6 +390,7 @@ public class terrorist : MonoBehaviour
                                 else
                                 {
                                     Debug.Log("爆弾上限");
+                                    manager.message.text = "爆弾上限";
                                 }
                                 manager.bom2 = false;
                                 mati = true;
@@ -379,6 +403,7 @@ public class terrorist : MonoBehaviour
                 {
                     mati = false;
                     Debug.Log("ターンエンド");
+                    manager.message.text = "ターンエンド";
                     manager.playflag = false;
                     manager.terroristtern = false;
                     Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
@@ -393,6 +418,7 @@ public class terrorist : MonoBehaviour
                     else
                     {
                         Debug.Log("テロリストの勝利");
+                        manager.message.text = "テロリストの勝利";
                     }
                 }
             }
