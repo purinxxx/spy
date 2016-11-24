@@ -10,6 +10,8 @@ public class manager : MonoBehaviour
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static int[] bompos = { 0, 0, 0 }; // 爆弾上限３個
     public static int[] bom2pos = { 0 }; // 爆弾上限１個
+    public static int[] spy1tpos = { 0, 0 }; // 盗聴器上限２個
+    public static int[] spy2tpos = { 0, 0 }; // 盗聴器上限２個
     public static int[] spylife = { 1, 1 }; // スパイライフ
     public static int[] koudouseigen = { 0, 0, 0 }; // 行動制限
     public static GameObject canvas;
@@ -30,6 +32,7 @@ public class manager : MonoBehaviour
     public static GameObject terroristbutton;
     public static GameObject boms;
     public static GameObject bom2s;
+    public static GameObject ts;
     public static bool saikoro = false;
     public static bool item = false;
     public static bool modoru = false;
@@ -105,6 +108,7 @@ public class manager : MonoBehaviour
         terroristbutton.SetActive(false);
         boms = GameObject.Find("boms");
         bom2s = GameObject.Find("bom2s");
+        ts = GameObject.Find("ts");
     }
 
     void Start()

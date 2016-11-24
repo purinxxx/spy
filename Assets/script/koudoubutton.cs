@@ -80,7 +80,7 @@ public class koudoubutton : MonoBehaviour
 
     public void toutyou()
     {
-        Debug.Log("盗聴器を仕掛ける（未実装）");
+        Debug.Log("盗聴器を仕掛ける");
         manager.toutyou = true;
     }
 
