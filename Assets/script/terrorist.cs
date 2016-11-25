@@ -168,7 +168,8 @@ public class terrorist : MonoBehaviour
                 manager.spy1button.SetActive(false);
                 manager.spy2button.SetActive(false);
                 manager.koudouseigen[1] += 1;
-                mati = true;
+                //mati = true;
+                manager.saikorobutton.SetActive(true);
             }
             else if (manager.player_spy2) //麻酔銃
             {
@@ -178,7 +179,8 @@ public class terrorist : MonoBehaviour
                 manager.spy1button.SetActive(false);
                 manager.spy2button.SetActive(false);
                 manager.koudouseigen[2] += 1;
-                mati = true;
+                //mati = true;
+                manager.saikorobutton.SetActive(true);
             }
             if (manager.saikoro)
             {

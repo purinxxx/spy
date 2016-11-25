@@ -58,6 +58,7 @@ public class koudoubutton : MonoBehaviour
         Debug.Log("アイテムを使わないで前の画面に戻る");
         manager.modoru = true;
         manager.itembutton.SetActive(true);
+        foreach (Transform child in manager.itemcanvas.transform) if(child.name!="modoru") Destroy(child.gameObject);
     }
 
     public void bom2()
@@ -129,6 +130,7 @@ public class koudoubutton : MonoBehaviour
         manager.itembutton.SetActive(false);
         manager.item1 = true;
         removeitem(1);
+        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
     }
 
     public void item2()
@@ -138,6 +140,7 @@ public class koudoubutton : MonoBehaviour
         manager.itembutton.SetActive(false);
         manager.item2 = true;
         removeitem(2);
+        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
     }
 
     public void item3()
@@ -147,6 +150,7 @@ public class koudoubutton : MonoBehaviour
         manager.itembutton.SetActive(false);
         manager.item3 = true;
         removeitem(3);
+        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
     }
 
     public void item4()
@@ -156,6 +160,7 @@ public class koudoubutton : MonoBehaviour
         manager.itembutton.SetActive(false);
         manager.item4 = true;
         removeitem(4);
+        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
     }
 
     public void item5()
@@ -165,11 +170,12 @@ public class koudoubutton : MonoBehaviour
         manager.itembutton.SetActive(false);
         manager.item5 = true;
         removeitem(5);
+        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
     }
 
     public void item6()
     {
-        Debug.Log("麻酔銃");
+        Debug.Log("アイテム6");
         //manager.modoru = true;
         //manager.itembutton.SetActive(false);
         //manager.item6 = true;

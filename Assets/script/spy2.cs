@@ -247,7 +247,8 @@ public class spy2 : MonoBehaviour
                 manager.terroristbutton.SetActive(false);
                 manager.spy1button.SetActive(false);
                 manager.koudouseigen[0] += 1;
-                mati = true;
+                //mati = true;
+                manager.saikorobutton.SetActive(true);
             }
             else if (manager.player_spy2) //麻酔銃
             {
@@ -257,7 +258,8 @@ public class spy2 : MonoBehaviour
                 manager.terroristbutton.SetActive(false);
                 manager.spy1button.SetActive(false);
                 manager.koudouseigen[1] += 1;
-                mati = true;
+                //mati = true;
+                manager.saikorobutton.SetActive(true);
             }
             if (manager.item1)
             {
@@ -265,7 +267,8 @@ public class spy2 : MonoBehaviour
                 manager.itembutton.SetActive(false);
                 manager.item1 = false;
                 manager.spylife[1] += 1;
-                mati = true;
+                //mati = true;
+                manager.saikorobutton.SetActive(true);
             }
             if (manager.saikoro)
             {

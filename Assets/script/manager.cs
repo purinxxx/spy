@@ -113,6 +113,8 @@ public class manager : MonoBehaviour
 
     void Start()
     {
+        //itemspy1.Add(2);
+
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
         plefab_s2 = (GameObject)Resources.Load("spy2");
@@ -189,14 +191,26 @@ public class manager : MonoBehaviour
             {
                 if (terroristtern)
                 {
+                    foreach (int i in itemterrorist)
+                    {
+                        Debug.Log("item : " + i.ToString());
+                    }
                     GameObject.Find("terrorist").GetComponent<terrorist>().play();
                 }
                 else if (spy1tern)
                 {
-                    if(playerpos[1]!=0) GameObject.Find("spy1").GetComponent<spy1>().play();
+                    foreach (int i in itemspy1)
+                    {
+                        Debug.Log("item : " + i.ToString());
+                    }
+                    if (playerpos[1]!=0) GameObject.Find("spy1").GetComponent<spy1>().play();
                 }
                 else if (spy2tern)
                 {
+                    foreach (int i in itemspy2)
+                    {
+                        Debug.Log("item : " + i.ToString());
+                    }
                     if (playerpos[2] != 0) GameObject.Find("spy2").GetComponent<spy2>().play();
                 }
             }
