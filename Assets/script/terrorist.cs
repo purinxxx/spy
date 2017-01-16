@@ -205,17 +205,7 @@ public class terrorist : MonoBehaviour
                 me = Random.Range(1, 7);
                 Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
-                if (me <= 2)
-                {
-                    int item = Random.Range(2, 6);
-                    manager.itemterrorist.Add(item);
-                    if (item == 1) manager.message.text = me.ToString() + "の目が出た　プロテクターを手に入れた";
-                    else if (item == 2) manager.message.text = me.ToString() + "の目が出た　車を手に入れた";
-                    else if (item == 3) manager.message.text = me.ToString() + "の目が出た　ヘリを手に入れた";
-                    else if (item == 4) manager.message.text = me.ToString() + "の目が出た　自転車を手に入れた";
-                    else if (item == 5) manager.message.text = me.ToString() + "の目が出た　麻酔銃を手に入れた";
-                    Debug.Log(item);
-                }
+                
                 if (manager.item2)
                 {
                     me = me * 2;
@@ -274,6 +264,17 @@ public class terrorist : MonoBehaviour
                 hantei();
                 settihantei(manager.playerpos[0]);
 
+                if (GameObject.Find(manager.playerpos[0].ToString()).transform.tag == "itemmasu")
+                {
+                    int item = Random.Range(2, 6);
+                    manager.itemterrorist.Add(item);
+                    if (item == 1) manager.message.text = "プロテクターを手に入れた";
+                    else if (item == 2) manager.message.text = "車を手に入れた";
+                    else if (item == 3) manager.message.text = "ヘリを手に入れた";
+                    else if (item == 4) manager.message.text = "自転車を手に入れた";
+                    else if (item == 5) manager.message.text = "麻酔銃を手に入れた";
+                    Debug.Log(item);
+                }
 
                 int cnt = 0;
                 for (int i = 1; i <= Mathf.Abs(me); ++i)

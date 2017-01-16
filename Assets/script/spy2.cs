@@ -376,7 +376,17 @@ public class spy2 : MonoBehaviour
             {
                 go = false;
                 hantei();
-                //mati = true;
+                if (GameObject.Find(manager.playerpos[2].ToString()).transform.tag == "itemmasu")
+                {
+                    int item = Random.Range(1, 6);
+                    manager.itemspy2.Add(item);
+                    if (item == 1) manager.message.text = "プロテクターを手に入れた";
+                    else if (item == 2) manager.message.text = "車を手に入れた";
+                    else if (item == 3) manager.message.text = "ヘリを手に入れた";
+                    else if (item == 4) manager.message.text = "自転車を手に入れた";
+                    else if (item == 5) manager.message.text = "麻酔銃を手に入れた";
+                    Debug.Log(item);
+                }
                 if (manager.playerpos[0] > 0 && manager.playerpos[2] > 0)
                 {
                     manager.toutyoubutton.SetActive(true);
@@ -438,6 +448,8 @@ public class spy2 : MonoBehaviour
                         if (manager.playerpos[0] == manager.playerpos[2]) manager.playerpos[0] = 0;
                     }
                 }
+                Debug.Log("探索終了");
+                pos = this.transform.position;
                 mati = true;
             }
 
