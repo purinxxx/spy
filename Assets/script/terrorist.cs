@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 public class terrorist : MonoBehaviour
 {
-
+    bool go = false;
+    bool bagutubusi = false;
     bool bakudanphase = false;
     bool bommax = false;
     int k;
@@ -19,11 +20,20 @@ public class terrorist : MonoBehaviour
     GameObject b;
     GameObject b2;
     int layerMask;
+    Vector3 tpos;
+    Vector3 camerapos = manager.maincamera.transform.position;
 
 
     public void play()
     {
+        bagutubusi = true;
         ternplayer = this.gameObject.name;
+        camerapos.x = this.transform.position.x;
+        camerapos.y = this.transform.position.y;
+        camerapos.z = -10;
+        manager.maincamera.transform.position = camerapos;
+        Debug.Log(camerapos);
+        Debug.Log(camerapos.x);
         Debug.Log(ternplayer + "　テロリストのターン");
         manager.message.text = "テロリストのターン";
         Debug.Log(spy1.mieru);
@@ -99,8 +109,15 @@ public class terrorist : MonoBehaviour
     {
         if (manager.terroristtern)
         {
+            if (bagutubusi)
+            {
+                Debug.Log("バグ潰し！");
+                manager.maincamera.transform.position = camerapos;
+                bagutubusi = false;
+            }
             if (manager.item)
             {
+                manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
                 int defaulty = 180;
                 foreach (int i in manager.itemterrorist)
@@ -184,6 +201,7 @@ public class terrorist : MonoBehaviour
             }
             if (manager.saikoro)
             {
+                manager.maincamera.transform.position = camerapos;
                 me = Random.Range(1, 7);
                 Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
@@ -221,19 +239,42 @@ public class terrorist : MonoBehaviour
                 //Debug.Log(manager.saikorobutton.activeInHierarchy);
                 //Debug.Log(this.gameObject.name);
                 l = manager.playerpos[0];
+                for(int i=1; i<=me; ++i)
+                {
+                    k = l + i;
+                    if (k > manager.total) k -= manager.total; //一周した場合
+                    if (k < 1) k += manager.total; //一周した場合
+                    tpos = GameObject.Find(k.ToString()).transform.position;
+                    tpos.y += 0.5f; // コマの位置調整
+                    camerapos.x = tpos.x;
+                    camerapos.y = tpos.y;
+                    camerapos.z = -10;
+                    StartCoroutine(idou(tpos, camerapos, i));
+                }
+                StartCoroutine(matu(me));
+                
+            }
+
+            if (go)
+            {
+                go = false;
                 k = l + me;
                 if (k > manager.total) k -= manager.total; //一周した場合
                 if (k < 1) k += manager.total; //一周した場合
                 manager.playerpos[0] = k;
                 //Debug.Log("テロリストの現在位置" + manager.playerpos[0]);
-                Vector3 tpos = GameObject.Find(k.ToString()).transform.position;
-                tpos.y += 0.4f; // コマの位置調整
-                                //GameObject.Find("terrorist").transform.position = pos;
-                this.gameObject.transform.position = tpos;
+                //tpos = GameObject.Find(k.ToString()).transform.position;
+                //tpos.y += 0.4f; // コマの位置調整
+                //this.gameObject.transform.position = tpos;
+                //camerapos.x = this.transform.position.x;
+                //camerapos.y = this.transform.position.y;
+                //camerapos.z = -10;
+                //manager.maincamera.transform.position = camerapos;
+                //manager.maincamera.transform.Translate(this.transform.position.x - camerapos.x, this.transform.position.y - camerapos.y, 0);
                 hantei();
                 settihantei(manager.playerpos[0]);
 
-                
+
                 int cnt = 0;
                 for (int i = 1; i <= Mathf.Abs(me); ++i)
                 {
@@ -443,7 +484,7 @@ public class terrorist : MonoBehaviour
                     }
                 }
 
-                else if (mati)
+                else if (mati && this.transform.position == tpos)
                 {
                     mati = false;
                     Debug.Log("ターンエンド");
@@ -469,4 +510,19 @@ public class terrorist : MonoBehaviour
 
         }
     }
+
+    private IEnumerator idou(Vector3 player, Vector3 camera, int time)
+    {
+        yield return new WaitForSeconds(time * 0.3f);
+        this.gameObject.transform.position = player;
+        manager.maincamera.transform.position = camera;
+        Debug.Log(time);
+    }
+
+    private IEnumerator matu(int me)
+    {
+        yield return new WaitForSeconds(me * 0.3f);
+        go = true;
+    }
+
 }

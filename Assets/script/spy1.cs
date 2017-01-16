@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 public class spy1 : MonoBehaviour
 {
-
+    bool go = false;
+    bool bagutubusi = false;
     int k;
     int l;
     int m;
@@ -17,9 +18,17 @@ public class spy1 : MonoBehaviour
     bool tmax = false;
     GameObject plefab_t;
     GameObject t;
+    Vector3 pos;
+    Vector3 camerapos = manager.maincamera.transform.position;
 
     public void play()
     {
+        bagutubusi = true;
+        camerapos.x = this.transform.position.x;
+        camerapos.y = this.transform.position.y;
+        camerapos.z = -10;
+        manager.maincamera.transform.position = camerapos;
+        Debug.Log(camerapos);
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = -5;
         foreach (Transform child in manager.bom2s.transform) child.GetComponent<Renderer>().sortingOrder = -5;
         if (spy2.mieru > 0) GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
@@ -176,6 +185,12 @@ public class spy1 : MonoBehaviour
     {
         if (manager.spy1tern)
         {
+            if (bagutubusi)
+            {
+                Debug.Log("バグ潰し！");
+                manager.maincamera.transform.position = camerapos;
+                bagutubusi = false;
+            }
             if (manager.item)
             {
                 manager.itemcanvas.SetActive(true);
@@ -322,10 +337,16 @@ public class spy1 : MonoBehaviour
                     if (k > manager.total) k -= manager.total; //一周した場合
                     if (k < 1) k += manager.total; //一周した場合
 
-                    Vector3 pos = GameObject.Find(k.ToString()).transform.position;
-                    pos.y += 0.4f; // コマの位置調整
-                    GameObject.Find(ternplayer).transform.position = pos;
+                    //pos = GameObject.Find(k.ToString()).transform.position;
+                    //pos.y += 0.4f; // コマの位置調整
+                    //GameObject.Find(ternplayer).transform.position = pos;
                     manager.playerpos[1] = k;
+                    pos = GameObject.Find(k.ToString()).transform.position;
+                    pos.y += 0.5f; // コマの位置調整
+                    camerapos.x = pos.x;
+                    camerapos.y = pos.y;
+                    camerapos.z = -10;
+                    StartCoroutine(idou(pos, camerapos, i));
                     if (k == manager.bom2pos[0])
                     {
                         manager.spylife[0] -= 1;
@@ -346,10 +367,16 @@ public class spy1 : MonoBehaviour
                         }
                     }
                 }
+                StartCoroutine(matu(me));
                 //Debug.Log("スパイ1の現在位置" + manager.playerpos[1]);
                 //Vector3 pos = GameObject.Find(k.ToString()).transform.position;
                 //pos.y += 0.4f; // コマの位置調整
                 //GameObject.Find(ternplayer).transform.position = pos;
+                
+            }
+            if (go)
+            {
+                go = false;
                 hantei();
                 //mati = true;
                 if (manager.playerpos[0] > 0 && manager.playerpos[1] > 0)
@@ -525,7 +552,7 @@ public class spy1 : MonoBehaviour
                         }
                     }
                 }
-                else if (mati)
+                else if (mati && this.transform.position==pos)
                 {
                     mati = false;
                     Debug.Log("ターンエンド");
@@ -564,5 +591,19 @@ public class spy1 : MonoBehaviour
         Destroy(mituketabom);
         Debug.Log("爆弾を除去した " + mituketabom.name);
         manager.message.text = "爆弾を除去した " + mituketabom.name;
+    }
+
+    private IEnumerator idou(Vector3 player, Vector3 camera, int time)
+    {
+        yield return new WaitForSeconds(time * 0.3f);
+        this.gameObject.transform.position = player;
+        manager.maincamera.transform.position = camera;
+        Debug.Log(time);
+    }
+
+    private IEnumerator matu(int me)
+    {
+        yield return new WaitForSeconds(me * 0.3f);
+        go = true;
     }
 }

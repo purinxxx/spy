@@ -14,6 +14,7 @@ public class manager : MonoBehaviour
     public static int[] spy2tpos = { 0, 0 }; // 盗聴器上限２個
     public static int[] spylife = { 1, 1 }; // スパイライフ
     public static int[] koudouseigen = { 0, 0, 0 }; // 行動制限
+    public static GameObject maincamera;
     public static GameObject canvas;
     public static GameObject itemcanvas;
     public static GameObject saikorobutton;
@@ -72,6 +73,7 @@ public class manager : MonoBehaviour
 
     void Awake()
     {
+        maincamera = GameObject.Find("Main Camera");
         message = GameObject.Find("message").GetComponentInChildren<Text>();
         canvas = GameObject.Find("Canvas");
         itemcanvas = GameObject.Find("itemCanvas");
@@ -138,7 +140,7 @@ public class manager : MonoBehaviour
         GameObject terroristmasu = GameObject.Find(terroristpos.ToString());
         //terroristmasu.tag = "terrorist"; // テロリストのいるマスにterroristタグをつける
         Vector3 tpos = terroristmasu.transform.position;
-        tpos.y += 0.4f; // コマの位置調整
+        tpos.y += 0.5f; // コマの位置調整
         t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
         t.name = plefab_t.name;
         t.GetComponent<Renderer>().sortingOrder = -5;
@@ -148,14 +150,14 @@ public class manager : MonoBehaviour
         GameObject spy1masu = GameObject.Find(spy1pos.ToString());
         //spy1masu.tag = "spy1";
         Vector3 s1pos = spy1masu.transform.position;
-        s1pos.y += 0.4f;
+        s1pos.y += 0.5f;
         s1 = (GameObject)Instantiate(plefab_s1, s1pos, Quaternion.identity);
         s1.name = plefab_s1.name;
 
         GameObject spy2masu = GameObject.Find(spy2pos.ToString());
         //spy2masu.tag = "spy2";
         Vector3 s2pos = spy2masu.transform.position;
-        s2pos.y += 0.4f;
+        s2pos.y += 0.5f;
         s2 = (GameObject)Instantiate(plefab_s2, s2pos, Quaternion.identity);
         s2.name = plefab_s2.name;
 
