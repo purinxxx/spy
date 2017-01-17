@@ -228,17 +228,26 @@ public class terrorist : MonoBehaviour
             }
             if (manager.susumu)
             {
+                Debug.Log(me);
                 manager.maincamera.transform.position = camerapos;
                 manager.susumu = false;
                 manager.susumubutton.SetActive(false);
                 //Debug.Log(manager.saikorobutton.activeInHierarchy);
                 //Debug.Log(this.gameObject.name);
                 l = manager.playerpos[0];
-                for(int i=1; i<=me; ++i)
+                for(int i = 1; i <= Mathf.Abs(me); ++i)
                 {
-                    k = l + i;
+                    if (me < 0)
+                    {
+                        k = l - i; //後ろに戻るとき
+                    }
+                    else
+                    {
+                        k = l + i;
+                    }
                     if (k > manager.total) k -= manager.total; //一周した場合
                     if (k < 1) k += manager.total; //一周した場合
+                    Debug.Log(k);
                     tpos = GameObject.Find(k.ToString()).transform.position;
                     tpos.y += 0.5f; // コマの位置調整
                     camerapos.x = tpos.x;
@@ -246,7 +255,7 @@ public class terrorist : MonoBehaviour
                     camerapos.z = -10;
                     StartCoroutine(idou(tpos, camerapos, i));
                 }
-                StartCoroutine(matu(me));
+                StartCoroutine(matu(Mathf.Abs(me)));
                 
             }
 
@@ -525,6 +534,7 @@ public class terrorist : MonoBehaviour
 
     private IEnumerator idou(Vector3 player, Vector3 camera, int time)
     {
+        Debug.Log(time);
         yield return new WaitForSeconds(time * 0.5f);
         //this.gameObject.transform.position = player;
         //manager.maincamera.transform.position = camera;

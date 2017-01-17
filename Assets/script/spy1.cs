@@ -438,6 +438,7 @@ public class spy1 : MonoBehaviour
                         GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
                         mieru = 3;
                         if (manager.playerpos[0] == manager.playerpos[1]) manager.playerpos[0] = 0;
+                        manager.message.text = "スパイの勝利 ";
                     }
                 }
                 Debug.Log("探索終了");
@@ -609,6 +610,7 @@ public class spy1 : MonoBehaviour
 
     private IEnumerator idou(Vector3 player, Vector3 camera, int time)
     {
+        time = Mathf.Abs(time);
         yield return new WaitForSeconds(time * 0.5f);
         //this.gameObject.transform.position = player;
         //manager.maincamera.transform.position = camera;
