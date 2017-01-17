@@ -11,8 +11,9 @@ public class spy2 : MonoBehaviour
     int l;
     int m;
     int me;
+    int idoume;
     string ternplayer;
-    bool mati = false;
+    public static bool mati = false;
     GameObject mituketabom;
     public static int mieru = 0;
     bool setti = false;
@@ -189,10 +190,14 @@ public class spy2 : MonoBehaviour
             {
                 Debug.Log("バグ潰し！");
                 manager.maincamera.transform.position = camerapos;
+                Swipe.prevX = camerapos.x;
+                Swipe.prevY = camerapos.y;
                 bagutubusi = false;
+                StartCoroutine(mukouka());
             }
             if (manager.item)
             {
+                manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
                 int defaulty = 180;
                 foreach (int i in manager.itemspy2)
@@ -287,20 +292,10 @@ public class spy2 : MonoBehaviour
             }
             if (manager.saikoro)
             {
+                manager.maincamera.transform.position = camerapos;
                 me = Random.Range(1, 7);
                 Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
-                if (me <= 2)
-                {
-                    int item = Random.Range(1, 6);
-                    manager.itemspy2.Add(item);
-                    if (item == 1) manager.message.text = me.ToString() + "の目が出た　プロテクターを手に入れた";
-                    else if (item == 2) manager.message.text = me.ToString() + "の目が出た　車を手に入れた";
-                    else if (item == 3) manager.message.text = me.ToString() + "の目が出た　ヘリを手に入れた";
-                    else if (item == 4) manager.message.text = me.ToString() + "の目が出た　自転車を手に入れた";
-                    else if (item == 5) manager.message.text = me.ToString() + "の目が出た　麻酔銃を手に入れた";
-                    Debug.Log(item);
-                }
                 if (manager.item2)
                 {
                     me = me * 2;
@@ -320,6 +315,7 @@ public class spy2 : MonoBehaviour
 
             if (manager.susumu)
             {
+                manager.maincamera.transform.position = camerapos;
                 manager.susumu = false;
                 manager.susumubutton.SetActive(false);
                 manager.tansakubutton.SetActive(false);
@@ -468,6 +464,10 @@ public class spy2 : MonoBehaviour
                 mati = true;
             }
 
+            if (mati)
+            {
+                manager.message.text = "画面をタッチして次のプレイヤーに変わってください。";
+            }
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -571,6 +571,7 @@ public class spy2 : MonoBehaviour
                 }
                 else if (mati && this.transform.position == pos)
                 {
+                    GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = false;
                     mati = false;
                     Debug.Log("ターンエンド");
                     manager.message.text = "ターンエンド";
@@ -607,15 +608,38 @@ public class spy2 : MonoBehaviour
 
     private IEnumerator idou(Vector3 player, Vector3 camera, int time)
     {
-        yield return new WaitForSeconds(time * 0.3f);
-        this.gameObject.transform.position = player;
-        manager.maincamera.transform.position = camera;
+        yield return new WaitForSeconds(time * 0.5f);
+        //this.gameObject.transform.position = player;
+        //manager.maincamera.transform.position = camera;
+        //this.gameObject.GetComponent<Rigidbody2D>().MovePosition(player);
+        //manager.maincamera.GetComponent<Rigidbody2D>().MovePosition(camera);
+        float step = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(transform.position.x - player.x), 2) + Mathf.Pow(Mathf.Abs(transform.position.x - player.x), 2)) / 10;
+        Debug.Log(step);
+        step = 0.15f;
+        while (transform.position != player)
+        {
+            yield return new WaitForSeconds(0.01f);
+            this.gameObject.transform.position = Vector3.MoveTowards(transform.position, player, step);
+            manager.maincamera.transform.position = Vector3.MoveTowards(manager.maincamera.transform.position, camera, step);
+        }
         Debug.Log(time);
+        idoume = time;
     }
 
     private IEnumerator matu(int me)
     {
-        yield return new WaitForSeconds(me * 0.3f);
+        while (me != idoume)
+        {
+            yield return new WaitForSeconds(0.01f);
+        }
         go = true;
+    }
+
+    private IEnumerator mukouka()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Swipe.prevX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+        Swipe.prevY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
     }
 }

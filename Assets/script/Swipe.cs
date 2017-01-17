@@ -14,12 +14,15 @@ public class Swipe : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
 
     private List<string> logs = new List<string>();
     const int MAX_LOGS = 30;
-    float prevX, prevY;
+    public static float prevX, prevY;
+    float prevXd = 0, prevYd = 0;
+    Vector3 worldpos;
+    Vector3 pos;
 
     void OnEnable()
     {
@@ -46,9 +49,10 @@ public class Swipe : MonoBehaviour {
     {
         string text = string.Format("OnTouchStart X={0} Y={1}", e.Input.ScreenPosition.x, e.Input.ScreenPosition.y);
         //Debug.Log(text);
-        Vector3 worldpos = Camera.main.ScreenToWorldPoint(e.Input.ScreenPosition);
+        worldpos = Camera.main.ScreenToWorldPoint(e.Input.ScreenPosition);
         prevX = worldpos.x;
         prevY = worldpos.y;
+        
     }
 
     void OnTouchEnd(object sender, CustomInputEventArgs e)
@@ -68,15 +72,48 @@ public class Swipe : MonoBehaviour {
                 });
         //Debug.Log(text);
 
-        Vector3 worldpos = Camera.main.ScreenToWorldPoint(e.Input.ScreenPosition);
-        Vector3 pos = manager.maincamera.transform.position;
-        if(pos.x + (prevX - worldpos.x) > -1 && pos.x + (prevX - worldpos.x) < 46) pos.x += (prevX - worldpos.x);
-        if (pos.y + (prevY - worldpos.y) > -23 && pos.y + (prevY - worldpos.y) < -2) pos.y += (prevY - worldpos.y);
-        manager.maincamera.transform.position = pos;
-        
 
+        worldpos = Camera.main.ScreenToWorldPoint(e.Input.ScreenPosition);
+        pos = manager.maincamera.transform.position;
+
+        //Debug.Log(Math.Abs(prevX - worldpos.x));
+
+        if (prevXd != Math.Abs(prevX - worldpos.x))
+        {
+            if (pos.x + (prevX - worldpos.x) > -1 && pos.x + (prevX - worldpos.x) < 46)
+            {
+                //if (Math.Abs(prevX - worldpos.x) > 0.1f)
+                //{
+                pos.x += (prevX - worldpos.x);
+                //}
+            }
+        }
+
+        if (prevYd != Math.Abs(prevY - worldpos.y))
+        {
+            if (pos.y + (prevY - worldpos.y) > -23 && pos.y + (prevY - worldpos.y) < -2)
+            {
+                //if (Math.Abs(prevY - worldpos.y) > 0.1f)
+                //{
+                pos.y += (prevY - worldpos.y);
+                //}
+            }
+        }
+
+        //manager.maincamera.transform.position = pos;
+        manager.maincamera.GetComponent<Rigidbody2D>().MovePosition(pos);
+
+
+
+        prevXd = Math.Abs(prevX - worldpos.x);
+        prevYd = Math.Abs(prevY - worldpos.y);
         prevX = worldpos.x;
         prevY = worldpos.y;
+
+        //pos.x = e.Input.DeltaPosition.x;
+        //pos.y = e.Input.DeltaPosition.y;
+        //manager.maincamera.GetComponent<Rigidbody>().MovePosition(pos);
+
     }
 
     void OnFlickStart(object sender, FlickEventArgs e)

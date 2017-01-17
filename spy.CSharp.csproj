@@ -82,18 +82,18 @@
     <Compile Include="Assets\TouchManager\Scripts\Events\CustomInputEventArgs.cs" />
     <Compile Include="Assets\TouchManager\Scripts\Events\FlickEventArgs.cs" />
     <Compile Include="Assets\TouchManager\Scripts\TouchManager.cs" />
-    <Compile Include="Assets\script\ScreenViewCamera.cs" />
     <Compile Include="Assets\script\Swipe.cs" />
-    <Compile Include="Assets\script\createmap.cs" />
-    <Compile Include="Assets\script\data.cs" />
     <Compile Include="Assets\script\koudoubutton.cs" />
     <Compile Include="Assets\script\manager.cs" />
     <Compile Include="Assets\script\saikorobutton.cs" />
     <Compile Include="Assets\script\spy1.cs" />
     <Compile Include="Assets\script\spy2.cs" />
-    <Compile Include="Assets\script\spy3.cs" />
-    <Compile Include="Assets\script\spy4.cs" />
     <Compile Include="Assets\script\terrorist.cs" />
+    <Compile Include="Assets\script\ボツ\ScreenViewCamera.cs" />
+    <Compile Include="Assets\script\ボツ\createmap.cs" />
+    <Compile Include="Assets\script\ボツ\data.cs" />
+    <Compile Include="Assets\script\ボツ\spy3.cs" />
+    <Compile Include="Assets\script\ボツ\spy4.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
