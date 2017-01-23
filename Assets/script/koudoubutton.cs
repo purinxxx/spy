@@ -58,7 +58,8 @@ public class koudoubutton : MonoBehaviour
     {
         Debug.Log("アイテムを使わないで前の画面に戻る");
         manager.modoru = true;
-        manager.itembutton.SetActive(true);
+        //manager.itembutton.SetActive(true);
+        manager.itembutton.GetComponent<Button>().interactable = true;
         foreach (Transform child in manager.itemcanvas.transform) if(child.name!="modoru") Destroy(child.gameObject);
     }
 
@@ -128,7 +129,7 @@ public class koudoubutton : MonoBehaviour
     {
         Debug.Log("プロテクター");
         manager.modoru = true;
-        manager.itembutton.SetActive(false);
+        //manager.itembutton.SetActive(false);
         manager.item1 = true;
         removeitem(1);
         foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
@@ -138,7 +139,7 @@ public class koudoubutton : MonoBehaviour
     {
         Debug.Log("車");
         manager.modoru = true;
-        manager.itembutton.SetActive(false);
+        //manager.itembutton.SetActive(false);
         manager.item2 = true;
         removeitem(2);
         foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
@@ -148,7 +149,7 @@ public class koudoubutton : MonoBehaviour
     {
         Debug.Log("ヘリ");
         manager.modoru = true;
-        manager.itembutton.SetActive(false);
+        //manager.itembutton.SetActive(false);
         manager.item3 = true;
         removeitem(3);
         foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
@@ -158,7 +159,7 @@ public class koudoubutton : MonoBehaviour
     {
         Debug.Log("自転車(前か後ろに３マス進める)");
         manager.modoru = true;
-        manager.itembutton.SetActive(false);
+        //manager.itembutton.SetActive(false);
         manager.item4 = true;
         removeitem(4);
         foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
@@ -168,7 +169,7 @@ public class koudoubutton : MonoBehaviour
     {
         Debug.Log("麻酔銃(任意のプレイヤーを一回休みにする)");
         manager.modoru = true;
-        manager.itembutton.SetActive(false);
+        //manager.itembutton.SetActive(false);
         manager.item5 = true;
         removeitem(5);
         foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);

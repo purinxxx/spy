@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class manager : MonoBehaviour
 {
     //public static Text message;
+    
     public static Text message;
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static int[] bompos = { 0, 0, 0 }; // 爆弾上限３個
@@ -62,6 +63,7 @@ public class manager : MonoBehaviour
     public static List<int> itemterrorist = new List<int>();
     public static List<int> itemspy1 = new List<int>();
     public static List<int> itemspy2 = new List<int>();
+    
     GameObject plefab_t;
     GameObject t;
     GameObject plefab_s1;
@@ -84,7 +86,7 @@ public class manager : MonoBehaviour
         itembutton = GameObject.Find("item");
         modorubutton = GameObject.Find("modoru");
         //saikorobutton.SetActive(false);
-        itembutton.SetActive(false);
+        //itembutton.SetActive(false);
         itemcanvas.SetActive(false);
         susumubutton = GameObject.Find("susumu");
         susumubutton.SetActive(false);

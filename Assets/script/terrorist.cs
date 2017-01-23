@@ -50,7 +50,7 @@ public class terrorist : MonoBehaviour
         {
             //manager.saikorobutton.SetActive(true);
             manager.saikorobutton.GetComponent<Button>().interactable = true;
-            if (manager.itemterrorist.Count > 0) manager.itembutton.SetActive(true);
+            if (manager.itemterrorist.Count > 0) manager.itembutton.GetComponent<Button>().interactable = true;
         }
         manager.playflag = true;
         foreach (Transform child in manager.boms.transform) child.GetComponent<Renderer>().sortingOrder = 5;
@@ -140,7 +140,8 @@ public class terrorist : MonoBehaviour
                 }
                 //manager.saikorobutton.SetActive(false);
                 //manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.item = false;
             }
             if (manager.modoru)
@@ -157,7 +158,8 @@ public class terrorist : MonoBehaviour
                 manager.item4 = false;
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.maebutton.SetActive(true);
                 manager.usirobutton.SetActive(true);
             }
@@ -182,7 +184,8 @@ public class terrorist : MonoBehaviour
                 manager.item5 = false;
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.spy1button.SetActive(true);
                 manager.spy2button.SetActive(true);
             }
@@ -231,7 +234,8 @@ public class terrorist : MonoBehaviour
                 manager.saikoro = false;
                 //manager.saikorobutton.SetActive(false);
                 //manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.susumubutton.SetActive(true);
             }
             if (manager.susumu)

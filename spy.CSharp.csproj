@@ -83,6 +83,7 @@
     <Compile Include="Assets\TouchManager\Scripts\Events\FlickEventArgs.cs" />
     <Compile Include="Assets\TouchManager\Scripts\TouchManager.cs" />
     <Compile Include="Assets\script\Swipe.cs" />
+    <Compile Include="Assets\script\hennsuu.cs" />
     <Compile Include="Assets\script\koudoubutton.cs" />
     <Compile Include="Assets\script\manager.cs" />
     <Compile Include="Assets\script\saikorobutton.cs" />

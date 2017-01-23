@@ -14,6 +14,7 @@ public class spy1 : MonoBehaviour
     int idoume;
     string ternplayer;
     public static bool mati = false;
+    GameObject mituketabom;
     public static int mieru = 0;
     bool setti = false;
     bool tmax = false;
@@ -57,7 +58,7 @@ public class spy1 : MonoBehaviour
         {
             //manager.saikorobutton.SetActive(true);
             manager.saikorobutton.GetComponent<Button>().interactable = true;
-            if (manager.itemspy1.Count > 0) manager.itembutton.SetActive(true);
+            if (manager.itemspy1.Count > 0) manager.itembutton.GetComponent<Button>().interactable = true;
         }
         manager.playflag = true;
     }
@@ -216,7 +217,8 @@ public class spy1 : MonoBehaviour
                     defaulty += 120;
                 }
                 //manager.saikorobutton.SetActive(false);
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.item = false;
             }
             if (manager.modoru)
@@ -234,7 +236,8 @@ public class spy1 : MonoBehaviour
                 manager.item4 = false;
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.maebutton.SetActive(true);
                 manager.usirobutton.SetActive(true);
             }
@@ -259,7 +262,8 @@ public class spy1 : MonoBehaviour
                 manager.item5 = false;
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.terroristbutton.SetActive(true);
                 manager.spy2button.SetActive(true);
             }
@@ -291,7 +295,8 @@ public class spy1 : MonoBehaviour
             {
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.item1 = false;
                 manager.spylife[0] += 1;
                 //mati = true;
@@ -317,7 +322,8 @@ public class spy1 : MonoBehaviour
                 manager.saikoro = false;
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
-                manager.itembutton.SetActive(false);
+                //manager.itembutton.SetActive(false);
+                manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.susumubutton.SetActive(true);
                 manager.tansakubutton.SetActive(true);
             }

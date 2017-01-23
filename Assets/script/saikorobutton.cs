@@ -12,6 +12,7 @@ public class saikorobutton : MonoBehaviour {
 
     public void use()
     {
+        manager.itembutton.GetComponent<Button>().interactable = false;
         Debug.Log("アイテムを使う");
         manager.item = true;
     }
