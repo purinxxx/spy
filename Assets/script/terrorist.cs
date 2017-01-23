@@ -37,12 +37,14 @@ public class terrorist : MonoBehaviour
         Debug.Log(camerapos.x);
         Debug.Log(ternplayer + "　テロリストのターン");
         manager.message.text = "テロリストのターン";
+        manager.logcontent.text = manager.logcontent.text + "\nテロリストのターン\n";
         Debug.Log(spy1.mieru);
         Debug.Log(spy2.mieru);
         if (manager.koudouseigen[0] > 0)
         {
             Debug.Log("麻酔状態で動けない");
             manager.message.text = "麻酔状態で動けない";
+            manager.logcontent.text = manager.logcontent.text + "\n麻酔状態で動けない\n";
             manager.koudouseigen[0] -= 1;
             mati = true;
         }
@@ -80,6 +82,7 @@ public class terrorist : MonoBehaviour
             {
                 Debug.Log("盗聴器を解除した");
                 manager.message.text = "盗聴器を解除した";
+                manager.logcontent.text = manager.logcontent.text + "\n盗聴器を解除した\n";
                 GameObject t = GameObject.Find("spy1toutyouki" + (x).ToString());
                 t.GetComponent<Renderer>().sortingOrder = 5;
                 manager.spy1tpos[j - 1] = 0;
@@ -89,6 +92,7 @@ public class terrorist : MonoBehaviour
             {
                 Debug.Log("盗聴器を解除した");
                 manager.message.text = "盗聴器を解除した";
+                manager.logcontent.text = manager.logcontent.text + "\n盗聴器を解除した\n";
                 GameObject t = GameObject.Find("spy2toutyouki" + (x).ToString());
                 t.GetComponent<Renderer>().sortingOrder = 5;
                 manager.spy2tpos[j - 1] = 0;
@@ -124,7 +128,7 @@ public class terrorist : MonoBehaviour
             {
                 manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
-                int defaulty = 180;
+                int defaultx = -315;
                 foreach (int i in manager.itemterrorist)
                 {
                     Debug.Log(i);
@@ -134,9 +138,9 @@ public class terrorist : MonoBehaviour
                     a.name = plefab_a.name;
                     a.transform.SetParent(manager.itemcanvas.transform);
                     RectTransform a_rect = a.GetComponent<RectTransform>();
-                    a_rect.anchoredPosition = new Vector2(-180, defaulty);
+                    a_rect.anchoredPosition = new Vector2(defaultx, 145);
                     a_rect.localScale = new Vector3(1,1,1);
-                    defaulty += 120;
+                    defaultx += 150;
                 }
                 //manager.saikorobutton.SetActive(false);
                 //manager.saikorobutton.GetComponent<Button>().interactable = false;
@@ -193,6 +197,7 @@ public class terrorist : MonoBehaviour
             {
                 Debug.Log("スパイ１は次のターン動けない");
                 manager.message.text = "スパイ１は次のターン動けない";
+                manager.logcontent.text = manager.logcontent.text + "\nスパイ１は次のターン動けない\n";
                 manager.player_spy1 = false;
                 manager.spy1button.SetActive(false);
                 manager.spy2button.SetActive(false);
@@ -205,6 +210,7 @@ public class terrorist : MonoBehaviour
             {
                 Debug.Log("スパイ２は次のターン動けない");
                 manager.message.text = "スパイ２は次のターン動けない";
+                manager.logcontent.text = manager.logcontent.text + "\nスパイ２は次のターン動けない\n";
                 manager.player_spy2 = false;
                 manager.spy1button.SetActive(false);
                 manager.spy2button.SetActive(false);
@@ -219,7 +225,8 @@ public class terrorist : MonoBehaviour
                 me = Random.Range(1, 7);
                 Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
-                
+                manager.logcontent.text = manager.logcontent.text + "\n" + me.ToString() + "の目が出た\n";
+
                 if (manager.item2)
                 {
                     me = me * 2;
@@ -294,11 +301,11 @@ public class terrorist : MonoBehaviour
                 {
                     int item = Random.Range(2, 6);
                     manager.itemterrorist.Add(item);
-                    if (item == 1) manager.message.text = "プロテクターを手に入れた";
-                    else if (item == 2) manager.message.text = "車を手に入れた";
-                    else if (item == 3) manager.message.text = "ヘリを手に入れた";
-                    else if (item == 4) manager.message.text = "自転車を手に入れた";
-                    else if (item == 5) manager.message.text = "麻酔銃を手に入れた";
+                    if (item == 1) { manager.message.text = "プロテクターを手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nプロテクターを手に入れた\n"; }
+                    else if (item == 2) { manager.message.text = "車を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\n車を手に入れた\n"; }
+                    else if (item == 3) { manager.message.text = "ヘリを手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nヘリを手に入れた\n"; }
+                    else if (item == 4) { manager.message.text = "自転車を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\n自転車を手に入れた\n"; }
+                    else if (item == 5) { manager.message.text = "麻酔銃を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\n麻酔銃を手に入れた\n"; }
                     Debug.Log(item);
                 }
 
@@ -433,6 +440,8 @@ public class terrorist : MonoBehaviour
                                         settihantei(m);
                                         manager.bom = false;
                                         mati = true;
+                                        manager.message.text = "爆弾を仕掛けた";
+                                        manager.logcontent.text = manager.logcontent.text + "\n爆弾を仕掛けた\n";
                                     }
                                     else if (manager.bompos[1] == 0)
                                     {
@@ -444,6 +453,8 @@ public class terrorist : MonoBehaviour
                                         settihantei(m);
                                         manager.bom = false;
                                         mati = true;
+                                        manager.message.text = "爆弾を仕掛けた";
+                                        manager.logcontent.text = manager.logcontent.text + "\n爆弾を仕掛けた\n";
                                     }
                                     else if (manager.bompos[2] == 0)
                                     {
@@ -455,6 +466,8 @@ public class terrorist : MonoBehaviour
                                         settihantei(m);
                                         manager.bom = false;
                                         mati = true;
+                                        manager.message.text = "爆弾を仕掛けた";
+                                        manager.logcontent.text = manager.logcontent.text + "\n爆弾を仕掛けた\n";
                                     }
                                     else
                                     {
@@ -504,6 +517,8 @@ public class terrorist : MonoBehaviour
                                         settihantei(m);
                                         manager.bom2 = false;
                                         mati = true;
+                                        manager.message.text = "強力な爆弾を仕掛けた";
+                                        manager.logcontent.text = manager.logcontent.text + "\n強力な爆弾を仕掛けた\n";
                                     }
                                     else
                                     {
@@ -537,6 +552,7 @@ public class terrorist : MonoBehaviour
                     {
                         Debug.Log("テロリストの勝利");
                         manager.message.text = "テロリストの勝利";
+                        manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
                     }
                 }
             }

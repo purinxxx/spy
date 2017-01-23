@@ -5,6 +5,14 @@ using UnityEngine.UI;
 public class koudoubutton : MonoBehaviour
 {
 
+    void notuseitem()
+    {
+        manager.modoru = true;
+        //manager.itembutton.SetActive(true);
+        manager.itembutton.GetComponent<Button>().interactable = true;
+        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+    }
+
     void removeitem(int n)
     {
         if (manager.terroristtern)
@@ -57,10 +65,7 @@ public class koudoubutton : MonoBehaviour
     public void modoru()
     {
         Debug.Log("アイテムを使わないで前の画面に戻る");
-        manager.modoru = true;
-        //manager.itembutton.SetActive(true);
-        manager.itembutton.GetComponent<Button>().interactable = true;
-        foreach (Transform child in manager.itemcanvas.transform) if(child.name!="modoru") Destroy(child.gameObject);
+        notuseitem();
     }
 
     public void bom2()
@@ -175,24 +180,63 @@ public class koudoubutton : MonoBehaviour
         foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
     }
 
-    public void item6()
+    public void map()
     {
-        Debug.Log("アイテム6");
+        Debug.Log("マップ");
+        if (manager.itemcanvas.activeSelf) notuseitem();
+        manager.mapbutton.GetComponent<Button>().interactable = false;
+        manager.mapwindow.SetActive(true);
+        manager.logbutton.GetComponent<Button>().interactable = true;
+        manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        //manager.logwindow.SetActive(false);
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
         //manager.modoru = true;
         //manager.itembutton.SetActive(false);
         //manager.item6 = true;
         //removeitem(6);
     }
 
-    public void item7()
+    public void closemap()
     {
-        Debug.Log("アイテム7");
-        //manager.item7 = true;
+        Debug.Log("マップ閉じる");
+        manager.mapbutton.GetComponent<Button>().interactable = true;
+        manager.mapwindow.SetActive(false);
     }
 
-    public void item8()
+    public void closelog()
     {
-        Debug.Log("アイテム8");
+        Debug.Log("ログ閉じる");
+        manager.logbutton.GetComponent<Button>().interactable = true;
+        manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        //manager.logwindow.SetActive(false);
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
+    }
+
+    public void log()
+    {
+        manager.logwindow.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+        if (manager.itemcanvas.activeSelf) notuseitem();
+        manager.logbutton.GetComponent<Button>().interactable = false;
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = false;
+        manager.mapbutton.GetComponent<Button>().interactable = true;
+        manager.mapwindow.SetActive(false);
+        manager.logcanvas.GetComponent<Canvas>().enabled = true;
+        //manager.logwindow.SetActive(true);
+        Debug.Log("ログ");
+        //manager.item7 = true;
+    }
+    
+
+    public void setting()
+    {
+        if (manager.itemcanvas.activeSelf) notuseitem();
+        manager.mapbutton.GetComponent<Button>().interactable = true;
+        manager.mapwindow.SetActive(false);
+        manager.logbutton.GetComponent<Button>().interactable = true;
+        manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        //manager.logwindow.SetActive(false);
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
+        Debug.Log("設定");
         //manager.item8 = true;
     }
 

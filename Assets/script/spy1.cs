@@ -201,7 +201,7 @@ public class spy1 : MonoBehaviour
             {
                 manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
-                int defaulty = 180;
+                int defaultx = -315;
                 foreach (int i in manager.itemspy1)
                 {
                     Debug.Log(i);
@@ -212,9 +212,9 @@ public class spy1 : MonoBehaviour
                     //a.transform.parent = manager.itemcanvas.transform;
                     a.transform.SetParent(manager.itemcanvas.transform);
                     RectTransform a_rect = a.GetComponent<RectTransform>();
-                    a_rect.anchoredPosition = new Vector2(-180, defaulty);
+                    a_rect.anchoredPosition = new Vector2(defaultx, 145);
                     a_rect.localScale = new Vector3(1, 1, 1);
-                    defaulty += 120;
+                    defaultx += 150;
                 }
                 //manager.saikorobutton.SetActive(false);
                 //manager.itembutton.SetActive(false);

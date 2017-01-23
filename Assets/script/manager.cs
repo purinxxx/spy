@@ -6,8 +6,9 @@ using System.Collections.Generic;
 public class manager : MonoBehaviour
 {
     //public static Text message;
-    
+
     public static Text message;
+    public static Text logcontent;
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
     public static int[] bompos = { 0, 0, 0 }; // 爆弾上限３個
     public static int[] bom2pos = { 0 }; // 爆弾上限１個
@@ -18,6 +19,7 @@ public class manager : MonoBehaviour
     public static GameObject maincamera;
     public static GameObject canvas;
     public static GameObject itemcanvas;
+    public static GameObject logcanvas;
     public static GameObject saikorobutton;
     public static GameObject itembutton;
     public static GameObject modorubutton;
@@ -35,6 +37,11 @@ public class manager : MonoBehaviour
     public static GameObject boms;
     public static GameObject bom2s;
     public static GameObject ts;
+    public static GameObject mapwindow;
+    public static GameObject logwindow;
+    public static GameObject mapbutton;
+    public static GameObject logbutton;
+    public static GameObject settingbutton;
     public static bool saikoro = false;
     public static bool item = false;
     public static bool modoru = false;
@@ -77,8 +84,10 @@ public class manager : MonoBehaviour
     {
         maincamera = GameObject.Find("Main Camera");
         message = GameObject.Find("message").GetComponentInChildren<Text>();
+        logcontent = GameObject.Find("LogContent").GetComponentInChildren<Text>();
         canvas = GameObject.Find("Canvas");
         itemcanvas = GameObject.Find("itemCanvas");
+        logcanvas = GameObject.Find("LogCanvas");
         //canvas.SetActive(false);
         //spycanvas = GameObject.Find("spyCanvas");
         //spycanvas.SetActive(false);
@@ -113,13 +122,26 @@ public class manager : MonoBehaviour
         boms = GameObject.Find("boms");
         bom2s = GameObject.Find("bom2s");
         ts = GameObject.Find("ts");
+        mapwindow = GameObject.Find("mapwindow");
+        mapwindow.SetActive(false);
+        logwindow = GameObject.Find("logwindow");
+        logwindow.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
+        //logwindow.SetActive(false);
+        manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        mapbutton = GameObject.Find("map");
+        logbutton = GameObject.Find("log");
+        settingbutton = GameObject.Find("setting");
     }
 
     void Start()
     {
         itemspy1.Add(4);
         itemspy2.Add(4);
+        itemterrorist.Add(1);
+        itemterrorist.Add(2);
+        itemterrorist.Add(3);
         itemterrorist.Add(4);
+        itemterrorist.Add(5);
 
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
