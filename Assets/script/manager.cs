@@ -83,7 +83,7 @@ public class manager : MonoBehaviour
         saikorobutton = GameObject.Find("saikoro");
         itembutton = GameObject.Find("item");
         modorubutton = GameObject.Find("modoru");
-        saikorobutton.SetActive(false);
+        //saikorobutton.SetActive(false);
         itembutton.SetActive(false);
         itemcanvas.SetActive(false);
         susumubutton = GameObject.Find("susumu");
@@ -115,7 +115,9 @@ public class manager : MonoBehaviour
 
     void Start()
     {
-        //itemspy1.Add(2);
+        itemspy1.Add(4);
+        itemspy2.Add(4);
+        itemterrorist.Add(4);
 
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");

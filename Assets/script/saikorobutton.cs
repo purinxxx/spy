@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class saikorobutton : MonoBehaviour {
 
     public void huru() {
+        manager.saikorobutton.GetComponent<Button>().interactable = false;
         Debug.Log("さいころをふる");
         manager.saikoro = true;
     }

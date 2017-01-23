@@ -55,7 +55,8 @@ public class spy1 : MonoBehaviour
         }
         else
         {
-            manager.saikorobutton.SetActive(true);
+            //manager.saikorobutton.SetActive(true);
+            manager.saikorobutton.GetComponent<Button>().interactable = true;
             if (manager.itemspy1.Count > 0) manager.itembutton.SetActive(true);
         }
         manager.playflag = true;
@@ -214,7 +215,7 @@ public class spy1 : MonoBehaviour
                     a_rect.localScale = new Vector3(1, 1, 1);
                     defaulty += 120;
                 }
-                manager.saikorobutton.SetActive(false);
+                //manager.saikorobutton.SetActive(false);
                 manager.itembutton.SetActive(false);
                 manager.item = false;
             }
@@ -222,7 +223,8 @@ public class spy1 : MonoBehaviour
             {
                 GameObject[] items = GameObject.FindGameObjectsWithTag("item");
                 foreach (GameObject g in items) Destroy(g);
-                manager.saikorobutton.SetActive(true);
+                //manager.saikorobutton.SetActive(true);
+                manager.saikorobutton.GetComponent<Button>().interactable = true;
                 //manager.itembutton.SetActive(true);
                 manager.itemcanvas.SetActive(false);
                 manager.modoru = false;
@@ -230,7 +232,8 @@ public class spy1 : MonoBehaviour
             if (manager.item4) //自転車
             {
                 manager.item4 = false;
-                manager.saikorobutton.SetActive(false);
+                //manager.saikorobutton.SetActive(false);
+                manager.saikorobutton.GetComponent<Button>().interactable = false;
                 manager.itembutton.SetActive(false);
                 manager.maebutton.SetActive(true);
                 manager.usirobutton.SetActive(true);
@@ -254,7 +257,8 @@ public class spy1 : MonoBehaviour
             if (manager.item5) //麻酔銃
             {
                 manager.item5 = false;
-                manager.saikorobutton.SetActive(false);
+                //manager.saikorobutton.SetActive(false);
+                manager.saikorobutton.GetComponent<Button>().interactable = false;
                 manager.itembutton.SetActive(false);
                 manager.terroristbutton.SetActive(true);
                 manager.spy2button.SetActive(true);
@@ -268,7 +272,8 @@ public class spy1 : MonoBehaviour
                 manager.spy2button.SetActive(false);
                 manager.koudouseigen[0] += 1;
                 //mati = true;
-                manager.saikorobutton.SetActive(true);
+                //manager.saikorobutton.SetActive(true);
+                manager.saikorobutton.GetComponent<Button>().interactable = true;
             }
             else if (manager.player_spy2) //麻酔銃
             {
@@ -279,16 +284,19 @@ public class spy1 : MonoBehaviour
                 manager.spy2button.SetActive(false);
                 manager.koudouseigen[2] += 1;
                 //mati = true;
-                manager.saikorobutton.SetActive(true);
+                //manager.saikorobutton.SetActive(true);
+                manager.saikorobutton.GetComponent<Button>().interactable = true;
             }
             if (manager.item1)
             {
-                manager.saikorobutton.SetActive(false);
+                //manager.saikorobutton.SetActive(false);
+                manager.saikorobutton.GetComponent<Button>().interactable = false;
                 manager.itembutton.SetActive(false);
                 manager.item1 = false;
                 manager.spylife[0] += 1;
                 //mati = true;
-                manager.saikorobutton.SetActive(true);
+                //manager.saikorobutton.SetActive(true);
+                manager.saikorobutton.GetComponent<Button>().interactable = true;
             }
             if (manager.saikoro)
             {
@@ -307,7 +315,8 @@ public class spy1 : MonoBehaviour
                     manager.item3 = false;
                 }
                 manager.saikoro = false;
-                manager.saikorobutton.SetActive(false);
+                //manager.saikorobutton.SetActive(false);
+                manager.saikorobutton.GetComponent<Button>().interactable = false;
                 manager.itembutton.SetActive(false);
                 manager.susumubutton.SetActive(true);
                 manager.tansakubutton.SetActive(true);
@@ -631,7 +640,7 @@ public class spy1 : MonoBehaviour
 
     private IEnumerator matu(int me)
     {
-        while (me != idoume)
+        while (Mathf.Abs(me) != idoume)
         {
             yield return new WaitForSeconds(0.01f);
         }
