@@ -135,13 +135,13 @@ public class manager : MonoBehaviour
 
     void Start()
     {
-        itemspy1.Add(4);
+        /*itemspy1.Add(4);
         itemspy2.Add(4);
         itemterrorist.Add(1);
         itemterrorist.Add(2);
         itemterrorist.Add(3);
         itemterrorist.Add(4);
-        itemterrorist.Add(5);
+        itemterrorist.Add(5);*/
 
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");

@@ -14,6 +14,7 @@ public class spy2 : MonoBehaviour
     int idoume;
     string ternplayer;
     public static bool mati = false;
+    bool masui = false;
     GameObject mituketabom;
     public static int mieru = 0;
     bool setti = false;
@@ -22,9 +23,11 @@ public class spy2 : MonoBehaviour
     GameObject t;
     Vector3 pos;
     Vector3 camerapos = manager.maincamera.transform.position;
+    int bairitu;
 
     public void play()
     {
+        bairitu = 1;
         bagutubusi = true;
         camerapos.x = this.transform.position.x;
         camerapos.y = this.transform.position.y;
@@ -43,6 +46,7 @@ public class spy2 : MonoBehaviour
         ternplayer = this.gameObject.name;
         Debug.Log(ternplayer + "　スパイ２（青）のターン");
         manager.message.text = "スパイ２（青）のターン";
+        manager.logcontent.text = manager.logcontent.text + "\nスパイ２（青）のターン\n";
         if (manager.spy1tpos[0] != 0) toutyousuru(manager.spy1tpos[0]);
         if (manager.spy1tpos[1] != 0) toutyousuru(manager.spy1tpos[1]);
         if (manager.spy2tpos[0] != 0) toutyousuru(manager.spy2tpos[0]);
@@ -51,14 +55,16 @@ public class spy2 : MonoBehaviour
         {
             Debug.Log("麻酔状態で動けない");
             manager.message.text = "麻酔状態で動けない";
+            manager.logcontent.text = manager.logcontent.text + "\nスパイ２は麻酔状態で動けない\n";
             manager.koudouseigen[2] -= 1;
-            mati = true;
+            masui = true;
         }
         else
         {
             //manager.saikorobutton.SetActive(true);
             manager.saikorobutton.GetComponent<Button>().interactable = true;
             if (manager.itemspy2.Count > 0) manager.itembutton.GetComponent<Button>().interactable = true;
+            else manager.itembutton.GetComponent<Button>().interactable = false;
         }
         manager.playflag = true;
     }
@@ -79,12 +85,14 @@ public class spy2 : MonoBehaviour
                     mieru = 0;
                     Debug.Log("爆弾を踏んでスパイ2死亡");
                     manager.message.text = "爆弾を踏んでスパイ2死亡";
+                    manager.logcontent.text = manager.logcontent.text + "\n爆弾を踏んでスパイ2死亡\n";
                     mati = true;
                     break;
                 }else
                 {
                     Debug.Log("爆弾を踏んだがプロテクターに守られた");
                     manager.message.text = "爆弾を踏んだがプロテクターに守られた";
+                    manager.logcontent.text = manager.logcontent.text + "\nスパイ２は爆弾を踏んだがプロテクターに守られた\n";
                 }
             }
         }
@@ -97,6 +105,7 @@ public class spy2 : MonoBehaviour
             //Destroy(GameObject.Find("terrorist"));
             Debug.Log("テロリスト死亡");
             manager.message.text = "テロリスト死亡";
+            manager.logcontent.text = manager.logcontent.text + "\nテロリスト死亡\n";
             mati = true;
         }
         //}
@@ -127,15 +136,17 @@ public class spy2 : MonoBehaviour
                     //爆弾見つけた
                     Debug.Log("爆弾見つけた");
                     manager.message.text = "爆弾見つけた";
+                    manager.logcontent.text = manager.logcontent.text + "\n盗聴器によって爆弾見つけた\n";
                     GameObject b = GameObject.Find("bom" + (k).ToString());
                     b.GetComponent<Renderer>().sortingOrder = 5;
                 }
             }
             if (k == manager.bom2pos[0])
             {
-                //トラップ爆弾見つけた
-                Debug.Log("トラップ爆弾見つけた");
-                manager.message.text = "トラップ爆弾見つけた";
+                //強力な爆弾見つけた
+                Debug.Log("強力な爆弾見つけた");
+                manager.message.text = "強力な爆弾見つけた";
+                manager.logcontent.text = manager.logcontent.text + "\n盗聴器によって強力な爆弾見つけた\n";
                 GameObject b = GameObject.Find("bom2" + (k).ToString());
                 b.GetComponent<Renderer>().sortingOrder = 5;
             }
@@ -144,6 +155,7 @@ public class spy2 : MonoBehaviour
                 //テロリスト見つけた
                 Debug.Log("テロリスト見つけた");
                 manager.message.text = "テロリスト見つけた";
+                manager.logcontent.text = manager.logcontent.text + "\n盗聴器によってテロリスト見つけた\n";
                 GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
             }
         }
@@ -157,6 +169,7 @@ public class spy2 : MonoBehaviour
             {
                 Debug.Log("爆弾見つけた");
                 manager.message.text = "爆弾見つけた";
+                manager.logcontent.text = manager.logcontent.text + "\n盗聴器で爆弾を上書きした\n";
                 GameObject b = GameObject.Find("bom" + (x).ToString());
                 b.GetComponent<Renderer>().sortingOrder = 5;
                 manager.bompos[j - 1] = 0;
@@ -165,8 +178,9 @@ public class spy2 : MonoBehaviour
         }
         if (x == manager.bom2pos[0])
         {
-            Debug.Log("トラップ爆弾見つけた");
-            manager.message.text = "トラップ爆弾見つけた";
+            Debug.Log("強力な爆弾見つけた");
+            manager.message.text = "強力な爆弾見つけた";
+            manager.logcontent.text = manager.logcontent.text + "\n盗聴器で強力な爆弾を上書きした\n";
             GameObject b = GameObject.Find("bom2" + (x).ToString());
             b.GetComponent<Renderer>().sortingOrder = 5;
             manager.bom2pos[0] = 0;
@@ -271,6 +285,7 @@ public class spy2 : MonoBehaviour
             {
                 Debug.Log("テロリストは次のターン動けない");
                 manager.message.text = "テロリストは次のターン動けない";
+                manager.logcontent.text = manager.logcontent.text + "\nテロリストは次のターン動けない\n";
                 manager.player_terrorist = false;
                 manager.terroristbutton.SetActive(false);
                 manager.spy1button.SetActive(false);
@@ -283,6 +298,7 @@ public class spy2 : MonoBehaviour
             {
                 Debug.Log("スパイ１は次のターン動けない");
                 manager.message.text = "スパイ１は次のターン動けない";
+                manager.logcontent.text = manager.logcontent.text + "\nスパイ１は次のターン動けない\n";
                 manager.player_spy1 = false;
                 manager.terroristbutton.SetActive(false);
                 manager.spy1button.SetActive(false);
@@ -303,22 +319,28 @@ public class spy2 : MonoBehaviour
                 //manager.saikorobutton.SetActive(true);
                 manager.saikorobutton.GetComponent<Button>().interactable = true;
             }
+            if (manager.item2)
+            {
+                manager.message.text = "スパイ２は車を使った";
+                manager.logcontent.text = manager.logcontent.text + "\nスパイ２は車使った\n";
+                bairitu = 2;
+                manager.item2 = false;
+            }
+            if (manager.item3)
+            {
+                manager.message.text = "スパイ２はヘリを使った";
+                manager.logcontent.text = manager.logcontent.text + "\nスパイ２はヘリを使った\n";
+                bairitu = 3;
+                manager.item3 = false;
+            }
             if (manager.saikoro)
             {
                 manager.maincamera.transform.position = camerapos;
                 me = Random.Range(1, 7);
                 Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
-                if (manager.item2)
-                {
-                    me = me * 2;
-                    manager.item2 = false;
-                }
-                else if (manager.item3)
-                {
-                    me = me * 3;
-                    manager.item3 = false;
-                }
+                manager.logcontent.text = manager.logcontent.text + "\n" + me.ToString() + "の目が出た\n";
+                me = me * bairitu;
                 manager.saikoro = false;
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
@@ -364,16 +386,18 @@ public class spy2 : MonoBehaviour
                         manager.bom2pos[0] = 0;
                         if (manager.spylife[1] == 0)
                         {
-                            Debug.Log("トラップ爆弾に引っかかりスパイ2死亡");
-                            manager.message.text = "トラップ爆弾に引っかかりスパイ2死亡";
+                            Debug.Log("強力な爆弾に引っかかりスパイ2死亡");
+                            manager.message.text = "強力な爆弾に引っかかりスパイ2死亡";
+                            manager.logcontent.text = manager.logcontent.text + "\n強力な爆弾に引っかかりスパイ2死亡\n";
                             GameObject.Find("spy2").GetComponent<Renderer>().sortingOrder = -5;
                             manager.playerpos[2] = -1;
                             mieru = 0;
                             break;
                         }else
                         {
-                            Debug.Log("トラップ爆弾に引っかかったがプロテクターに守られた");
-                            manager.message.text = "トラップ爆弾に引っかかったがプロテクターに守られた";
+                            Debug.Log("強力な爆弾に引っかかったがプロテクターに守られた");
+                            manager.message.text = "強力な爆弾に引っかかったがプロテクターに守られた";
+                            manager.logcontent.text = manager.logcontent.text + "\nスパイ２は強力な爆弾に引っかかったがプロテクターに守られた\n";
                         }
                     }
                 }
@@ -391,11 +415,11 @@ public class spy2 : MonoBehaviour
                 {
                     int item = Random.Range(1, 6);
                     manager.itemspy2.Add(item);
-                    if (item == 1) manager.message.text = "プロテクターを手に入れた";
-                    else if (item == 2) manager.message.text = "車を手に入れた";
-                    else if (item == 3) manager.message.text = "ヘリを手に入れた";
-                    else if (item == 4) manager.message.text = "自転車を手に入れた";
-                    else if (item == 5) manager.message.text = "麻酔銃を手に入れた";
+                    if (item == 1) { manager.message.text = "プロテクターを手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nスパイ１はプロテクターを手に入れた\n"; }
+                    else if (item == 2) { manager.message.text = "車を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nスパイ２は車を手に入れた\n"; }
+                    else if (item == 3) { manager.message.text = "ヘリを手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nスパイ３はヘリを手に入れた\n"; }
+                    else if (item == 4) { manager.message.text = "自転車を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nスパイ４は自転車を手に入れた\n"; }
+                    else if (item == 5) { manager.message.text = "麻酔銃を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nスパイ５は麻酔銃を手に入れた\n"; }
                     Debug.Log(item);
                 }
                 if (manager.playerpos[0] > 0 && manager.playerpos[2] > 0)
@@ -408,6 +432,7 @@ public class spy2 : MonoBehaviour
             {
                 Debug.Log("探索中");
                 manager.message.text = "探索中";
+                manager.logcontent.text = manager.logcontent.text + "\nスパイ２は探索した\n";
                 manager.tansaku = false;
                 manager.susumu = false;
                 manager.susumubutton.SetActive(false);
@@ -429,6 +454,7 @@ public class spy2 : MonoBehaviour
                             //爆弾見つけた
                             Debug.Log("爆弾見つけた");
                             manager.message.text = "爆弾見つけた";
+                            manager.logcontent.text = manager.logcontent.text + "\n探索によって爆弾見つけた\n";
                             Debug.Log(k);
                             Debug.Log(manager.bompos[0]);
                             Debug.Log(manager.bompos[1]);
@@ -441,9 +467,10 @@ public class spy2 : MonoBehaviour
                     }
                     if (k == manager.bom2pos[0])
                     {
-                        //トラップ爆弾見つけた
-                        Debug.Log("トラップ爆弾見つけた");
-                        manager.message.text = "トラップ爆弾見つけた";
+                        //強力な爆弾見つけた
+                        Debug.Log("強力な爆弾見つけた");
+                        manager.message.text = "強力な爆弾見つけた";
+                        manager.logcontent.text = manager.logcontent.text + "\n探索によって強力な爆弾見つけた\n";
                         GameObject b = GameObject.Find("bom2" + (k).ToString());
                         b.GetComponent<Renderer>().sortingOrder = 5;
                         manager.bom2pos[0] = 0;
@@ -454,10 +481,12 @@ public class spy2 : MonoBehaviour
                         //テロリスト見つけた
                         Debug.Log("テロリスト見つけた");
                         manager.message.text = "テロリスト見つけた";
+                        manager.logcontent.text = manager.logcontent.text + "\n探索によってテロリスト見つけた\n";
                         GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
                         mieru = 3;
                         if (manager.playerpos[0] == manager.playerpos[2]) manager.playerpos[0] = 0;
                         manager.message.text = "スパイの勝利 ";
+                        manager.logcontent.text = manager.logcontent.text + "\nスパイの勝利\n";
                     }
                 }
                 Debug.Log("探索終了");
@@ -555,6 +584,8 @@ public class spy2 : MonoBehaviour
                                 // 盗聴器置く
                                 if (manager.spy2tpos[0] == 0)
                                 {
+                                    manager.message.text = "盗聴器を設置した";
+                                    manager.logcontent.text = manager.logcontent.text + "\nスパイ２は盗聴器を設置した\n";
                                     manager.spy2tpos[0] = m;
                                     Vector3 tpos = obj.transform.position;
                                     t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
@@ -567,6 +598,8 @@ public class spy2 : MonoBehaviour
                                 }
                                 else if (manager.spy2tpos[1] == 0)
                                 {
+                                    manager.message.text = "盗聴器を設置した";
+                                    manager.logcontent.text = manager.logcontent.text + "\nスパイ２は盗聴器を設置した\n";
                                     manager.spy2tpos[1] = m;
                                     Vector3 tpos = obj.transform.position;
                                     t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
@@ -585,10 +618,11 @@ public class spy2 : MonoBehaviour
                         }
                     }
                 }
-                else if (mati && this.transform.position == pos)
+                else if (mati && this.transform.position == pos || masui)
                 {
                     GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = false;
                     mati = false;
+                    masui = false;
                     Debug.Log("ターンエンド");
                     manager.message.text = "ターンエンド";
                     manager.playflag = false;
@@ -597,10 +631,12 @@ public class spy2 : MonoBehaviour
                     if (manager.playerpos[1] == 0 && manager.playerpos[2] == 0)
                     {
                         manager.message.text = "テロリストの勝利 ";
+                        manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
                     }
                     else if (manager.playerpos[0] == 0)
                     {
                         manager.message.text = "スパイの勝利 ";
+                        manager.logcontent.text = manager.logcontent.text + "\nスパイの勝利\n";
                     }
                     else if (manager.playerpos[0] != 0)
                     {
@@ -620,6 +656,8 @@ public class spy2 : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         Destroy(mituketabom);
         Debug.Log("爆弾を除去した " + mituketabom.name);
+        manager.message.text = "爆弾を除去した " + mituketabom.name;
+        manager.logcontent.text = manager.logcontent.text + "\nスパイ２は爆弾を除去した\n";
     }
 
     private IEnumerator idou(Vector3 player, Vector3 camera, int time)
