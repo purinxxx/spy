@@ -29,6 +29,9 @@ public class terrorist : MonoBehaviour
 
     public void play()
     {
+        manager.player_direction(0, manager.playerpos[0]);
+        manager.player_direction(1, manager.playerpos[1]);
+        manager.player_direction(2, manager.playerpos[2]);
         bairitu = 1;
         bagutubusi = true;
         ternplayer = this.gameObject.name;
@@ -132,7 +135,7 @@ public class terrorist : MonoBehaviour
             {
                 manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
-                int defaultx = -315;
+                int defaultx = -260;
                 foreach (int i in manager.itemterrorist)
                 {
                     Debug.Log(i);
@@ -144,7 +147,7 @@ public class terrorist : MonoBehaviour
                     RectTransform a_rect = a.GetComponent<RectTransform>();
                     a_rect.anchoredPosition = new Vector2(defaultx, 145);
                     a_rect.localScale = new Vector3(1,1,1);
-                    defaultx += 150;
+                    defaultx += 140;
                 }
                 //manager.saikorobutton.SetActive(false);
                 //manager.saikorobutton.GetComponent<Button>().interactable = false;
@@ -291,6 +294,9 @@ public class terrorist : MonoBehaviour
             if (go)
             {
                 go = false;
+                manager.player_direction(0, manager.playerpos[0]);
+                manager.player_direction(1, manager.playerpos[1]);
+                manager.player_direction(2, manager.playerpos[2]);
                 k = l + me;
                 if (k > manager.total) k -= manager.total; //一周した場合
                 if (k < 1) k += manager.total; //一周した場合
@@ -590,6 +596,7 @@ public class terrorist : MonoBehaviour
         }
         Debug.Log(time);
         idoume = time;
+        //manager.player_direction(manager.playerpos[0] + time);
     }
 
     private IEnumerator matu(int me)

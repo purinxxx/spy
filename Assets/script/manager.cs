@@ -80,6 +80,24 @@ public class manager : MonoBehaviour
 
     // Use this for initialization
 
+    public static void player_direction(int who, int j)
+    {
+        float direction;
+        if (j > total) j -= total; //一周した場合
+        if (j < 1) j += total; //一周した場合
+        int k = j + 1;
+        if (k > total) k -= total; //一周した場合
+        if (k < 1) k += total; //一周した場合
+        float x1 = GameObject.Find(j.ToString()).transform.position.x;
+        float x2 = GameObject.Find(k.ToString()).transform.position.x;
+        if (x1 > x2) direction = 0.1f;
+        else direction = -0.1f;
+        if (who==0) GameObject.Find("terrorist").transform.localScale = new Vector3(direction, 0.1f, 0.1f);
+        if (who==1) GameObject.Find("spy1").transform.localScale = new Vector3(direction, 0.1f, 0.1f);
+        if (who==2) GameObject.Find("spy2").transform.localScale = new Vector3(direction, 0.1f, 0.1f);
+    }
+
+
     void Awake()
     {
         maincamera = GameObject.Find("Main Camera");
@@ -135,13 +153,18 @@ public class manager : MonoBehaviour
 
     void Start()
     {
-        /*itemspy1.Add(4);
+        //デバッグ用
+        itemspy1.Add(2);
+        itemspy1.Add(3);
+        itemspy1.Add(4);
+        itemspy2.Add(2);
+        itemspy2.Add(3);
         itemspy2.Add(4);
-        itemterrorist.Add(1);
         itemterrorist.Add(2);
         itemterrorist.Add(3);
         itemterrorist.Add(4);
-        itemterrorist.Add(5);*/
+        itemterrorist.Add(5);
+        itemterrorist.Add(3);
 
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");

@@ -27,6 +27,9 @@ public class spy2 : MonoBehaviour
 
     public void play()
     {
+        manager.player_direction(0, manager.playerpos[0]);
+        manager.player_direction(1, manager.playerpos[1]);
+        manager.player_direction(2, manager.playerpos[2]);
         bairitu = 1;
         bagutubusi = true;
         camerapos.x = this.transform.position.x;
@@ -214,7 +217,7 @@ public class spy2 : MonoBehaviour
             {
                 manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
-                int defaultx = -315;
+                int defaultx = -280;
                 foreach (int i in manager.itemspy2)
                 {
                     Debug.Log(i);
@@ -227,7 +230,7 @@ public class spy2 : MonoBehaviour
                     RectTransform a_rect = a.GetComponent<RectTransform>();
                     a_rect.anchoredPosition = new Vector2(defaultx, 145);
                     a_rect.localScale = new Vector3(1, 1, 1);
-                    defaultx += 150;
+                    defaultx += 140;
                 }
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
@@ -410,6 +413,9 @@ public class spy2 : MonoBehaviour
             if (go)
             {
                 go = false;
+                manager.player_direction(0, manager.playerpos[0]);
+                manager.player_direction(1, manager.playerpos[1]);
+                manager.player_direction(2, manager.playerpos[2]);
                 hantei();
                 if (GameObject.Find(manager.playerpos[2].ToString()).transform.tag == "itemmasu")
                 {
@@ -679,6 +685,7 @@ public class spy2 : MonoBehaviour
         }
         Debug.Log(time);
         idoume = time;
+        //manager.player_direction(manager.playerpos[2] + time);
     }
 
     private IEnumerator matu(int me)
@@ -686,6 +693,7 @@ public class spy2 : MonoBehaviour
         while (Mathf.Abs(me) != idoume)
         {
             yield return new WaitForSeconds(0.01f);
+            if (manager.playerpos[1] <= 0) break;
         }
         go = true;
     }
