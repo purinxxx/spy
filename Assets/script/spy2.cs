@@ -195,7 +195,7 @@ public class spy2 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        plefab_t = (GameObject)Resources.Load("toutyouki");
+        plefab_t = (GameObject)Resources.Load("toutyouki2");
 
     }
 

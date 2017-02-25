@@ -80,7 +80,7 @@ public class Swipe : MonoBehaviour {
 
         if (prevXd != Math.Abs(prevX - worldpos.x))
         {
-            if (pos.x + (prevX - worldpos.x) > -1 && pos.x + (prevX - worldpos.x) < 46)
+            if (pos.x + (prevX - worldpos.x) > 1f && pos.x + (prevX - worldpos.x) < 44f)
             {
                 //if (Math.Abs(prevX - worldpos.x) > 0.1f)
                 //{
@@ -91,7 +91,7 @@ public class Swipe : MonoBehaviour {
 
         if (prevYd != Math.Abs(prevY - worldpos.y))
         {
-            if (pos.y + (prevY - worldpos.y) > -23 && pos.y + (prevY - worldpos.y) < -2)
+            if (pos.y + (prevY - worldpos.y) > -22.5f && pos.y + (prevY - worldpos.y) < -2.5f)
             {
                 //if (Math.Abs(prevY - worldpos.y) > 0.1f)
                 //{
