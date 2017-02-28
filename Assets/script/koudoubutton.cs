@@ -124,60 +124,88 @@ public class koudoubutton : MonoBehaviour
         manager.player_spy2 = true;
     }
 
-    public void terrorist()
-    {
-        Debug.Log("terrorist押した");
-        manager.player_terrorist = true;
-    }
+	public void terrorist()
+	{
+		Debug.Log("terrorist押した");
+		manager.player_terrorist = true;
+	}
+
+	public void itemsiyousuru()
+	{
+		Debug.Log (manager.selecteditem);
+		Debug.Log("使用する押した");
+		manager.modoru = true;
+		if(manager.selecteditem==1)	manager.item1 = true;
+		if (manager.selecteditem == 2) {
+			manager.item2 = true;
+			Debug.Log("くるま！");
+		}
+		if(manager.selecteditem==3)	manager.item3 = true;
+		if(manager.selecteditem==4)	manager.item4 = true;
+		if(manager.selecteditem==5)	manager.item5 = true;
+		removeitem(manager.selecteditem);
+		foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+		manager.itemwindow.SetActive (false);
+	}
+
+	public void itemcancel()
+	{
+		Debug.Log("キャンセル押した");
+		manager.itemwindow.SetActive (false);
+		manager.itembutton.GetComponent<Button>().interactable = true;
+		foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+	}
 
     public void item1()
     {
-        Debug.Log("プロテクター");
-        manager.modoru = true;
-        //manager.itembutton.SetActive(false);
-        manager.item1 = true;
-        removeitem(1);
-        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+		Debug.Log("プロテクター");
+		manager.itemtitle.text = "プロテクター";
+		manager.itemsentence.text = "スパイ専用アイテム\n爆弾から１回身を守れる。\n効果は重複する。";
+		manager.modoru = true;
+		manager.selecteditem = 1;
+		manager.itemcanvas.SetActive(false);
+		manager.itemwindow.SetActive (true);
     }
 
     public void item2()
     {
-        Debug.Log("車");
-        manager.modoru = true;
-        //manager.itembutton.SetActive(false);
-        manager.item2 = true;
-        removeitem(2);
-        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+		Debug.Log("車");
+		manager.itemtitle.text = "自動車";
+		manager.itemsentence.text = "さいころの目が２倍になる。";
+		manager.selecteditem = 2;
+		manager.itemcanvas.SetActive(false);
+		manager.itemwindow.SetActive (true);
     }
 
     public void item3()
     {
-        Debug.Log("ヘリ");
-        manager.modoru = true;
-        //manager.itembutton.SetActive(false);
-        manager.item3 = true;
-        removeitem(3);
-        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+		Debug.Log("ヘリ");
+		manager.itemtitle.text = "ヘリコプター";
+		manager.itemsentence.text = "さいころの目が３倍になる。";
+		manager.selecteditem = 3;
+		manager.itemcanvas.SetActive(false);
+		manager.itemwindow.SetActive (true);
     }
 
     public void item4()
     {
-        Debug.Log("自転車(前か後ろに３マス進める)");
-        manager.modoru = true;
-        //manager.itembutton.SetActive(false);
-        manager.item4 = true;
-        removeitem(4);
-        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+		Debug.Log("自転車(前か後ろに３マス進める)");
+		manager.itemtitle.text = "自転車";
+		manager.itemsentence.text = "前か後ろに３マス進める。";
+		manager.selecteditem = 4;
+		manager.itemcanvas.SetActive(false);
+		manager.itemwindow.SetActive (true);
     }
 
     public void item5()
     {
-        Debug.Log("麻酔銃(任意のプレイヤーを一回休みにする)");
-        manager.modoru = true;
-        //manager.itembutton.SetActive(false);
-        manager.item5 = true;
-        removeitem(5);
-        foreach (Transform child in manager.itemcanvas.transform) if (child.name != "modoru") Destroy(child.gameObject);
+		Debug.Log("麻酔銃(任意のプレイヤーを一回休みにする)");
+		manager.itemtitle.text = "麻酔銃";
+		manager.itemsentence.text = "任意のプレイヤーを１回休みにする。";
+		manager.modoru = true;
+		manager.selecteditem = 5;
+		manager.itemcanvas.SetActive(false);
+		manager.itemwindow.SetActive (true);
     }
 
     public void map()

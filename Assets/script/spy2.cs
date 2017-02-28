@@ -217,7 +217,7 @@ public class spy2 : MonoBehaviour
             {
                 manager.maincamera.transform.position = camerapos;
                 manager.itemcanvas.SetActive(true);
-                int defaultx = -280;
+                int defaultx = -260;
                 foreach (int i in manager.itemspy2)
                 {
                     Debug.Log(i);

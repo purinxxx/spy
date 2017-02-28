@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 public class manager : MonoBehaviour
 {
-    //public static Text message;
-
+	public static Text itemtitle;
+	public static Text itemsentence;
+	public static int selecteditem = 0;
     public static Text message;
     public static Text logcontent;
     public static int[] playerpos = new int[3]; // 各プレイヤーの現在位置を保存するパブリックな配列（とりあえず３人プレイ）
@@ -36,8 +37,9 @@ public class manager : MonoBehaviour
     public static GameObject terroristbutton;
     public static GameObject boms;
     public static GameObject bom2s;
-    public static GameObject ts;
-    public static GameObject mapwindow;
+	public static GameObject ts;
+	public static GameObject mapwindow;
+	public static GameObject itemwindow;
     public static GameObject logwindow;
     public static GameObject mapbutton;
     public static GameObject logbutton;
@@ -100,8 +102,10 @@ public class manager : MonoBehaviour
 
     void Awake()
     {
-        maincamera = GameObject.Find("Main Camera");
-        message = GameObject.Find("message").GetComponentInChildren<Text>();
+		maincamera = GameObject.Find("Main Camera");
+		itemtitle = GameObject.Find("title").GetComponentInChildren<Text>();
+		itemsentence = GameObject.Find("sentence").GetComponentInChildren<Text>();
+		message = GameObject.Find("message").GetComponentInChildren<Text>();
         logcontent = GameObject.Find("LogContent").GetComponentInChildren<Text>();
         canvas = GameObject.Find("Canvas");
         itemcanvas = GameObject.Find("itemCanvas");
@@ -139,9 +143,11 @@ public class manager : MonoBehaviour
         terroristbutton.SetActive(false);
         boms = GameObject.Find("boms");
         bom2s = GameObject.Find("bom2s");
-        ts = GameObject.Find("ts");
-        mapwindow = GameObject.Find("mapwindow");
-        mapwindow.SetActive(false);
+		ts = GameObject.Find("ts");
+		itemwindow = GameObject.Find("itemwindow");
+		itemwindow.SetActive(false);
+		mapwindow = GameObject.Find("mapwindow");
+		mapwindow.SetActive(false);
         logwindow = GameObject.Find("logwindow");
         logwindow.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
         //logwindow.SetActive(false);
