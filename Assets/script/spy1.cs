@@ -244,7 +244,7 @@ public class spy1 : MonoBehaviour
                     RectTransform a_rect = a.GetComponent<RectTransform>();
                     a_rect.anchoredPosition = new Vector2(defaultx, 145);
                     a_rect.localScale = new Vector3(1, 1, 1);
-                    defaultx += 140;
+                    defaultx += 160;
                 }
                 //manager.saikorobutton.SetActive(false);
                 //manager.itembutton.SetActive(false);
