@@ -300,6 +300,18 @@ public class manager : MonoBehaviour
 
 	private IEnumerator wingamen(int who){
 		gameend = true;
+		if (who == 0) {
+			GameObject.Find("winspy1").SetActive(false);
+			GameObject.Find("winspy2").SetActive(false);
+		}
+		if(who==1) {
+			GameObject.Find("winterrorist").SetActive(false);
+			GameObject.Find("winspy2").SetActive(false);
+		}
+		if(who==2) {
+			GameObject.Find("winspy1").SetActive(false);
+			GameObject.Find("winterrorist").SetActive(false);
+		}
 		Debug.Log (who);
 		yield return new WaitForSeconds(1f);
 		manager.bgm.Stop ();
