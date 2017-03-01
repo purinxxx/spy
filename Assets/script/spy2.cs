@@ -233,7 +233,7 @@ public class spy2 : MonoBehaviour
                     defaultx += 140;
                 }
                 //manager.saikorobutton.SetActive(false);
-                manager.saikorobutton.GetComponent<Button>().interactable = false;
+                //manager.saikorobutton.GetComponent<Button>().interactable = false;
                 //manager.itembutton.SetActive(false);
                 manager.itembutton.GetComponent<Button>().interactable = false;
                 manager.item = false;
