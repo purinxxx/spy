@@ -11,6 +11,7 @@ public class terrorist : MonoBehaviour
 	public AudioClip soundbicycle;
 	public AudioClip soundsetti;
 	public AudioClip soundkaijo;
+	public AudioClip soundwin;
 	AudioSource audio;
 
     bool go = false;
@@ -604,10 +605,11 @@ public class terrorist : MonoBehaviour
                         manager.spy2tern = true; // 次のターンへ
                     }
                     else
-                    {
+					{
                         Debug.Log("テロリストの勝利");
                         manager.message.text = "テロリストの勝利";
                         manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
+						StartCoroutine(win (0));
                     }
                 }
             }
@@ -654,4 +656,15 @@ public class terrorist : MonoBehaviour
         Swipe.prevY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
         GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
     }
+
+
+	private IEnumerator win(int who){
+		Debug.Log (who);
+		yield return new WaitForSeconds(1f);
+		manager.bgm.Stop ();
+		manager.wincanvas.GetComponent<Canvas>().enabled = true;
+		//manager.win.Play ();
+		audio.PlayOneShot(soundwin);
+	}
+
 }

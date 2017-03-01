@@ -5,6 +5,13 @@ using System.Collections.Generic;
 
 public class manager : MonoBehaviour
 {
+	bool gameend=false;
+
+	public static AudioSource bgm;
+	public static AudioSource win;
+	public AudioClip soundwin;
+	AudioSource audio;
+
 	public static Text itemtitle;
 	public static Text itemsentence;
 	public static int selecteditem = 0;
@@ -20,7 +27,8 @@ public class manager : MonoBehaviour
     public static GameObject maincamera;
     public static GameObject canvas;
     public static GameObject itemcanvas;
-    public static GameObject logcanvas;
+	public static GameObject logcanvas;
+	public static GameObject wincanvas;
     public static GameObject saikorobutton;
     public static GameObject itembutton;
     public static GameObject modorubutton;
@@ -102,15 +110,16 @@ public class manager : MonoBehaviour
 
 
     void Awake()
-    {
+	{
 		maincamera = GameObject.Find("Main Camera");
 		itemtitle = GameObject.Find("title").GetComponentInChildren<Text>();
 		itemsentence = GameObject.Find("sentence").GetComponentInChildren<Text>();
 		message = GameObject.Find("message").GetComponentInChildren<Text>();
         logcontent = GameObject.Find("LogContent").GetComponentInChildren<Text>();
         canvas = GameObject.Find("Canvas");
-        itemcanvas = GameObject.Find("itemCanvas");
-        logcanvas = GameObject.Find("LogCanvas");
+		itemcanvas = GameObject.Find("itemCanvas");
+		logcanvas = GameObject.Find("LogCanvas");
+		wincanvas = GameObject.Find("winCanvas");
         //canvas.SetActive(false);
         //spycanvas = GameObject.Find("spyCanvas");
         //spycanvas.SetActive(false);
@@ -161,7 +170,13 @@ public class manager : MonoBehaviour
     }
 
     void Start()
-    {
+	{
+		audio = GetComponent<AudioSource>();
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		bgm = audioSources[0];
+		win = audioSources[1];
+		bgm.Play ();
+
         //デバッグ用
         itemspy1.Add(2);
         itemspy1.Add(3);
@@ -186,6 +201,10 @@ public class manager : MonoBehaviour
         while (spy1pos == terroristpos) spy1pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
         int spy2pos = Random.Range(1, total + 1);
         while (spy2pos == terroristpos || spy2pos == spy1pos) spy2pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
+
+		terroristpos = 1;
+		spy1pos = 2;
+		spy2pos = 3;
 
         playerpos[0] = terroristpos;
         playerpos[1] = spy1pos;
@@ -236,44 +255,57 @@ public class manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(playflag);
-        if (playflag == false)
-        {
-            if (playerpos[0] == 0)
-            {
-                Debug.Log("スパイの勝利");
-            }
-            else if (playerpos[1] == 0 && playerpos[2] == 0)
-            {
-                Debug.Log("テロリストの勝利");
-            }
-            else
-            {
-                if (terroristtern)
-                {
-                    foreach (int i in itemterrorist)
-                    {
-                        Debug.Log("item : " + i.ToString());
-                    }
-                    GameObject.Find("terrorist").GetComponent<terrorist>().play();
-                }
-                else if (spy1tern)
-                {
-                    foreach (int i in itemspy1)
-                    {
-                        Debug.Log("item : " + i.ToString());
-                    }
-                    if (playerpos[1]!=0) GameObject.Find("spy1").GetComponent<spy1>().play();
-                }
-                else if (spy2tern)
-                {
-                    foreach (int i in itemspy2)
-                    {
-                        Debug.Log("item : " + i.ToString());
-                    }
-                    if (playerpos[2] != 0) GameObject.Find("spy2").GetComponent<spy2>().play();
-                }
-            }
-        }
+		if (gameend == false) {
+			//Debug.Log(playflag);
+			if (playflag == false) {
+				if (playerpos [0] == 0) {
+					bgm.Stop ();
+					win.Play ();
+					if (playerpos [1] == 0) {
+						Debug.Log ("スパイ２の勝利");
+						StartCoroutine (wingamen (2));
+					}
+					if (playerpos [2] == 0) {
+						Debug.Log ("スパイ１の勝利");
+						StartCoroutine (wingamen (1));
+					}
+				} else if (playerpos [1] == 0 && playerpos [2] == 0) {
+					//bgm.Stop ();
+					//win.Play ();
+					//wincanvas.GetComponent<Canvas>().enabled = true;
+					//Debug.Log("テロリストの勝利");
+				} else {
+					if (terroristtern) {
+						foreach (int i in itemterrorist) {
+							Debug.Log ("item : " + i.ToString ());
+						}
+						GameObject.Find ("terrorist").GetComponent<terrorist> ().play ();
+					} else if (spy1tern) {
+						foreach (int i in itemspy1) {
+							Debug.Log ("item : " + i.ToString ());
+						}
+						if (playerpos [1] != 0)
+							GameObject.Find ("spy1").GetComponent<spy1> ().play ();
+					} else if (spy2tern) {
+						foreach (int i in itemspy2) {
+							Debug.Log ("item : " + i.ToString ());
+						}
+						if (playerpos [2] != 0)
+							GameObject.Find ("spy2").GetComponent<spy2> ().play ();
+					}
+				}
+			}
+		}
     }
+
+	private IEnumerator wingamen(int who){
+		gameend = true;
+		Debug.Log (who);
+		yield return new WaitForSeconds(1f);
+		manager.bgm.Stop ();
+		manager.wincanvas.GetComponent<Canvas>().enabled = true;
+		//manager.win.Play ();
+		audio.PlayOneShot(soundwin);
+	}
+
 }

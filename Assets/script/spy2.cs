@@ -13,6 +13,7 @@ public class spy2 : MonoBehaviour
 	public AudioClip soundsetti;
 	public AudioClip soundkaijo;
 	public AudioClip soundbakuhatu;
+	public AudioClip soundwin;
 	AudioSource audio;
 
     bool go = false;
@@ -99,8 +100,13 @@ public class spy2 : MonoBehaviour
 					audio.PlayOneShot (soundbakuhatu);
                     Debug.Log("爆弾を踏んでスパイ2死亡");
                     manager.message.text = "爆弾を踏んでスパイ2死亡";
-                    manager.logcontent.text = manager.logcontent.text + "\n爆弾を踏んでスパイ2死亡\n";
-                    mati = true;
+					manager.logcontent.text = manager.logcontent.text + "\n爆弾を踏んでスパイ2死亡\n";
+					if (manager.playerpos [1] == 0 && manager.playerpos [2] == 0) {
+						manager.message.text = "テロリストの勝利 ";
+						manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
+						StartCoroutine(win (0));
+					}
+                    //mati = true;
                     break;
                 }else
 				{
@@ -418,8 +424,14 @@ public class spy2 : MonoBehaviour
                             manager.message.text = "強力な爆弾に引っかかりスパイ2死亡";
                             manager.logcontent.text = manager.logcontent.text + "\n強力な爆弾に引っかかりスパイ2死亡\n";
                             GameObject.Find("spy2").GetComponent<Renderer>().sortingOrder = -5;
-                            manager.playerpos[2] = -1;
+							manager.playerpos[2] = -1;
+							if (manager.playerpos [1] == 0 && manager.playerpos [2] == 0) {
+								manager.message.text = "テロリストの勝利 ";
+								manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
+								StartCoroutine(win (0));
+							}
                             mieru = 0;
+							//mati = true;
                             break;
                         }else
                         {
@@ -518,9 +530,12 @@ public class spy2 : MonoBehaviour
                         manager.logcontent.text = manager.logcontent.text + "\n探索によってテロリスト見つけた\n";
                         GameObject.Find("terrorist").GetComponent<Renderer>().sortingOrder = 10;
                         mieru = 3;
-                        if (manager.playerpos[0] == manager.playerpos[2]) manager.playerpos[0] = 0;
-                        manager.message.text = "スパイの勝利 ";
-                        manager.logcontent.text = manager.logcontent.text + "\nスパイの勝利\n";
+						if (manager.playerpos [0] == manager.playerpos [2]) {
+							manager.playerpos [0] = 0;
+							manager.message.text = "スパイの勝利 ";
+							manager.logcontent.text = manager.logcontent.text + "\nスパイの勝利\n";
+							StartCoroutine(win (2));
+						}
                     }
                 }
                 Debug.Log("探索終了");
@@ -666,14 +681,16 @@ public class spy2 : MonoBehaviour
                     manager.spy2tern = false;
                     Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
                     if (manager.playerpos[1] == 0 && manager.playerpos[2] == 0)
-                    {
+					{
                         manager.message.text = "テロリストの勝利 ";
                         manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
+						StartCoroutine(win (0));
                     }
                     else if (manager.playerpos[0] == 0)
-                    {
+					{
                         manager.message.text = "スパイの勝利 ";
                         manager.logcontent.text = manager.logcontent.text + "\nスパイの勝利\n";
+						StartCoroutine(win (2));
                     }
                     else if (manager.playerpos[0] != 0)
                     {
@@ -738,4 +755,13 @@ public class spy2 : MonoBehaviour
         Swipe.prevY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
         GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
     }
+
+	private IEnumerator win(int who){
+		Debug.Log (who);
+		yield return new WaitForSeconds(1f);
+		manager.bgm.Stop ();
+		manager.wincanvas.GetComponent<Canvas>().enabled = true;
+		//manager.win.Play ();
+		audio.PlayOneShot(soundwin);
+	}
 }
