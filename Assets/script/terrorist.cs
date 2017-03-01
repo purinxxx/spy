@@ -173,6 +173,7 @@ public class terrorist : MonoBehaviour
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
                 //manager.itembutton.SetActive(false);
                 manager.itembutton.GetComponent<Button>().interactable = false;
+				manager.koudou.SetActive (true);
                 manager.maebutton.SetActive(true);
                 manager.usirobutton.SetActive(true);
             }
@@ -198,8 +199,11 @@ public class terrorist : MonoBehaviour
                 //manager.saikorobutton.SetActive(false);
                 manager.saikorobutton.GetComponent<Button>().interactable = false;
                 //manager.itembutton.SetActive(false);
-                manager.itembutton.GetComponent<Button>().interactable = false;
-                manager.spy1button.SetActive(true);
+				manager.itembutton.GetComponent<Button>().interactable = false;
+				manager.koudou.SetActive (true);
+				manager.spy1button.GetComponent<RectTransform>().localPosition=new Vector3(0,60,0);
+				manager.spy1button.SetActive(true);
+				manager.spy2button.GetComponent<RectTransform>().localPosition=new Vector3(0,-60,0);
                 manager.spy2button.SetActive(true);
             }
             if (manager.player_spy1) //麻酔銃
@@ -255,7 +259,9 @@ public class terrorist : MonoBehaviour
                 //manager.saikorobutton.SetActive(false);
                 //manager.saikorobutton.GetComponent<Button>().interactable = false;
                 //manager.itembutton.SetActive(false);
-                manager.itembutton.GetComponent<Button>().interactable = false;
+				manager.itembutton.GetComponent<Button>().interactable = false;
+				manager.koudou.SetActive (true);
+				manager.susumubutton.GetComponent<RectTransform>().localPosition=new Vector3(0,0,0);
                 manager.susumubutton.SetActive(true);
             }
             if (manager.susumu)
@@ -355,10 +361,21 @@ public class terrorist : MonoBehaviour
                     mati = true;
                 }
                 else
-                {
-                    manager.bombutton.SetActive(true);
-                    if (manager.bom2pos[0] == 0) manager.bom2button.SetActive(true);
-                    manager.nonebutton.SetActive(true);
+				{
+					manager.koudou.SetActive(true);
+					if (manager.bom2pos [0] == 0) {
+						manager.bombutton.GetComponent<RectTransform>().localPosition=new Vector3(0,90,0);
+						manager.bombutton.SetActive(true);
+						manager.bom2button.GetComponent<RectTransform>().localPosition=new Vector3(0,0,0);
+						manager.bom2button.SetActive (true);
+						manager.nonebutton.GetComponent<RectTransform>().localPosition=new Vector3(0,-90,0);
+						manager.nonebutton.SetActive(true);
+					} else {
+						manager.bombutton.GetComponent<RectTransform>().localPosition=new Vector3(0,60,0);
+						manager.bombutton.SetActive(true);
+						manager.nonebutton.GetComponent<RectTransform>().localPosition=new Vector3(0,-60,0);
+						manager.nonebutton.SetActive(true);
+					}
                 }
             }
 

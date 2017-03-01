@@ -53,19 +53,22 @@ public class koudoubutton : MonoBehaviour
     public void susumu()
     {
         Debug.Log("進む");
-        manager.susumu = true;
+		manager.susumu = true;
+		manager.koudou.SetActive(false);
     }
 
     public void tansaku()
     {
         Debug.Log("探索する");
-        manager.tansaku = true;
+		manager.tansaku = true;
+		manager.koudou.SetActive(false);
     }
 
     public void modoru()
     {
         Debug.Log("アイテムを使わないで前の画面に戻る");
-        notuseitem();
+		notuseitem();
+		manager.koudou.SetActive(false);
     }
 
     public void bom2()
@@ -74,7 +77,8 @@ public class koudoubutton : MonoBehaviour
         manager.bom2 = true;
         manager.bombutton.SetActive(false);
         manager.bom2button.SetActive(false);
-        manager.nonebutton.SetActive(false);
+		manager.nonebutton.SetActive(false);
+		manager.koudou.SetActive(false);
     }
 
     public void bom()
@@ -83,51 +87,59 @@ public class koudoubutton : MonoBehaviour
         manager.bom = true;
         manager.bombutton.SetActive(false);
         manager.bom2button.SetActive(false);
-        manager.nonebutton.SetActive(false);
+		manager.nonebutton.SetActive(false);
+		manager.koudou.SetActive(false);
     }
 
     public void toutyou()
     {
         Debug.Log("盗聴器を仕掛ける");
-        manager.toutyou = true;
+		manager.toutyou = true;
+		manager.koudou.SetActive(false);
     }
 
     public void none()
     {
         Debug.Log("何もしない");
-        manager.none = true;
+		manager.none = true;
+		manager.koudou.SetActive(false);
     }
 
 
     public void mae()
     {
         Debug.Log("前に３マス");
-        manager.mae = true;
+		manager.mae = true;
+		manager.koudou.SetActive(false);
     }
 
 
     public void usiro()
     {
         Debug.Log("後ろに３マス");
-        manager.usiro = true;
+		manager.usiro = true;
+		manager.koudou.SetActive(false);
     }
 
     public void spy1()
     {
         Debug.Log("spy1押した");
-        manager.player_spy1 = true;
+		manager.player_spy1 = true;
+		manager.koudou.SetActive(false);
     }
 
     public void spy2()
     {
         Debug.Log("spy2押した");
-        manager.player_spy2 = true;
+		manager.player_spy2 = true;
+		manager.koudou.SetActive(false);
     }
 
 	public void terrorist()
 	{
 		Debug.Log("terrorist押した");
 		manager.player_terrorist = true;
+		manager.koudou.SetActive(false);
 	}
 
 	public void itemsiyousuru()

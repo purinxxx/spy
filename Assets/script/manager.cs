@@ -42,8 +42,9 @@ public class manager : MonoBehaviour
 	public static GameObject itemwindow;
     public static GameObject logwindow;
     public static GameObject mapbutton;
-    public static GameObject logbutton;
-    public static GameObject settingbutton;
+	public static GameObject logbutton;
+	public static GameObject settingbutton;
+	public static GameObject koudou;
     public static bool saikoro = false;
     public static bool item = false;
     public static bool modoru = false;
@@ -153,8 +154,10 @@ public class manager : MonoBehaviour
         //logwindow.SetActive(false);
         manager.logcanvas.GetComponent<Canvas>().enabled = false;
         mapbutton = GameObject.Find("map");
-        logbutton = GameObject.Find("log");
-        settingbutton = GameObject.Find("setting");
+		logbutton = GameObject.Find("log");
+		settingbutton = GameObject.Find("setting");
+		koudou = GameObject.Find("koudou");
+		koudou.SetActive(false);
     }
 
     void Start()
