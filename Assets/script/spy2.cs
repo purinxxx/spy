@@ -5,6 +5,16 @@ using System.Collections.Generic;
 
 public class spy2 : MonoBehaviour
 {
+	public AudioClip soundkoma;
+	public AudioClip soundcar;
+	public AudioClip soundair;
+	public AudioClip soundbicycle;
+	public AudioClip soundprotector;
+	public AudioClip soundsetti;
+	public AudioClip soundkaijo;
+	public AudioClip soundbakuhatu;
+	AudioSource audio;
+
     bool go = false;
     bool bagutubusi = false;
     int k;
@@ -86,13 +96,15 @@ public class spy2 : MonoBehaviour
                     GameObject.Find("spy2").GetComponent<Renderer>().sortingOrder = -5;
                     manager.playerpos[2] = 0;
                     mieru = 0;
+					audio.PlayOneShot (soundbakuhatu);
                     Debug.Log("爆弾を踏んでスパイ2死亡");
                     manager.message.text = "爆弾を踏んでスパイ2死亡";
                     manager.logcontent.text = manager.logcontent.text + "\n爆弾を踏んでスパイ2死亡\n";
                     mati = true;
                     break;
                 }else
-                {
+				{
+					audio.PlayOneShot (soundbakuhatu);
                     Debug.Log("爆弾を踏んだがプロテクターに守られた");
                     manager.message.text = "爆弾を踏んだがプロテクターに守られた";
                     manager.logcontent.text = manager.logcontent.text + "\nスパイ２は爆弾を踏んだがプロテクターに守られた\n";
@@ -194,7 +206,8 @@ public class spy2 : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
+	{
+		audio = GetComponent<AudioSource>();
         plefab_t = (GameObject)Resources.Load("toutyouki2");
 
     }
@@ -260,7 +273,8 @@ public class spy2 : MonoBehaviour
                 manager.usirobutton.SetActive(true);
             }
             if (manager.mae) //自転車
-            {
+			{
+				audio.PlayOneShot (soundbicycle);
                 manager.mae = false;
                 manager.maebutton.SetActive(false);
                 manager.usirobutton.SetActive(false);
@@ -268,7 +282,8 @@ public class spy2 : MonoBehaviour
                 manager.susumu = true;
             }
             if (manager.usiro) //自転車
-            {
+			{
+				audio.PlayOneShot (soundbicycle);
                 manager.usiro = false;
                 manager.maebutton.SetActive(false);
                 manager.usirobutton.SetActive(false);
@@ -361,7 +376,10 @@ public class spy2 : MonoBehaviour
             }
 
             if (manager.susumu)
-            {
+			{
+				if (bairitu == 2) audio.PlayOneShot(soundcar);
+				if (bairitu == 3) audio.PlayOneShot(soundair);
+
                 manager.maincamera.transform.position = camerapos;
                 manager.susumu = false;
                 manager.susumubutton.SetActive(false);
@@ -599,7 +617,8 @@ public class spy2 : MonoBehaviour
                             {
                                 // 盗聴器置く
                                 if (manager.spy2tpos[0] == 0)
-                                {
+								{
+									audio.PlayOneShot (soundsetti);
                                     manager.message.text = "盗聴器を設置した";
                                     manager.logcontent.text = manager.logcontent.text + "\nスパイ２は盗聴器を設置した\n";
                                     manager.spy2tpos[0] = m;
@@ -613,7 +632,8 @@ public class spy2 : MonoBehaviour
                                     mati = true;
                                 }
                                 else if (manager.spy2tpos[1] == 0)
-                                {
+								{
+									audio.PlayOneShot (soundsetti);
                                     manager.message.text = "盗聴器を設置した";
                                     manager.logcontent.text = manager.logcontent.text + "\nスパイ２は盗聴器を設置した\n";
                                     manager.spy2tpos[1] = m;
@@ -670,7 +690,8 @@ public class spy2 : MonoBehaviour
     private IEnumerator bomkesu(GameObject mituketabom)
     {
         yield return new WaitForSeconds(2.0f);
-        Destroy(mituketabom);
+		Destroy(mituketabom);
+		audio.PlayOneShot (soundkaijo);
         Debug.Log("爆弾を除去した " + mituketabom.name);
         manager.message.text = "爆弾を除去した " + mituketabom.name;
         manager.logcontent.text = manager.logcontent.text + "\nスパイ２は爆弾を除去した\n";
@@ -694,7 +715,8 @@ public class spy2 : MonoBehaviour
             manager.maincamera.transform.position = Vector3.MoveTowards(manager.maincamera.transform.position, camera, step);
         }
         Debug.Log(time);
-        idoume = time;
+		idoume = time;
+		audio.PlayOneShot (soundkoma);
         //manager.player_direction(manager.playerpos[2] + time);
     }
 

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: d1ec3db100974b54b96e806f9f12fac2
-timeCreated: 1477489550
+timeCreated: 1488371688
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - soundcar: {fileID: 8300000, guid: ba1f5bd6502308c459f892b5547debb7, type: 3}
+  - soundair: {fileID: 8300000, guid: 7773a42c7a2892848aec44899dce792e, type: 3}
+  - soundbicycle: {fileID: 8300000, guid: 4caf794b93d91a848a4495732d1a166f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

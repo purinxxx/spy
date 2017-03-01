@@ -5,6 +5,14 @@ using System.Collections.Generic;
 
 public class terrorist : MonoBehaviour
 {
+	public AudioClip soundkoma;
+	public AudioClip soundcar;
+	public AudioClip soundair;
+	public AudioClip soundbicycle;
+	public AudioClip soundsetti;
+	public AudioClip soundkaijo;
+	AudioSource audio;
+
     bool go = false;
     bool bagutubusi = false;
     bool bakudanphase = false;
@@ -86,7 +94,8 @@ public class terrorist : MonoBehaviour
         for (int j = 1; j <= manager.spy1tpos.Length; ++j)
         {
             if (x == manager.spy1tpos[j - 1])
-            {
+			{
+				audio.PlayOneShot (soundkaijo);
                 Debug.Log("盗聴器を解除した");
                 manager.message.text = "盗聴器を解除した";
                 manager.logcontent.text = manager.logcontent.text + "\nテロリストは盗聴器を解除した\n";
@@ -96,7 +105,8 @@ public class terrorist : MonoBehaviour
                 Destroy(t);
             }
             if (x == manager.spy2tpos[j - 1])
-            {
+			{
+				audio.PlayOneShot (soundkaijo);
                 Debug.Log("盗聴器を解除した");
                 manager.message.text = "盗聴器を解除した";
                 manager.logcontent.text = manager.logcontent.text + "\nテロリストは盗聴器を解除した\n";
@@ -112,6 +122,7 @@ public class terrorist : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		audio = GetComponent<AudioSource>();
         plefab_b = (GameObject)Resources.Load("bom");
         plefab_b2 = (GameObject)Resources.Load("bom2");
         //layerMask = LayerMask.GetMask(new string[] { LayerMask.LayerToName(8) }); //レイヤーマスクbom
@@ -179,6 +190,7 @@ public class terrorist : MonoBehaviour
             }
             if (manager.mae) //自転車
             {
+				audio.PlayOneShot (soundbicycle);
                 manager.mae = false;
                 manager.maebutton.SetActive(false);
                 manager.usirobutton.SetActive(false);
@@ -186,7 +198,8 @@ public class terrorist : MonoBehaviour
                 manager.susumu = true;
             }
             if (manager.usiro) //自転車
-            {
+			{
+				audio.PlayOneShot (soundbicycle);
                 manager.usiro = false;
                 manager.maebutton.SetActive(false);
                 manager.usirobutton.SetActive(false);
@@ -253,11 +266,11 @@ public class terrorist : MonoBehaviour
                 Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
                 manager.logcontent.text = manager.logcontent.text + "\n" + me.ToString() + "の目が出た\n";
-                me = me * bairitu;
+				me = me * bairitu;
 
                 manager.saikoro = false;
                 //manager.saikorobutton.SetActive(false);
-                //manager.saikorobutton.GetComponent<Button>().interactable = false;
+                manager.saikorobutton.GetComponent<Button>().interactable = false;
                 //manager.itembutton.SetActive(false);
 				manager.itembutton.GetComponent<Button>().interactable = false;
 				manager.koudou.SetActive (true);
@@ -265,7 +278,10 @@ public class terrorist : MonoBehaviour
                 manager.susumubutton.SetActive(true);
             }
             if (manager.susumu)
-            {
+			{
+				if (bairitu == 2) audio.PlayOneShot(soundcar);
+				if (bairitu == 3) audio.PlayOneShot(soundair);
+
                 Debug.Log(me);
                 manager.maincamera.transform.position = camerapos;
                 manager.susumu = false;
@@ -429,6 +445,7 @@ public class terrorist : MonoBehaviour
                                 {
                                     if (manager.bompos[i] == b)
                                     {
+										audio.PlayOneShot (soundkaijo);
                                         Debug.Log("爆弾を撤去しました");
                                         manager.message.text = "爆弾を撤去しました";
                                         bommax = false;
@@ -473,6 +490,7 @@ public class terrorist : MonoBehaviour
                                         settihantei(m);
                                         manager.bom = false;
                                         mati = true;
+										audio.PlayOneShot (soundsetti);
                                         manager.message.text = "爆弾を仕掛けた";
                                         manager.logcontent.text = manager.logcontent.text + "\nテロリストは爆弾を仕掛けた\n";
                                     }
@@ -485,7 +503,8 @@ public class terrorist : MonoBehaviour
                                         b.transform.parent = manager.boms.transform;
                                         settihantei(m);
                                         manager.bom = false;
-                                        mati = true;
+										mati = true;
+										audio.PlayOneShot (soundsetti);
                                         manager.message.text = "爆弾を仕掛けた";
                                         manager.logcontent.text = manager.logcontent.text + "\nテロリストは爆弾を仕掛けた\n";
                                     }
@@ -498,7 +517,8 @@ public class terrorist : MonoBehaviour
                                         b.transform.parent = manager.boms.transform;
                                         settihantei(m);
                                         manager.bom = false;
-                                        mati = true;
+										mati = true;
+										audio.PlayOneShot (soundsetti);
                                         manager.message.text = "爆弾を仕掛けた";
                                         manager.logcontent.text = manager.logcontent.text + "\nテロリストは爆弾を仕掛けた\n";
                                     }
@@ -549,7 +569,8 @@ public class terrorist : MonoBehaviour
                                         //int.Parse(b.name.Substring(3))
                                         settihantei(m);
                                         manager.bom2 = false;
-                                        mati = true;
+										mati = true;
+										audio.PlayOneShot (soundsetti);
                                         manager.message.text = "強力な爆弾を仕掛けた";
                                         manager.logcontent.text = manager.logcontent.text + "\nテロリストは強力な爆弾を仕掛けた\n";
                                     }
@@ -612,7 +633,8 @@ public class terrorist : MonoBehaviour
             manager.maincamera.transform.position = Vector3.MoveTowards(manager.maincamera.transform.position, camera, step);
         }
         Debug.Log(time);
-        idoume = time;
+		idoume = time;
+		audio.PlayOneShot (soundkoma);
         //manager.player_direction(manager.playerpos[0] + time);
     }
 
