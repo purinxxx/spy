@@ -223,7 +223,7 @@ public class manager : MonoBehaviour
 		bgm.Play ();
 
         //デバッグ用
-		/*
+		//
         itemspy1.Add(2);
         itemspy1.Add(3);
         itemspy1.Add(4);
@@ -235,14 +235,14 @@ public class manager : MonoBehaviour
         itemterrorist.Add(4);
         itemterrorist.Add(5);
         itemterrorist.Add(3);
-        */
+        //
 
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
         plefab_s2 = (GameObject)Resources.Load("spy2");
 
 
-        total = GameObject.Find("masu").transform.childCount; //30
+        total = GameObject.Find("masu").transform.childCount; //85
         int terroristpos = Random.Range(1, total + 1);
         int spy1pos = Random.Range(1, total + 1);
         while (spy1pos == terroristpos) spy1pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
@@ -250,11 +250,11 @@ public class manager : MonoBehaviour
         while (spy2pos == terroristpos || spy2pos == spy1pos) spy2pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
 
 		//デバッグ用
-		/*
-		terroristpos = 1;
+		//
+		terroristpos = 4;
 		spy1pos = 2;
 		spy2pos = 3;
-		*/
+		//
 
         playerpos[0] = terroristpos;
         playerpos[1] = spy1pos;

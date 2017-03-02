@@ -108,7 +108,7 @@ public class spy2 : MonoBehaviour
 						manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
 						StartCoroutine(win (0));
 					}
-                    //mati = true;
+                    mati = true;
                     break;
                 }else
 				{
@@ -629,7 +629,7 @@ public class spy2 : MonoBehaviour
                     int masulayer = 1 << LayerMask.NameToLayer("masu");
                     Vector3 aTapPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Collider2D aCollider2d = Physics2D.OverlapPoint(aTapPoint, masulayer);
-                    if (aCollider2d)
+					if (aCollider2d && tmax==false)
                     {
                         GameObject obj = aCollider2d.transform.gameObject;
                         //Debug.Log(obj.name);
