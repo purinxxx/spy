@@ -57,7 +57,6 @@
      <Compile Include="Assets\TouchManager\Scripts\Events\FlickEventArgs.cs" />
      <Compile Include="Assets\TouchManager\Scripts\TouchManager.cs" />
      <Compile Include="Assets\script\Swipe.cs" />
-     <Compile Include="Assets\script\hennsuu.cs" />
      <Compile Include="Assets\script\koudoubutton.cs" />
      <Compile Include="Assets\script\manager.cs" />
      <Compile Include="Assets\script\spy1.cs" />
@@ -66,6 +65,7 @@
      <Compile Include="Assets\script\ボツ\ScreenViewCamera.cs" />
      <Compile Include="Assets\script\ボツ\createmap.cs" />
      <Compile Include="Assets\script\ボツ\data.cs" />
+     <Compile Include="Assets\script\ボツ\hennsuu.cs" />
      <Compile Include="Assets\script\ボツ\saikorobutton.cs" />
      <Compile Include="Assets\script\ボツ\spy3.cs" />
      <Compile Include="Assets\script\ボツ\spy4.cs" />

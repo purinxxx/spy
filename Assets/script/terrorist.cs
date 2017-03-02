@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,15 +14,15 @@ public class terrorist : MonoBehaviour
 	public AudioClip soundwin;
 	AudioSource audio;
 
-    bool go = false;
+    public bool go = false;
     bool bagutubusi = false;
     bool bakudanphase = false;
     bool bommax = false;
     int k;
     int l;
     int m;
-    int me;
-    int idoume;
+    public int me;
+    public int idoume;
     string ternplayer;
     public static bool mati = false;
     bool masui = false;
@@ -37,7 +37,9 @@ public class terrorist : MonoBehaviour
 
 
     public void play()
-    {
+	{
+		go = false;
+		idoume = 0;
         manager.player_direction(0, manager.playerpos[0]);
         manager.player_direction(1, manager.playerpos[1]);
         manager.player_direction(2, manager.playerpos[2]);
@@ -48,16 +50,16 @@ public class terrorist : MonoBehaviour
         camerapos.y = this.transform.position.y;
         camerapos.z = -10;
         manager.maincamera.transform.position = camerapos;
-        Debug.Log(camerapos);
-        Debug.Log(camerapos.x);
-        Debug.Log(ternplayer + "　テロリストのターン");
+        //Debug.Log(camerapos);
+        //Debug.Log(camerapos.x);
+        //Debug.Log(ternplayer + "　テロリストのターン");
         manager.message.text = "テロリストのターン";
         manager.logcontent.text = manager.logcontent.text + "\nテロリストのターン\n";
-        Debug.Log(spy1.mieru);
-        Debug.Log(spy2.mieru);
+        //Debug.Log(spy1.mieru);
+        //Debug.Log(spy2.mieru);
         if (manager.koudouseigen[0] > 0)
         {
-            Debug.Log("麻酔状態で動けない");
+            //Debug.Log("麻酔状態で動けない");
             manager.message.text = "麻酔状態で動けない";
             manager.logcontent.text = manager.logcontent.text + "\nテロリストは麻酔状態で動けない\n";
             manager.koudouseigen[0] -= 1;
@@ -82,10 +84,10 @@ public class terrorist : MonoBehaviour
         {
             //if(manager.playerpos[0]==manager.playerpos[i]) //スパイがテロリストに踏まれたら
             //{
-            //    manager.playerpos[i] = 0;
-            //    //Destroy(GameObject.Find("spy" + i.ToString()));
-            //    GameObject.Find("spy" + i.ToString()).GetComponent<Renderer>().sortingOrder = -5;
-            //    Debug.Log(GameObject.Find("spy" + i.ToString()) + "テロリストに殺される");
+                //manager.playerpos[i] = 0;
+                //Destroy(GameObject.Find("spy" + i.ToString()));
+                //GameObject.Find("spy" + i.ToString()).GetComponent<Renderer>().sortingOrder = -5;
+                //Debug.Log(GameObject.Find("spy" + i.ToString()) + "テロリストに殺される");
             //}
         }
     }
@@ -97,7 +99,7 @@ public class terrorist : MonoBehaviour
             if (x == manager.spy1tpos[j - 1])
 			{
 				audio.PlayOneShot (soundkaijo);
-                Debug.Log("盗聴器を解除した");
+                //Debug.Log("盗聴器を解除した");
                 manager.message.text = "盗聴器を解除した";
                 manager.logcontent.text = manager.logcontent.text + "\nテロリストは盗聴器を解除した\n";
                 GameObject t = GameObject.Find("spy1toutyouki" + (x).ToString());
@@ -108,7 +110,7 @@ public class terrorist : MonoBehaviour
             if (x == manager.spy2tpos[j - 1])
 			{
 				audio.PlayOneShot (soundkaijo);
-                Debug.Log("盗聴器を解除した");
+                //Debug.Log("盗聴器を解除した");
                 manager.message.text = "盗聴器を解除した";
                 manager.logcontent.text = manager.logcontent.text + "\nテロリストは盗聴器を解除した\n";
                 GameObject t = GameObject.Find("spy2toutyouki" + (x).ToString());
@@ -146,7 +148,7 @@ public class terrorist : MonoBehaviour
         {
             if (bagutubusi)
             {
-                Debug.Log("バグ潰し！");
+                //Debug.Log("バグ潰し！");
                 manager.maincamera.transform.position = camerapos;
                 Swipe.prevX = camerapos.x;
                 Swipe.prevY = camerapos.y;
@@ -160,7 +162,7 @@ public class terrorist : MonoBehaviour
                 int defaultx = -260;
                 foreach (int i in manager.itemterrorist)
                 {
-                    Debug.Log(i);
+                    //Debug.Log(i);
                     string str = "item" + i.ToString();
                     GameObject plefab_a = (GameObject)Resources.Load(str);
                     GameObject a = (GameObject)Instantiate(plefab_a);
@@ -232,7 +234,7 @@ public class terrorist : MonoBehaviour
             }
             if (manager.player_spy1) //麻酔銃
             {
-                Debug.Log("スパイ１は次のターン動けない");
+                //Debug.Log("スパイ１は次のターン動けない");
                 manager.message.text = "スパイ１は次のターン動けない";
                 manager.logcontent.text = manager.logcontent.text + "\nテロリストはスパイ１に麻酔銃を撃った\n";
                 manager.player_spy1 = false;
@@ -245,7 +247,7 @@ public class terrorist : MonoBehaviour
             }
             else if (manager.player_spy2) //麻酔銃
             {
-                Debug.Log("スパイ２は次のターン動けない");
+                //Debug.Log("スパイ２は次のターン動けない");
                 manager.message.text = "スパイ２は次のターン動けない";
                 manager.logcontent.text = manager.logcontent.text + "\nテロリストはスパイ２に麻酔銃を撃った\n";
                 manager.player_spy2 = false;
@@ -274,7 +276,7 @@ public class terrorist : MonoBehaviour
             {
                 manager.maincamera.transform.position = camerapos;
                 me = Random.Range(1, 7);
-                Debug.Log(me.ToString() + "の目が出た");
+                //Debug.Log(me.ToString() + "の目が出た");
                 manager.message.text = me.ToString() + "の目が出た";
                 manager.logcontent.text = manager.logcontent.text + "\n" + me.ToString() + "の目が出た\n";
 				me = me * bairitu;
@@ -293,7 +295,7 @@ public class terrorist : MonoBehaviour
 				if (bairitu == 2) audio.PlayOneShot(soundcar);
 				if (bairitu == 3) audio.PlayOneShot(soundair);
 
-                Debug.Log(me);
+                //Debug.Log(me);
                 manager.maincamera.transform.position = camerapos;
                 manager.susumu = false;
                 manager.susumubutton.SetActive(false);
@@ -312,7 +314,7 @@ public class terrorist : MonoBehaviour
                     }
                     if (k > manager.total) k -= manager.total; //一周した場合
                     if (k < 1) k += manager.total; //一周した場合
-                    Debug.Log(k);
+                    //Debug.Log(k);
                     tpos = GameObject.Find(k.ToString()).transform.position;
                     tpos.y += 0.5f; // コマの位置調整
                     camerapos.x = tpos.x;
@@ -355,7 +357,7 @@ public class terrorist : MonoBehaviour
                     else if (item == 3) { manager.message.text = "ヘリを手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nテロリストはヘリを手に入れた\n"; }
                     else if (item == 4) { manager.message.text = "自転車を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nテロリストは自転車を手に入れた\n"; }
                     else if (item == 5) { manager.message.text = "麻酔銃を手に入れた"; manager.logcontent.text = manager.logcontent.text + "\nテロリストは麻酔銃を手に入れた\n"; }
-                    Debug.Log(item);
+                    //Debug.Log(item);
                 }
 
                 int cnt = 0;
@@ -383,7 +385,7 @@ public class terrorist : MonoBehaviour
                 }
                 if (cnt == me)
                 {
-                    Debug.Log("爆弾置けない");
+                    //Debug.Log("爆弾置けない");
                     manager.message.text = "爆弾置けない";
                     mati = true;
                 }
@@ -434,7 +436,7 @@ public class terrorist : MonoBehaviour
                     if (j != 0)
                     {
                         bommax = true;
-                        Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
+                        //Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
                         manager.message.text = "いらない爆弾を撤去してから新しい爆弾を設置してください";
                     }
                     if (bommax)
@@ -448,7 +450,7 @@ public class terrorist : MonoBehaviour
                         if (bCollider2d)
                         {
                             GameObject obj = bCollider2d.transform.gameObject;
-                            Debug.Log(obj.name);
+                            //Debug.Log(obj.name);
                             if (obj.name.Substring(0, 3) == "bom")
                             {
                                 int b = int.Parse(obj.name.Substring(3));
@@ -457,7 +459,7 @@ public class terrorist : MonoBehaviour
                                     if (manager.bompos[i] == b)
                                     {
 										audio.PlayOneShot (soundkaijo);
-                                        Debug.Log("爆弾を撤去しました");
+                                        //Debug.Log("爆弾を撤去しました");
                                         manager.message.text = "爆弾を撤去しました";
                                         bommax = false;
                                         Destroy(obj);
@@ -535,7 +537,7 @@ public class terrorist : MonoBehaviour
                                     }
                                     else
                                     {
-                                        Debug.Log("爆弾上限");
+                                        //Debug.Log("爆弾上限");
                                         manager.message.text = "爆弾上限";
                                     }
                                 }
@@ -587,7 +589,7 @@ public class terrorist : MonoBehaviour
                                     }
                                     else
                                     {
-                                        Debug.Log("爆弾上限");
+                                        //Debug.Log("爆弾上限");
                                         manager.message.text = "爆弾上限";
                                     }
                                 }
@@ -601,11 +603,11 @@ public class terrorist : MonoBehaviour
                     GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = false;
                     mati = false;
                     masui = false;
-                    Debug.Log("ターンエンド");
+                    //Debug.Log("ターンエンド");
                     manager.message.text = "ターンエンド";
                     manager.playflag = false;
                     manager.terroristtern = false;
-                    Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
+                    //Debug.Log("スパイ１　" + manager.playerpos[1].ToString() + "　　スパイ２　" + manager.playerpos[2].ToString());
                     if (manager.playerpos[1] != 0)
                     {
                         manager.spy1tern = true; // 次のターンへ
@@ -616,7 +618,7 @@ public class terrorist : MonoBehaviour
                     }
                     else
 					{
-                        Debug.Log("テロリストの勝利");
+                        //Debug.Log("テロリストの勝利");
                         manager.message.text = "テロリストの勝利";
                         manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
 						StartCoroutine(win (0));
@@ -629,14 +631,14 @@ public class terrorist : MonoBehaviour
 
     private IEnumerator idou(Vector3 player, Vector3 camera, int time)
     {
-        Debug.Log(time);
+        //Debug.Log(time);
         yield return new WaitForSeconds(time * 0.5f);
         //this.gameObject.transform.position = player;
         //manager.maincamera.transform.position = camera;
         //this.gameObject.GetComponent<Rigidbody2D>().MovePosition(player);
         //manager.maincamera.GetComponent<Rigidbody2D>().MovePosition(camera);
         float step = Mathf.Sqrt(Mathf.Pow(Mathf.Abs(transform.position.x - player.x), 2) + Mathf.Pow(Mathf.Abs(transform.position.x - player.x), 2)) / 10;
-        Debug.Log(step);
+        //Debug.Log(step);
         step = 0.15f;
         while(transform.position!=player)
         {
@@ -644,7 +646,7 @@ public class terrorist : MonoBehaviour
             this.gameObject.transform.position = Vector3.MoveTowards(transform.position, player, step);
             manager.maincamera.transform.position = Vector3.MoveTowards(manager.maincamera.transform.position, camera, step);
         }
-        Debug.Log(time);
+        //Debug.Log(time);
 		idoume = time;
 		audio.PlayOneShot (soundkoma);
         //manager.player_direction(manager.playerpos[0] + time);
@@ -669,7 +671,7 @@ public class terrorist : MonoBehaviour
 
 
 	private IEnumerator win(int who){
-		Debug.Log (who);
+		//Debug.Log (who);
 		if (who == 0) {
 			GameObject.Find("winspy1").SetActive(false);
 			GameObject.Find("winspy2").SetActive(false);

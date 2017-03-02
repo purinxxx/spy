@@ -167,7 +167,7 @@ public class manager : MonoBehaviour
 		settingbutton = GameObject.Find("setting");
 		koudou = GameObject.Find("koudou");
 		koudou.SetActive(false);
-		Debug.Log ("Awake");
+		//Debug.Log ("Awake");
     }
 
     void Start()
@@ -300,7 +300,7 @@ public class manager : MonoBehaviour
         a.transform.position = pos;
         */
 
-		Debug.Log ("Start");
+		//Debug.Log ("Start");
     }
 
     // Update is called once per frame
@@ -314,11 +314,11 @@ public class manager : MonoBehaviour
 					bgm.Stop ();
 					win.Play ();
 					if (playerpos [1] == 0) {
-						Debug.Log ("スパイ２の勝利");
+						//Debug.Log ("スパイ２の勝利");
 						StartCoroutine (wingamen (2));
 					}
 					if (playerpos [2] == 0) {
-						Debug.Log ("スパイ１の勝利");
+						//Debug.Log ("スパイ１の勝利");
 						StartCoroutine (wingamen (1));
 					}
 				} else if (playerpos [1] == 0 && playerpos [2] == 0) {
@@ -330,18 +330,18 @@ public class manager : MonoBehaviour
 					//Debug.Log (terroristtern);
 					if (terroristtern) {
 						foreach (int i in itemterrorist) {
-							Debug.Log ("item : " + i.ToString ());
+							//Debug.Log ("item : " + i.ToString ());
 						}
 						GameObject.Find ("terrorist").GetComponent<terrorist> ().play ();
 					} else if (spy1tern) {
 						foreach (int i in itemspy1) {
-							Debug.Log ("item : " + i.ToString ());
+							//Debug.Log ("item : " + i.ToString ());
 						}
 						if (playerpos [1] != 0)
 							GameObject.Find ("spy1").GetComponent<spy1> ().play ();
 					} else if (spy2tern) {
 						foreach (int i in itemspy2) {
-							Debug.Log ("item : " + i.ToString ());
+							//Debug.Log ("item : " + i.ToString ());
 						}
 						if (playerpos [2] != 0)
 							GameObject.Find ("spy2").GetComponent<spy2> ().play ();
@@ -365,7 +365,7 @@ public class manager : MonoBehaviour
 			GameObject.Find("winspy1").SetActive(false);
 			GameObject.Find("winterrorist").SetActive(false);
 		}
-		Debug.Log (who);
+		//Debug.Log (who);
 		yield return new WaitForSeconds(1f);
 		manager.bgm.Stop ();
 		manager.wincanvas.GetComponent<Canvas>().enabled = true;
