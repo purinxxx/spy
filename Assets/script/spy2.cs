@@ -33,7 +33,7 @@ public class spy2 : MonoBehaviour
     GameObject plefab_t;
     GameObject t;
     Vector3 pos;
-    Vector3 camerapos = manager.maincamera.transform.position;
+    Vector3 camerapos;
     int bairitu;
 
     public void play()
@@ -213,6 +213,17 @@ public class spy2 : MonoBehaviour
     // Use this for initialization
     void Start()
 	{
+		//初期化
+		go = false;
+		bagutubusi = false;
+		mati = false;
+		masui = false;
+		mieru = 0;
+		setti = false;
+		tmax = false;
+
+
+		camerapos = manager.maincamera.transform.position;
 		audio = GetComponent<AudioSource>();
         plefab_t = (GameObject)Resources.Load("toutyouki2");
 
@@ -412,32 +423,32 @@ public class spy2 : MonoBehaviour
                     camerapos.x = pos.x;
                     camerapos.y = pos.y;
                     camerapos.z = -10;
-                    StartCoroutine(idou(pos, camerapos, i));
+					StartCoroutine(idou(pos, camerapos, i, manager.playerpos[2]));
                     if (k == manager.bom2pos[0])
                     {
                         manager.spylife[1] -= 1;
-                        Destroy(GameObject.Find("bom2" + manager.bom2pos[0].ToString()));
-                        manager.bom2pos[0] = 0;
+                        //Destroy(GameObject.Find("bom2" + manager.bom2pos[0].ToString()));
+                        //manager.bom2pos[0] = 0;
                         if (manager.spylife[1] == 0)
                         {
-                            Debug.Log("強力な爆弾に引っかかりスパイ2死亡");
-                            manager.message.text = "強力な爆弾に引っかかりスパイ2死亡";
-                            manager.logcontent.text = manager.logcontent.text + "\n強力な爆弾に引っかかりスパイ2死亡\n";
-                            GameObject.Find("spy2").GetComponent<Renderer>().sortingOrder = -5;
-							manager.playerpos[2] = -1;
-							if (manager.playerpos [1] == 0 && manager.playerpos [2] == 0) {
-								manager.message.text = "テロリストの勝利 ";
-								manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
-								StartCoroutine(win (0));
-							}
-                            mieru = 0;
+                            //Debug.Log("強力な爆弾に引っかかりスパイ2死亡");
+                            //manager.message.text = "強力な爆弾に引っかかりスパイ2死亡";
+                            //manager.logcontent.text = manager.logcontent.text + "\n強力な爆弾に引っかかりスパイ2死亡\n";
+                            //GameObject.Find("spy2").GetComponent<Renderer>().sortingOrder = -5;
+							//manager.playerpos[2] = -1;
+							//if (manager.playerpos [1] == 0 && manager.playerpos [2] == 0) {
+								//manager.message.text = "テロリストの勝利 ";
+								//manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
+								//StartCoroutine(win (0));
+							//}
+                            //mieru = 0;
 							//mati = true;
                             break;
                         }else
                         {
-                            Debug.Log("強力な爆弾に引っかかったがプロテクターに守られた");
-                            manager.message.text = "強力な爆弾に引っかかったがプロテクターに守られた";
-                            manager.logcontent.text = manager.logcontent.text + "\nスパイ２は強力な爆弾に引っかかったがプロテクターに守られた\n";
+                            //Debug.Log("強力な爆弾に引っかかったがプロテクターに守られた");
+                            //manager.message.text = "強力な爆弾に引っかかったがプロテクターに守られた";
+                            //manager.logcontent.text = manager.logcontent.text + "\nスパイ２は強力な爆弾に引っかかったがプロテクターに守られた\n";
                         }
                     }
                 }
@@ -715,7 +726,7 @@ public class spy2 : MonoBehaviour
         manager.logcontent.text = manager.logcontent.text + "\nスパイ２は爆弾を除去した\n";
     }
 
-    private IEnumerator idou(Vector3 player, Vector3 camera, int time)
+	private IEnumerator idou(Vector3 player, Vector3 camera, int time, int spy2pos)
     {
         time = Mathf.Abs(time);
         yield return new WaitForSeconds(time * 0.5f);
@@ -736,6 +747,36 @@ public class spy2 : MonoBehaviour
 		idoume = time;
 		audio.PlayOneShot (soundkoma);
         //manager.player_direction(manager.playerpos[2] + time);
+
+		//
+		if (spy2pos == manager.bom2pos[0])
+		{
+			//manager.spylife[1] -= 1;
+			Destroy(GameObject.Find("bom2" + manager.bom2pos[0].ToString()));
+			manager.bom2pos[0] = 0;
+			if (manager.spylife[1] == 0)
+			{
+				Debug.Log("強力な爆弾に引っかかりスパイ2死亡");
+				manager.message.text = "強力な爆弾に引っかかりスパイ2死亡";
+				manager.logcontent.text = manager.logcontent.text + "\n強力な爆弾に引っかかりスパイ2死亡\n";
+				GameObject.Find("spy2").GetComponent<Renderer>().sortingOrder = -5;
+				manager.playerpos[2] = -1;
+				if (manager.playerpos [1] == 0 && manager.playerpos [2] == 0) {
+					manager.message.text = "テロリストの勝利 ";
+					manager.logcontent.text = manager.logcontent.text + "\nテロリストの勝利\n";
+					StartCoroutine(win (0));
+				}
+				mieru = 0;
+				mati = true;
+				//break;
+			}else
+			{
+				Debug.Log("強力な爆弾に引っかかったがプロテクターに守られた");
+				manager.message.text = "強力な爆弾に引っかかったがプロテクターに守られた";
+				manager.logcontent.text = manager.logcontent.text + "\nスパイ２は強力な爆弾に引っかかったがプロテクターに守られた\n";
+			}
+		}
+		//
     }
 
     private IEnumerator matu(int me)
@@ -743,7 +784,7 @@ public class spy2 : MonoBehaviour
         while (Mathf.Abs(me) != idoume)
         {
             yield return new WaitForSeconds(0.01f);
-            if (manager.playerpos[1] <= 0) break;
+            if (manager.playerpos[2] <= 0) break;
         }
         go = true;
     }

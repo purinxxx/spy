@@ -239,7 +239,7 @@ public class koudoubutton : MonoBehaviour
 	{
 		Debug.Log("麻酔銃(任意のプレイヤーを一回休みにする)");
 		manager.itemtitle.text = "麻酔銃";
-		manager.itemsentence.text = "任意のプレイヤーを１回休みにする。";
+		manager.itemsentence.text = "任意のプレイヤーを１回休みにする。\n効果は重複する。";
 		manager.modoru = true;
 		manager.selecteditem = 5;
 		manager.itemcanvas.SetActive(false);
@@ -339,6 +339,35 @@ public class koudoubutton : MonoBehaviour
 		manager.item = true;
 	}
 
+	public void restart()
+	{
+		audio.PlayOneShot (soundtouch);
+		/*
+		manager.itemcanvas.SetActive(true);
+		manager.susumubutton.SetActive(true);
+		manager.tansakubutton.SetActive(true);
+		manager.bombutton.SetActive(true);
+		manager.bom2button.SetActive(true);
+		manager.toutyoubutton.SetActive(true);
+		manager.nonebutton.SetActive(true);
+		manager.maebutton.SetActive(true);
+		manager.usirobutton.SetActive(true);
+		manager.spy1button.SetActive(true);
+		manager.spy2button.SetActive(true);
+		manager.terroristbutton.SetActive(true);
+		manager.itemwindow.SetActive(true);
+		manager.mapwindow.SetActive(true);
+		manager.koudou.SetActive(true);
+		*/
+		StartCoroutine (reload());
+	}
+
+	public void end()
+	{
+		audio.PlayOneShot (soundtouch);
+		Application.Quit ();
+	}
+
     // Use this for initialization
     void Start()
 	{
@@ -351,4 +380,11 @@ public class koudoubutton : MonoBehaviour
     {
 
     }
+
+	private IEnumerator reload()
+	{
+		yield return new WaitForSeconds(3f);
+		Application.LoadLevel ("play");
+	}
+
 }

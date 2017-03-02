@@ -32,7 +32,7 @@ public class terrorist : MonoBehaviour
     GameObject b2;
     int layerMask;
     Vector3 tpos;
-    Vector3 camerapos = manager.maincamera.transform.position;
+    Vector3 camerapos;
     int bairitu;
 
 
@@ -123,6 +123,16 @@ public class terrorist : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		//初期化
+		go = false;
+		bagutubusi = false;
+		bakudanphase = false;
+		bommax = false;
+		mati = false;
+		masui = false;
+
+
+		camerapos = manager.maincamera.transform.position;
 		audio = GetComponent<AudioSource>();
         plefab_b = (GameObject)Resources.Load("bom");
         plefab_b2 = (GameObject)Resources.Load("bom2");

@@ -167,10 +167,55 @@ public class manager : MonoBehaviour
 		settingbutton = GameObject.Find("setting");
 		koudou = GameObject.Find("koudou");
 		koudou.SetActive(false);
+		Debug.Log ("Awake");
     }
 
     void Start()
 	{
+		//初期化
+		bompos[0] = 0;
+		bompos[1] = 0;
+		bompos[2] = 0;
+		bom2pos[0] = 0;
+		spy1tpos[0] = 0;
+		spy1tpos[1] = 0;
+		spy2tpos[0] = 0;
+		spy2tpos[1] = 0;
+		spylife[0] = 1;
+		spylife[1] = 1;
+		koudouseigen[0] = 0;
+		koudouseigen[1] = 0;
+		koudouseigen[2] = 0;
+		selecteditem = 0;
+		saikoro = false;
+		item = false;
+		modoru = false;
+		susumu = false;
+		tansaku = false;
+		bom = false;
+		bom2 = false;
+		toutyou = false;
+		none = false;
+		mae = false;
+		usiro = false;
+		player_spy1 = false;
+		player_spy2 = false;
+		player_terrorist = false;
+		item1 = false;
+		item2 = false;
+		item3 = false;
+		item4 = false;
+		item5 = false;
+		terroristtern = true;
+		spy1tern = false;
+		spy2tern = false;
+		playflag = false;
+		itemterrorist = new List<int>();
+		itemspy1 = new List<int>();
+		itemspy2 = new List<int>();
+
+
+
 		audio = GetComponent<AudioSource>();
 		AudioSource[] audioSources = GetComponents<AudioSource>();
 		bgm = audioSources[0];
@@ -178,6 +223,7 @@ public class manager : MonoBehaviour
 		bgm.Play ();
 
         //デバッグ用
+		/*
         itemspy1.Add(2);
         itemspy1.Add(3);
         itemspy1.Add(4);
@@ -189,6 +235,7 @@ public class manager : MonoBehaviour
         itemterrorist.Add(4);
         itemterrorist.Add(5);
         itemterrorist.Add(3);
+        */
 
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
@@ -202,9 +249,12 @@ public class manager : MonoBehaviour
         int spy2pos = Random.Range(1, total + 1);
         while (spy2pos == terroristpos || spy2pos == spy1pos) spy2pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
 
+		//デバッグ用
+		/*
 		terroristpos = 1;
 		spy1pos = 2;
 		spy2pos = 3;
+		*/
 
         playerpos[0] = terroristpos;
         playerpos[1] = spy1pos;
@@ -250,11 +300,13 @@ public class manager : MonoBehaviour
         a.transform.position = pos;
         */
 
+		Debug.Log ("Start");
     }
 
     // Update is called once per frame
     void Update()
-    {
+	{
+		//Debug.Log ("Update");
 		if (gameend == false) {
 			//Debug.Log(playflag);
 			if (playflag == false) {
@@ -275,6 +327,7 @@ public class manager : MonoBehaviour
 					//wincanvas.GetComponent<Canvas>().enabled = true;
 					//Debug.Log("テロリストの勝利");
 				} else {
+					//Debug.Log (terroristtern);
 					if (terroristtern) {
 						foreach (int i in itemterrorist) {
 							Debug.Log ("item : " + i.ToString ());
