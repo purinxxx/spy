@@ -1,7 +1,7 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{38EF1F49-8A09-BDEB-6092-8A81C0F77BB4}") = "spy", "Assembly-CSharp.csproj", "{55F87B37-BF7D-1094-2240-ABD05BC803A9}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spy", "Assembly-CSharp.csproj", "{55F87B37-BF7D-1094-2240-ABD05BC803A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
