@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class spy1 : MonoBehaviour
 {
+	bool targetflag;
+
 	public AudioClip soundkoma;
 	public AudioClip soundcar;
 	public AudioClip soundair;
@@ -30,14 +32,17 @@ public class spy1 : MonoBehaviour
     public static int mieru = 0;
     bool setti = false;
     bool tmax = false;
-    GameObject plefab_t;
-    GameObject t;
+	GameObject plefab_t;
+	GameObject plefab_target;
+	GameObject t;
+	GameObject ta;
     Vector3 pos;
     Vector3 camerapos;
     int bairitu;
 
     public void play()
 	{
+		targetflag=false;
 		go = false;
 		idoume = 0;
         manager.player_direction(0, manager.playerpos[0]);
@@ -218,6 +223,7 @@ public class spy1 : MonoBehaviour
     void Start()
 	{
 		//初期化
+		targetflag=false;
 		go = false;
 		bagutubusi = false;
 		mati = false;
@@ -229,7 +235,8 @@ public class spy1 : MonoBehaviour
 
 		camerapos = manager.maincamera.transform.position;
 		audio = GetComponent<AudioSource>();
-        plefab_t = (GameObject)Resources.Load("toutyouki");
+		plefab_t = (GameObject)Resources.Load("toutyouki");
+		plefab_target = (GameObject)Resources.Load("target");
     }
 
     // Update is called once per frame
@@ -570,8 +577,43 @@ public class spy1 : MonoBehaviour
                 mati = true;
             }
 
+			if (setti && targetflag==false) {
+				int j = 1;
+				foreach (int i in manager.spy1tpos)
+				{
+					j = j * i;
+				}
+				if (j != 0)
+				{
+					tmax = true;
+					//Debug.Log("いらない盗聴器を撤去してから新しい盗聴器を設置してください");
+					manager.message.text = "いらない盗聴器を撤去してから新しい盗聴器を設置してください";
+				} else {
+					targetflag = true;
+					for (int i = 1; i <= Mathf.Abs (me); ++i) { //絶対値meにする
+						if (me < 0) {
+							m = l + me + i; //後ろに戻るとき
+						} else {
+							m = l + i - 1;
+						}
+						if (m > manager.total) m -= manager.total; //一周した場合
+						if (m < 1) m += manager.total; //一周した場合
+						if (m != manager.playerpos [1] && m != manager.playerpos [2] && m != manager.spy1tpos [0] && m != manager.spy1tpos [1] && m != manager.spy2tpos [0] && m != manager.spy2tpos [1]) {
+							Vector3 tapos = GameObject.Find(m.ToString()).transform.position;
+							ta = (GameObject)Instantiate(plefab_target, tapos, Quaternion.identity);
+							ta.name = "target" + m.ToString();
+							ta.transform.parent = GameObject.Find("targets").transform;
+						}
+					}
+				}
+			}
+
             if (mati)
-            {
+			{
+				foreach (Transform n in GameObject.Find("targets").transform )
+				{
+					Destroy(n.gameObject);
+				}
                 manager.message.text = "画面をタッチして次のプレイヤーに変わってください。";
             }
 
@@ -580,17 +622,6 @@ public class spy1 : MonoBehaviour
                 if (setti)
                 {
                     // lからkの一個前のマスに盗聴器を置ける
-                    int j = 1;
-                    foreach (int i in manager.spy1tpos)
-                    {
-                        j = j * i;
-                    }
-                    if (j != 0)
-                    {
-                        tmax = true;
-                        //Debug.Log("いらない盗聴器を撤去してから新しい盗聴器を設置してください");
-                        manager.message.text = "いらない盗聴器を撤去してから新しい盗聴器を設置してください";
-                    }
                     if (tmax)
                     {
                         // http://bribser.co.jp/blog/tappobject/
@@ -642,42 +673,39 @@ public class spy1 : MonoBehaviour
                             if (m > manager.total) m -= manager.total; //一周した場合
                             if (m < 1) m += manager.total; //一周した場合
                             if (obj.name == m.ToString())
-                            {
-                                // 盗聴器置く
-                                if (manager.spy1tpos[0] == 0)
-								{
-									audio.PlayOneShot (soundsetti);
-                                    manager.message.text = "盗聴器を設置した";
-                                    manager.logcontent.text = manager.logcontent.text + "\nスパイ１は盗聴器を設置した\n";
-                                    manager.spy1tpos[0] = m;
-                                    Vector3 tpos = obj.transform.position;
-                                    t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
-                                    t.name = "spy1toutyouki" + m.ToString();
-                                    t.transform.parent = manager.ts.transform;
-                                    //int.Parse(b.name.Substring(3))
-                                    settihantei(m);
-                                    setti = false;
-                                    mati = true;
-                                }
-                                else if (manager.spy1tpos[1] == 0)
-								{
-									audio.PlayOneShot (soundsetti);
-                                    manager.message.text = "盗聴器を設置した";
-                                    manager.logcontent.text = manager.logcontent.text + "\nスパイ１は盗聴器を設置した\n";
-                                    manager.spy1tpos[1] = m;
-                                    Vector3 tpos = obj.transform.position;
-                                    t = (GameObject)Instantiate(plefab_t, tpos, Quaternion.identity);
-                                    t.name = "spy1toutyouki" + m.ToString();
-                                    t.transform.parent = manager.ts.transform;
-                                    settihantei(m);
-                                    setti = false;
-                                    mati = true;
-                                }
-                                else
-                                {
-                                    //Debug.Log("盗聴器上限");
-                                    manager.message.text = "盗聴器上限";
-                                }
+							{
+								if (m != manager.playerpos [1] && m != manager.playerpos [2] && m != manager.spy1tpos [0] && m != manager.spy1tpos [1] && m != manager.spy2tpos [0] && m != manager.spy2tpos [1]) {
+									// 盗聴器置く
+									if (manager.spy1tpos [0] == 0) {
+										audio.PlayOneShot (soundsetti);
+										manager.message.text = "盗聴器を設置した";
+										manager.logcontent.text = manager.logcontent.text + "\nスパイ１は盗聴器を設置した\n";
+										manager.spy1tpos [0] = m;
+										Vector3 tpos = obj.transform.position;
+										t = (GameObject)Instantiate (plefab_t, tpos, Quaternion.identity);
+										t.name = "spy1toutyouki" + m.ToString ();
+										t.transform.parent = manager.ts.transform;
+										//int.Parse(b.name.Substring(3))
+										settihantei (m);
+										setti = false;
+										mati = true;
+									} else if (manager.spy1tpos [1] == 0) {
+										audio.PlayOneShot (soundsetti);
+										manager.message.text = "盗聴器を設置した";
+										manager.logcontent.text = manager.logcontent.text + "\nスパイ１は盗聴器を設置した\n";
+										manager.spy1tpos [1] = m;
+										Vector3 tpos = obj.transform.position;
+										t = (GameObject)Instantiate (plefab_t, tpos, Quaternion.identity);
+										t.name = "spy1toutyouki" + m.ToString ();
+										t.transform.parent = manager.ts.transform;
+										settihantei (m);
+										setti = false;
+										mati = true;
+									} else {
+										//Debug.Log("盗聴器上限");
+										manager.message.text = "盗聴器上限";
+									}
+								}
                             }
                         }
                     }
@@ -723,7 +751,7 @@ public class spy1 : MonoBehaviour
 
     private IEnumerator bomkesu(GameObject mituketabom)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
 		Destroy(mituketabom);
 		audio.PlayOneShot (soundkaijo);
         //Debug.Log("爆弾を除去した " + mituketabom.name);

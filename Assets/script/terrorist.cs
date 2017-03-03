@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class terrorist : MonoBehaviour
 {
+	bool targetflag;
+
 	public AudioClip soundkoma;
 	public AudioClip soundcar;
 	public AudioClip soundair;
@@ -26,10 +28,12 @@ public class terrorist : MonoBehaviour
     string ternplayer;
     public static bool mati = false;
     bool masui = false;
-    GameObject plefab_b;
-    GameObject plefab_b2;
-    GameObject b;
-    GameObject b2;
+	GameObject plefab_b;
+	GameObject plefab_b2;
+	GameObject plefab_target;
+	GameObject b;
+	GameObject b2;
+	GameObject ta;
     int layerMask;
     Vector3 tpos;
     Vector3 camerapos;
@@ -38,6 +42,7 @@ public class terrorist : MonoBehaviour
 
     public void play()
 	{
+		targetflag=false;
 		go = false;
 		idoume = 0;
         manager.player_direction(0, manager.playerpos[0]);
@@ -126,6 +131,7 @@ public class terrorist : MonoBehaviour
     void Start()
     {
 		//初期化
+		targetflag=false;
 		go = false;
 		bagutubusi = false;
 		bakudanphase = false;
@@ -136,8 +142,9 @@ public class terrorist : MonoBehaviour
 
 		camerapos = manager.maincamera.transform.position;
 		audio = GetComponent<AudioSource>();
-        plefab_b = (GameObject)Resources.Load("bom");
-        plefab_b2 = (GameObject)Resources.Load("bom2");
+		plefab_b = (GameObject)Resources.Load("bom");
+		plefab_b2 = (GameObject)Resources.Load("bom2");
+		plefab_target = (GameObject)Resources.Load("target");
         //layerMask = LayerMask.GetMask(new string[] { LayerMask.LayerToName(8) }); //レイヤーマスクbom
     }
 
@@ -417,8 +424,42 @@ public class terrorist : MonoBehaviour
                 mati = true;
             }
 
+			if ((manager.bom || manager.bom2) && targetflag==false) {
+				int j = 1;
+				foreach (int i in manager.bompos)
+				{
+					j = j * i;
+				}
+				if (j != 0) {
+					bommax = true;
+					//Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
+					manager.message.text = "いらない爆弾を撤去してから新しい爆弾を設置してください";
+				} else {
+					targetflag = true;
+					for (int i = 1; i <= Mathf.Abs (me); ++i) { //絶対値meにする
+						if (me < 0) {
+							m = l + me + i; //後ろに戻るとき
+						} else {
+							m = l + i - 1;
+						}
+						if (m > manager.total) m -= manager.total; //一周した場合
+						if (m < 1) m += manager.total; //一周した場合
+						if (m != manager.playerpos [0] && m != manager.playerpos [1] && m != manager.playerpos [2] && m != manager.bom2pos [0] && m != manager.bompos [0] && m != manager.bompos [1] && m != manager.bompos [2]) {
+							Vector3 tapos = GameObject.Find(m.ToString()).transform.position;
+							ta = (GameObject)Instantiate(plefab_target, tapos, Quaternion.identity);
+							ta.name = "target" + m.ToString();
+							ta.transform.parent = GameObject.Find("targets").transform;
+						}
+					}
+				}
+			}
+
             if (mati)
             {
+				foreach (Transform n in GameObject.Find("targets").transform )
+				{
+					Destroy(n.gameObject);
+				}
                 manager.message.text = "画面をタッチして次のプレイヤーに変わってください。";
             }
 
@@ -428,17 +469,7 @@ public class terrorist : MonoBehaviour
                 if (manager.bom)
                 {
                     // lからkの一個前のマスに爆弾を置ける
-                    int j = 1;
-                    foreach (int i in manager.bompos)
-                    {
-                        j = j * i;
-                    }
-                    if (j != 0)
-                    {
-                        bommax = true;
-                        //Debug.Log("いらない爆弾を撤去してから新しい爆弾を設置してください");
-                        manager.message.text = "いらない爆弾を撤去してから新しい爆弾を設置してください";
-                    }
+                    
                     if (bommax)
                     {
                         // http://bribser.co.jp/blog/tappobject/

@@ -222,21 +222,6 @@ public class manager : MonoBehaviour
 		win = audioSources[1];
 		bgm.Play ();
 
-        //デバッグ用
-		//
-        itemspy1.Add(2);
-        itemspy1.Add(3);
-        itemspy1.Add(4);
-        itemspy2.Add(2);
-        itemspy2.Add(3);
-        itemspy2.Add(4);
-        itemterrorist.Add(2);
-        itemterrorist.Add(3);
-        itemterrorist.Add(4);
-        itemterrorist.Add(5);
-        itemterrorist.Add(3);
-        //
-
         plefab_t = (GameObject)Resources.Load("terrorist");
         plefab_s1 = (GameObject)Resources.Load("spy1");
         plefab_s2 = (GameObject)Resources.Load("spy2");
@@ -250,11 +235,23 @@ public class manager : MonoBehaviour
         while (spy2pos == terroristpos || spy2pos == spy1pos) spy2pos = Random.Range(1, total + 1); // プレイヤーの初期位置が重ならないように
 
 		//デバッグ用
-		//
+		/*
+		itemspy1.Add(2);
+		itemspy1.Add(3);
+		itemspy1.Add(4);
+		itemspy2.Add(2);
+		itemspy2.Add(3);
+		itemspy2.Add(4);
+		itemterrorist.Add(2);
+		itemterrorist.Add(3);
+		itemterrorist.Add(4);
+		itemterrorist.Add(5);
+		itemterrorist.Add(3);
+
 		terroristpos = 4;
 		spy1pos = 2;
 		spy2pos = 3;
-		//
+		*/
 
         playerpos[0] = terroristpos;
         playerpos[1] = spy1pos;
