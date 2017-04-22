@@ -27,8 +27,9 @@ public class manager : MonoBehaviour
     public static GameObject maincamera;
     public static GameObject canvas;
     public static GameObject itemcanvas;
-	public static GameObject logcanvas;
-	public static GameObject wincanvas;
+    public static GameObject logcanvas;
+    public static GameObject helpcanvas;
+    public static GameObject wincanvas;
     public static GameObject saikorobutton;
     public static GameObject itembutton;
     public static GameObject modorubutton;
@@ -49,9 +50,10 @@ public class manager : MonoBehaviour
 	public static GameObject mapwindow;
 	public static GameObject itemwindow;
     public static GameObject logwindow;
+    public static GameObject helpwindow;
     public static GameObject mapbutton;
-	public static GameObject logbutton;
-	public static GameObject settingbutton;
+    public static GameObject logbutton;
+    public static GameObject settingbutton;
 	public static GameObject koudou;
     public static bool saikoro = false;
     public static bool item = false;
@@ -118,8 +120,9 @@ public class manager : MonoBehaviour
         logcontent = GameObject.Find("LogContent").GetComponentInChildren<Text>();
         canvas = GameObject.Find("Canvas");
 		itemcanvas = GameObject.Find("itemCanvas");
-		logcanvas = GameObject.Find("LogCanvas");
-		wincanvas = GameObject.Find("winCanvas");
+        logcanvas = GameObject.Find("LogCanvas");
+        helpcanvas = GameObject.Find("HelpCanvas");
+        wincanvas = GameObject.Find("winCanvas");
         //canvas.SetActive(false);
         //spycanvas = GameObject.Find("spyCanvas");
         //spycanvas.SetActive(false);
@@ -162,6 +165,8 @@ public class manager : MonoBehaviour
         logwindow.GetComponent<ScrollRect>().verticalNormalizedPosition = 0;
         //logwindow.SetActive(false);
         manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        helpwindow = GameObject.Find("helpwindow");
+        manager.helpcanvas.GetComponent<Canvas>().enabled = false;
         mapbutton = GameObject.Find("map");
 		logbutton = GameObject.Find("log");
 		settingbutton = GameObject.Find("setting");

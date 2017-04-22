@@ -255,6 +255,8 @@ public class koudoubutton : MonoBehaviour
         manager.mapwindow.SetActive(true);
         manager.logbutton.GetComponent<Button>().interactable = true;
         manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        manager.settingbutton.GetComponent<Button>().interactable = true;
+        manager.helpcanvas.GetComponent<Canvas>().enabled = false;
         //manager.logwindow.SetActive(false);
         GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
         //manager.modoru = true;
@@ -271,11 +273,19 @@ public class koudoubutton : MonoBehaviour
     }
 
     public void closelog()
-	{
+    {
         //Debug.Log("ログ閉じる");
         manager.logbutton.GetComponent<Button>().interactable = true;
         manager.logcanvas.GetComponent<Canvas>().enabled = false;
         //manager.logwindow.SetActive(false);
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
+    }
+
+    public void closehelp()
+    {
+        //Debug.Log("ヘルプ閉じる");
+        manager.settingbutton.GetComponent<Button>().interactable = true;
+        manager.helpcanvas.GetComponent<Canvas>().enabled = false;
         GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
     }
 
@@ -288,6 +298,8 @@ public class koudoubutton : MonoBehaviour
         GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = false;
         manager.mapbutton.GetComponent<Button>().interactable = true;
         manager.mapwindow.SetActive(false);
+        manager.settingbutton.GetComponent<Button>().interactable = true;
+        manager.helpcanvas.GetComponent<Canvas>().enabled = false;
         manager.logcanvas.GetComponent<Canvas>().enabled = true;
         //manager.logwindow.SetActive(true);
         //Debug.Log("ログ");
@@ -303,8 +315,9 @@ public class koudoubutton : MonoBehaviour
         manager.mapwindow.SetActive(false);
         manager.logbutton.GetComponent<Button>().interactable = true;
         manager.logcanvas.GetComponent<Canvas>().enabled = false;
-        //manager.logwindow.SetActive(false);
+        manager.helpcanvas.GetComponent<Canvas>().enabled = true;
         GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
+        manager.settingbutton.GetComponent<Button>().interactable = false;
         //Debug.Log("設定");
         //manager.item8 = true;
     }
@@ -316,10 +329,12 @@ public class koudoubutton : MonoBehaviour
 		if (manager.itemcanvas.activeSelf) notuseitem();
 		manager.mapbutton.GetComponent<Button>().interactable = true;
 		manager.mapwindow.SetActive(false);
-		manager.logbutton.GetComponent<Button>().interactable = true;
-		manager.logcanvas.GetComponent<Canvas>().enabled = false;
-		//manager.logwindow.SetActive(false);
-		GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
+        manager.logbutton.GetComponent<Button>().interactable = true;
+        manager.logcanvas.GetComponent<Canvas>().enabled = false;
+        manager.settingbutton.GetComponent<Button>().interactable = true;
+        manager.helpcanvas.GetComponent<Canvas>().enabled = false;
+        //manager.logwindow.SetActive(false);
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
 		manager.saikorobutton.GetComponent<Button>().interactable = false;
 		//Debug.Log("さいころをふる");
 		manager.saikoro = true;
@@ -332,8 +347,10 @@ public class koudoubutton : MonoBehaviour
 		manager.mapwindow.SetActive(false);
 		manager.logbutton.GetComponent<Button>().interactable = true;
 		manager.logcanvas.GetComponent<Canvas>().enabled = false;
-		//manager.logwindow.SetActive(false);
-		GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
+        manager.settingbutton.GetComponent<Button>().interactable = true;
+        manager.helpcanvas.GetComponent<Canvas>().enabled = false;
+        //manager.logwindow.SetActive(false);
+        GameObject.Find("TouchManager").GetComponent<Swipe>().enabled = true;
 		manager.itembutton.GetComponent<Button>().interactable = false;
 		//Debug.Log("アイテムを使う");
 		manager.item = true;
